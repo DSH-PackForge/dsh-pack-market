@@ -19,5 +19,5 @@ jobs:
         with:
           node-version: 22
 
-      - name: 校验 index/index.json（modpack-cli 契约校验）
-        run: npx -y modpack-cli@latest index validate index/index.json
+      - name: 校验 index/index.json 是合法 JSON（临时：modpack-cli 尚未发布 index 命令，暂只查 JSON 合法性）
+        run: node -e "JSON.parse(require('fs').readFileSync('index/index.json','utf8')); console.log('✓ index/index.json 是合法 JSON')"
