@@ -1,8 +1,8 @@
 # dsh-pack-market
 
-DSH 整合包平台 · 市场仓库（**索引 + 市场网页，同仓库**）。
+DSH 整合包平台 · 市场仓库（**索引 + 市场网页，同仓库，GitHub Pages 部署**）。
 
-> 由 `ModPack-Index`（索引）与 `ModPack-Web`（市场网页）合并而来，不再需要跨仓库同步。
+> 由 `ModPack-Index`（索引）与 `ModPack-Web`（市场网页）合并而来，数据与站点同仓库，不再需要跨仓库同步。
 
 ## 目录结构
 
@@ -14,10 +14,10 @@ dsh-pack-market/
 │   ├── index.html              # 市场页
 │   ├── market.css / market.js  # 样式与渲染逻辑
 │   ├── LICENSE                 # MIT（网页代码）
-│   └── index.json              # 部署副本（由 CI 从 index/index.json 同步）
+│   └── index.json              # 本地预览快照（线上由 CI 实时从 index/index.json 生成）
 ├── .github/workflows/
-│   ├── validate-index.yml      # PR / push 校验 index/index.json
-│   └── sync-web.yml            # index/index.json → web/index.json + 触发部署
+│   ├── validate-index.yml      # PR 校验 index/index.json
+│   └── deploy-pages.yml        # 校验 → 复制索引 → 部署 GitHub Pages
 └── README.md
 ```
 
@@ -26,7 +26,20 @@ dsh-pack-market/
 - **事实源**：`index/index.json` —— 修改索引请只改这里。
 - **网页读取**：`web/index.json`（`market.js` 默认 `./index.json`）。
 
-`sync-web.yml` 在 `index/index.json` 变更时：先跑 `modpack-cli index validate` 校验，再复制到 `web/index.json` 并提交，随后静态托管自动部署。**不要手动改 `web/index.json`**，它由 CI 生成。
+`deploy-pages.yml` 在部署时**实时**把 `index/index.json` 复制到 `web/index.json`，所以线上站点永远与事实源一致；仓库里提交的那份 `web/index.json` 只是「本地 `npx serve web/` 预览」用的快照，不保证实时。**不要手动改 `web/index.json`。**
+
+## GitHub Pages 部署
+
+部署用 GitHub Actions（`deploy-pages.yml`），站点输出目录是 `web/`。
+
+一次性设置（仓库 Settings → Pages）：
+
+1. **Build and deployment → Source** 选 **GitHub Actions**（不是 branch）。
+2. 之后每次 push 到 `main`，`deploy-pages.yml` 自动：
+   - 校验 `index/index.json`
+   - 复制 `index/index.json` → `web/index.json`
+   - `upload-pages-artifact` 上传 `web/` → `deploy-pages` 发布
+3. 可选自定义域：`Settings → Pages → Custom domain`（会写入 CNAME）。
 
 ## 数据契约
 
@@ -39,8 +52,4 @@ dsh-pack-market/
 | workflow | 触发 | 作用 |
 |---|---|---|
 | `validate-index.yml` | PR + push（index 变更） | 跑 `npx -y modpack-cli@latest index validate index/index.json` |
-| `sync-web.yml` | push 到 main（index 变更）/ 手动 | 校验 → 复制到 `web/index.json` → 回写并触发部署 |
-
-## 部署
-
-市场页托管（Cloudflare Pages / GitHub Pages）连接本仓库，静态输出指向 `web/`。`sync-web.yml` 回写的 push 即触发自动部署，部署无需额外 secret。
+| `deploy-pages.yml` | push 到 main / 手动 | 校验 → 复制索引 → 部署到 GitHub Pages |

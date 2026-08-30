@@ -1,0 +1,47 @@
+name: deploy-pages
+
+# GitHub Pages（Actions 部署源）。站点输出目录是 web/：
+# 部署时实时把 index/index.json 复制进 web/，所以线上永远与事实源一致，
+# 无需提交回写（也不往仓库写回），比旧 sync-web.yml 更干净。
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: {}   # 允许手动触发
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true   # 旧 push 构建被新 push 取代
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: 校验 index/index.json
+        run: npx -y modpack-cli@latest index validate index/index.json
+
+      - name: 复制事实源索引 → web/index.json
+        run: cp index/index.json web/index.json
+
+      - name: 上传 Pages 产物
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: web
+
+      - name: 部署到 GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
