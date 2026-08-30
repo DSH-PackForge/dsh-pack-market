@@ -16,8 +16,7 @@ dsh-pack-market/
 │   ├── LICENSE                 # MIT（网页代码）
 │   └── index.json              # 本地预览快照（线上由 CI 实时从 index/index.json 生成）
 ├── .github/workflows/
-│   ├── validate-index.yml      # PR 校验 index/index.json
-│   └── deploy-pages.yml        # 校验 → 复制索引 → 部署 GitHub Pages
+│   └── deploy-pages.yml        # 复制索引 → 部署 GitHub Pages
 └── README.md
 ```
 
@@ -36,7 +35,6 @@ dsh-pack-market/
 
 1. **Build and deployment → Source** 选 **GitHub Actions**（不是 branch）。
 2. 之后每次 push 到 `main`，`deploy-pages.yml` 自动：
-   - 校验 `index/index.json`
    - 复制 `index/index.json` → `web/index.json`
    - `upload-pages-artifact` 上传 `web/` → `deploy-pages` 发布
 3. 可选自定义域：`Settings → Pages → Custom domain`（会写入 CNAME）。
@@ -51,5 +49,4 @@ dsh-pack-market/
 
 | workflow | 触发 | 作用 |
 |---|---|---|
-| `validate-index.yml` | PR + push（index 变更） | 跑 `npx -y modpack-cli@latest index validate index/index.json` |
-| `deploy-pages.yml` | push 到 main / 手动 | 校验 → 复制索引 → 部署到 GitHub Pages |
+| `deploy-pages.yml` | push 到 main / 手动 | 复制索引 → 部署到 GitHub Pages |
