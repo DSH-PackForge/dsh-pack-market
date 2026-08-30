@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ModPack 市场 — DSH 整合包平台</title>
+<meta name="description" content="像玩 Minecraft 整合包一样，一键导出、分享、安装 DSH AI 智能体配置包。">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#f6f2ea">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#211d18">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23c0392b'/><text x='50' y='68' font-size='52' text-anchor='middle' fill='white' font-family='Archivo,sans-serif' font-weight='800'>MP</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="market.css">
+</head>
+<body>
+
+<header class="site-head">
+  <nav class="nav">
+    <a class="brand" href="./">
+      <span class="brand-mark">MP</span>
+      <span class="brand-name">ModPack <em>市场</em></span>
+    </a>
+    <div class="nav-links">
+      <a href="https://www.npmjs.com/package/modpack-cli" target="_blank" rel="noopener">CLI</a>
+      <a href="https://github.com/deepseek-ai/deepseek-harness" target="_blank" rel="noopener">DSH</a>
+    </div>
+  </nav>
+  <div class="hero">
+    <h1>DSH 整合包市场</h1>
+    <p class="sub">像玩 Minecraft 整合包一样，<strong>一键导出、分享、安装</strong> DSH AI 智能体配置包。</p>
+    <div class="stats" id="stats"><span class="stat"><b id="stat-count">–</b>个整合包</span><span class="stat"><b id="stat-cats">–</b>个分类</span><span class="stat"><b id="stat-authors">–</b>位作者</span></div>
+  </div>
+</header>
+
+<main>
+  <section class="controls">
+    <label class="search">
+      <span class="search-icon">⌕</span>
+      <input id="search" type="search" placeholder="搜索整合包（名称 / 描述 / 作者）…" autocomplete="off">
+    </label>
+    <div class="cats" id="cats"></div>
+    <p class="hint" id="hint"></p>
+  </section>
+
+  <section>
+    <ul class="cards" id="cards"></ul>
+    <p class="empty" id="empty" hidden>没有匹配的整合包。</p>
+  </section>
+</main>
+
+<footer class="site-foot">
+  <p>ModPack 市场 · 数据源 <code id="data-src">index.json</code></p>
+  <p>安装：<code>npm install -g modpack-cli</code> · 发布：<code>modpack publish &lt;tgz&gt; --repo 你的仓库</code></p>
+  <p class="credit">设计灵感：<a href="https://awesome-dsh-plugin.com" target="_blank" rel="noopener">awesome-dsh-plugin.com</a>（CC0 1.0）</p>
+</footer>
+
+<script src="market.js"></script>
+</body>
+</html>
