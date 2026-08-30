@@ -27,6 +27,17 @@ const FALLBACK = {
 
 const $ = (sel) => document.querySelector(sel);
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+// 多语言字段取值：字符串原样返回；对象按 当前语言 → 语言基座 → en-US → zh-CN → 首个值 兜底（v3 起 displayName/description 可为 map）
+function pickLang(v) {
+  if (v == null) return '';
+  if (typeof v === 'string') return v;
+  const lang = (navigator.language || 'zh-CN').toLowerCase();
+  if (v[lang]) return v[lang];
+  const base = lang.split('-')[0];
+  const baseHit = Object.keys(v).find((k) => k.toLowerCase().startsWith(base));
+  if (baseHit) return v[baseHit];
+  return v['en-US'] || v['zh-CN'] || Object.values(v)[0] || '';
+}
 
 let index = null;
 let activeCat = 'all';
@@ -75,7 +86,7 @@ function renderStats() {
 function matches(m) {
   if (activeCat !== 'all' && m.category !== activeCat) return false;
   if (!query) return true;
-  const hay = [m.name, m.displayName, m.description, m.author, m.category, ...(m.bundles || [])]
+  const hay = [m.name, pickLang(m.displayName), pickLang(m.description), m.author, m.category, ...(m.bundles || [])]
     .join(' ').toLowerCase();
   return hay.includes(query);
 }
@@ -86,11 +97,11 @@ function cardHTML(m) {
   return `
     <li class="card">
       <div class="top">
-        <span class="title">${esc(m.displayName || m.name)}</span>
+        <span class="title">${esc(pickLang(m.displayName) || m.name)}</span>
         <span class="ver">${esc(m.version)}</span>
       </div>
       <div class="pkg">${esc(m.name)}</div>
-      <p class="desc">${esc(m.description || '（无描述）')}</p>
+      <p class="desc">${esc(pickLang(m.description) || '（无描述）')}</p>
       <div class="meta">
         ${m.category ? `<span class="chip tag">${esc(m.category)}</span>` : ''}
         <span class="chip">${(m.bundles || []).length} 个 bundle</span>
