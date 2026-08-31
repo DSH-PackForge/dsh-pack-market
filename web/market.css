@@ -159,3 +159,51 @@ details.inst .menu {
 .site-foot .credit { margin-top: 6px; font-size: 12px; }
 .site-foot .credit a { color: var(--ink-3); text-decoration: underline; text-underline-offset: 2px; }
 .site-foot .credit a:hover { color: var(--cinnabar); }
+
+/* ── 详情页 ─────────────────────────────────────────── */
+.detail { max-width: 960px; margin: 0 auto; padding: 28px 24px 60px; }
+.back { display: inline-block; margin-bottom: 20px; color: var(--cinnabar); text-decoration: none; font-size: 14px; font-weight: 600; }
+.back:hover { text-decoration: underline; }
+.d-head { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 14px; }
+.d-head h2 { font-family: var(--display); font-weight: 900; font-size: clamp(24px, 4vw, 34px); letter-spacing: -.5px; line-height: 1.2; }
+.d-sub { margin-top: 6px; color: var(--ink-3); font-size: 14px; font-family: var(--mono); word-break: break-all; }
+.d-sub .dot { margin: 0 5px; }
+.d-chips { display: flex; flex-wrap: wrap; gap: 6px; justify-content: flex-end; max-width: 420px; }
+.d-desc { color: var(--ink-2); font-size: 15px; max-width: 720px; margin-bottom: 24px; }
+.d-block { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 18px 20px; margin-bottom: 14px; }
+.d-block h3 { font-family: var(--display); font-weight: 800; font-size: 15px; margin-bottom: 12px; }
+.d-block h4 { font-size: 13px; color: var(--ink-2); margin: 14px 0 8px; font-weight: 600; }
+.d-block h4:first-child { margin-top: 0; }
+.d-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 640px) { .d-grid { grid-template-columns: 1fr; } }
+.d-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+.d-list li { display: flex; align-items: baseline; gap: 8px; font-size: 13px; color: var(--ink-2); flex-wrap: wrap; }
+.d-list li code, .d-info code.mono {
+  font-family: var(--mono); font-size: 12px; color: var(--ink);
+  background: var(--paper-2); border: 1px solid var(--line); border-radius: 6px; padding: 2px 7px;
+  word-break: break-all;
+}
+.d-list li .dk { font-family: var(--mono); font-size: 12px; word-break: break-all; }
+.d-list li .arrow { color: var(--ink-3); }
+.d-list li.none { color: var(--ink-3); }
+.d-install { display: flex; flex-direction: column; gap: 12px; }
+.d-install-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.d-dl {
+  background: var(--cinnabar); color: var(--on-cinnabar); text-decoration: none;
+  border-radius: 9px; padding: 8px 16px; font-size: 13px; font-weight: 600;
+}
+.d-dl:hover { background: var(--cinnabar-deep); }
+.d-install-row small { color: var(--ink-3); font-size: 12px; }
+.d-install-row small code { font-family: var(--mono); font-size: 12px; background: var(--paper-2); border: 1px solid var(--line); padding: 1px 6px; border-radius: 5px; }
+.d-info { display: grid; grid-template-columns: 110px 1fr; row-gap: 8px; column-gap: 14px; font-size: 13px; }
+@media (max-width: 520px) { .d-info { grid-template-columns: 1fr; row-gap: 2px; } .d-info dt { margin-top: 8px; } }
+.d-info dt { color: var(--ink-3); }
+.d-info dd { color: var(--ink-2); word-break: break-all; }
+.d-info code.mono.break { white-space: normal; }
+
+/* 卡片“详情”入口 */
+.card a.title { color: var(--ink); text-decoration: none; }
+.card a.title:hover { color: var(--cinnabar); }
+.detail-link { color: var(--cinnabar); text-decoration: none; font-size: 13px; font-weight: 600; white-space: nowrap; }
+.detail-link:hover { text-decoration: underline; }
+.foot-right { display: flex; align-items: center; gap: 10px; }

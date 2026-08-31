@@ -97,7 +97,7 @@ function cardHTML(m) {
   return `
     <li class="card">
       <div class="top">
-        <span class="title">${esc(pickLang(m.displayName) || m.name)}</span>
+        <a class="title" href="#/pack/${encodeURIComponent(m.name)}">${esc(pickLang(m.displayName) || m.name)}</a>
         <span class="ver">${esc(m.version)}</span>
       </div>
       <div class="pkg">${esc(m.name)}</div>
@@ -112,7 +112,9 @@ function cardHTML(m) {
       </div>
       <div class="foot">
         <span class="sha" title="${esc(m.sha256)}">sha256 ${esc(m.sha256.slice(0, 12))}…</span>
-        <details class="inst">
+        <span class="foot-right">
+          <a class="detail-link" href="#/pack/${encodeURIComponent(m.name)}">详情 →</a>
+          <details class="inst">
           <summary>安装 ▾</summary>
           <div class="menu">
             <b>安装到本机 Profile</b>
@@ -127,6 +129,7 @@ function cardHTML(m) {
             <small>装完后启动：<code>dsh --profile ${esc(m.name)}</code>（可用 --name 改名）</small>
           </div>
         </details>
+        </span>
       </div>
     </li>`;
 }
@@ -140,10 +143,116 @@ function renderCards() {
   list.innerHTML = filtered.map(cardHTML).join('');
 }
 
+function detailHTML(m) {
+  const size = m.size ? `${(m.size / 1024).toFixed(1)} KB` : '';
+  const cmd = `modpack install ${m.downloadUrl}`;
+  const bundles = (m.bundles || [])
+    .map((b) => `<li><code>${esc(b)}</code></li>`).join('') || '<li class="none">（无）</li>';
+  const deps = Object.entries(m.dependencies || {})
+    .map(([k, v]) => `<li><span class="dk">${esc(k)}</span><span class="arrow">→</span><code>${esc(v)}</code></li>`).join('') || '<li class="none">（无）</li>';
+  const files = (m.files || [])
+    .map((f) => `<li><code>${esc(f.path)}</code><span class="arrow">·</span><span>${Math.round((f.size || 0) / 1024)} KB · ${esc((f.sha256 || '').slice(0, 12))}…</span></li>`).join('');
+
+  return `
+    <div class="detail">
+      <a class="back" href="#">← 返回市场</a>
+      <header class="d-head">
+        <div>
+          <h2>${esc(pickLang(m.displayName) || m.name)}</h2>
+          <div class="d-sub">${esc(m.name)}<span class="dot">·</span>v${esc(m.version)}</div>
+        </div>
+        <div class="d-chips">
+          ${m.category ? `<span class="chip tag">${esc(m.category)}</span>` : ''}
+          ${m.author ? `<span class="chip">作者 ${esc(m.author)}</span>` : ''}
+          ${m.dshVersion ? `<span class="chip">DSH ${esc(m.dshVersion)}</span>` : ''}
+          <span class="chip">manifest v${esc(m.manifestVersion ?? 3)}</span>
+          ${m.updatedAt ? `<span class="chip">更新 ${esc(m.updatedAt)}</span>` : ''}
+          ${size ? `<span class="chip">${size}</span>` : ''}
+        </div>
+      </header>
+
+      <p class="d-desc">${esc(pickLang(m.description) || '（无描述）')}</p>
+
+      <section class="d-block">
+        <h3>安装</h3>
+        <div class="d-install">
+          <div class="mi-cli">
+            <b>命令（需 modpack-cli）</b>
+            <span class="cli">
+              <input readonly value="${esc(cmd)}" spellcheck="false">
+              <button class="copy" type="button">复制</button>
+            </span>
+          </div>
+          <div class="d-install-row">
+            <a class="d-dl" href="${esc(m.downloadUrl)}" target="_blank" rel="noopener">直接下载包</a>
+            <small>装完启动：<code>dsh --profile ${esc(m.profileName || m.name)}</code></small>
+          </div>
+        </div>
+      </section>
+
+      <section class="d-block">
+        <h3>内容</h3>
+        <div class="d-grid">
+          <div>
+            <h4>Bundles（${(m.bundles || []).length}）</h4>
+            <ul class="d-list">${bundles}</ul>
+          </div>
+          <div>
+            <h4>依赖（${Object.keys(m.dependencies || {}).length}）</h4>
+            <ul class="d-list">${deps}</ul>
+          </div>
+        </div>
+        ${files ? `<div><h4>按需拉取 files[]（${(m.files || []).length}）</h4><ul class="d-list">${files}</ul></div>` : ''}
+      </section>
+
+      <section class="d-block">
+        <h3>校验信息</h3>
+        <dl class="d-info">
+          <dt>sha256</dt><dd><code class="mono">${esc(m.sha256 || '')}</code></dd>
+          <dt>大小</dt><dd>${size || '–'}</dd>
+          <dt>下载地址</dt><dd><code class="mono break">${esc(m.downloadUrl || '')}</code></dd>
+          ${m.profileName ? `<dt>Profile</dt><dd><code class="mono">${esc(m.profileName)}</code></dd>` : ''}
+          ${m.icon ? `<dt>图标</dt><dd><code class="mono break">${esc(m.icon)}</code></dd>` : ''}
+        </dl>
+      </section>
+    </div>`;
+}
+
+function currentName() {
+  const m = location.hash.match(/^#\/pack\/([^/]+)$/);
+  return m ? decodeURIComponent(m[1]) : null;
+}
+
+function showList() {
+  document.querySelector('.hero').hidden = false;
+  document.querySelector('main').hidden = false;
+  $('#detail').hidden = true;
+  window.scrollTo(0, 0);
+}
+
+function showDetail(name) {
+  const m = index.modpacks.find((x) => x.name === name);
+  document.querySelector('.hero').hidden = true;
+  document.querySelector('main').hidden = true;
+  const d = $('#detail');
+  d.innerHTML = m
+    ? detailHTML(m)
+    : `<div class="detail"><a class="back" href="#">← 返回市场</a><p class="d-desc">未找到整合包「${esc(name)}」。</p></div>`;
+  d.hidden = false;
+  window.scrollTo(0, 0);
+}
+
+function route() {
+  if (!index) return;
+  const name = currentName();
+  if (name) showDetail(name); else showList();
+}
+
 function render() {
   renderStats();
   renderCats();
   renderCards();
+  route();
 }
 
 $('#search').addEventListener('input', (e) => {
@@ -164,5 +273,7 @@ document.addEventListener('click', (e) => {
     document.execCommand('copy');
   });
 });
+
+window.addEventListener('hashchange', route);
 
 load();
