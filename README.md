@@ -8,24 +8,34 @@ DSH 整合包平台 · 市场仓库（**索引 + 市场网页，同仓库，GitH
 
 ```
 dsh-pack-market/
+├── scripts/
+│   └── collect.mjs             # 采集器：扫 topic `dsh-pack` → 生成 index/index.json
 ├── index/
-│   └── index.json              # 索引数据（唯一事实源，schemaVersion 1）
+│   └── index.json              # 索引数据（采集器生成，勿手改）
 ├── web/
 │   ├── index.html              # 市场页
 │   ├── market.css / market.js  # 样式与渲染逻辑
 │   ├── LICENSE                 # MIT（网页代码）
-│   └── index.json              # 本地预览快照（线上由 CI 实时从 index/index.json 生成）
+│   └── index.json              # 本地预览快照（线上由 CI 实时生成）
 ├── .github/workflows/
-│   └── deploy-pages.yml        # 复制索引 → 部署 GitHub Pages
+│   └── deploy-pages.yml        # 采集 dsh-pack 标签 → 部署 GitHub Pages
 └── README.md
 ```
 
-## 一条数据，两份位置
+## 索引从哪来（自动收录）
 
-- **事实源**：`index/index.json` —— 修改索引请只改这里。
-- **网页读取**：`web/index.json`（`market.js` 默认 `./index.json`）。
+- **事实源 = 各整合包仓库的 `manifest.json`**：作者给仓库打 topic `dsh-pack`、根放 `manifest.json`、建 Release 放 `.tgz`（或在清单里写 `downloadUrl`）。
+- **`index/index.json` 由采集器自动生成**：`deploy-pages.yml` 每天定时 / 手动 / 推送时运行 `scripts/collect.mjs`，**不要在这里手改**。
+- `web/index.json` 是部署时从 `index/index.json` 复制的快照，仅用于本地 `npx serve web/` 预览，**也不要手改**。
 
-`deploy-pages.yml` 在部署时**实时**把 `index/index.json` 复制到 `web/index.json`，所以线上站点永远与事实源一致；仓库里提交的那份 `web/index.json` 只是「本地 `npx serve web/` 预览」用的快照，不保证实时。**不要手动改 `web/index.json`。**
+## 如何发布（让整合包被收录）
+
+1. 仓库 **About → Topics** 加 `dsh-pack`；
+2. 根放 `manifest.json`（manifest v4 契约：`manifestVersion: 4` + `type` + `name` / `version` / `displayName` / `description` / `bundles` / `dependencies` / `dshVersion` / …），**推荐**再放一份 `README.md`；
+3. 分发方式二选一：
+   - **清单直连**：在 `manifest.json` 里写 `downloadUrl`，并在 `<downloadUrl>.sha256` 放 64 位 sha256（侧车文件）；
+   - **默认 GitHub Release**：不写 `downloadUrl`，建一个 Release，挂上 `<name>-<version>.tgz`，再挂一个 `<name>-<version>.tgz.sha256` 侧车文件；
+4. 采集器会自动收录；想立刻刷新，去 Actions 手动跑「自动收录 dsh-pack 并部署」。
 
 ## GitHub Pages 部署
 
@@ -49,4 +59,4 @@ dsh-pack-market/
 
 | workflow | 触发 | 作用 |
 |---|---|---|
-| `deploy-pages.yml` | push 到 main / 手动 | 复制索引 → 部署到 GitHub Pages |
+| `deploy-pages.yml` | 每天定时 / push 到 main / 手动 | 扫 `dsh-pack` 标签 → 生成索引 → 提交 → 复制 → 部署 Pages |

@@ -1,25 +1,34 @@
-name: deploy-pages
+name: 自动收录 dsh-pack 并部署
 
-# GitHub Pages（Actions 部署源）。站点输出目录是 web/：
-# 部署时实时把 index/index.json 复制进 web/，所以线上永远与事实源一致，
-# 无需提交回写（也不往仓库写回），比旧 sync-web.yml 更干净。
+# 每天定时 / 手动 / push 到 main 时：
+#   1) 扫 GitHub topic `dsh-pack` → scripts/collect.mjs → 生成 index/index.json
+#   2) 提交回 main（有变化才提交）
+#   3) 复制 index/index.json → web/index.json
+#   4) 部署 GitHub Pages
+#
+# 为什么把“采集”和“部署”合在同一个 workflow：
+#   默认 GITHUB_TOKEN 推回 main 的 push 不会再次触发其它 workflow（防递归）；
+#   若拆成两个独立 workflow，采集提交后部署不会自动跟进，除非额外配置 PAT。
+#   合并后采集完立刻部署，无需 PAT。
 
 on:
+  schedule:
+    - cron: '17 5 * * *'   # 每天 UTC 05:17
   push:
     branches: [main]
   workflow_dispatch: {}   # 允许手动触发
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
 concurrency:
   group: pages
-  cancel-in-progress: true   # 旧 push 构建被新 push 取代
+  cancel-in-progress: true   # 旧运行被新运行取代
 
 jobs:
-  deploy:
+  collect-and-deploy:
     runs-on: ubuntu-latest
     environment:
       name: github-pages
@@ -30,6 +39,23 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+
+      - name: 扫描 dsh-pack 标签，生成 index/index.json
+        run: node scripts/collect.mjs
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 提交索引变更
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index/index.json
+          if git diff --cached --quiet; then
+            echo "索引无变化，跳过提交"
+          else
+            git commit -m "chore(index): 自动收录 dsh-pack 标签仓库"
+            git push
+          fi
 
       - name: 复制事实源索引 → web/index.json
         run: cp index/index.json web/index.json
