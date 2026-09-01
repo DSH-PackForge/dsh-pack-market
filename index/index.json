@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-01T05:48:03.259Z",
+  "generatedAt": "2026-09-01T06:34:20.306Z",
   "modpacks": [
     {
       "manifestVersion": 4,
@@ -34,8 +34,8 @@
       },
       "category": "coding",
       "downloadUrl": "https://github.com/DSH-PackForge/all-about-whales/releases/download/v1.0.0/all-about-whales-1.0.0.dspack",
-      "sha256": "8a01a36e22f75a0c0a9daf5dabf90a306514bb985edaaf3f0b056515ae575de4",
-      "size": 6540,
+      "sha256": "6dfaf5cc50f45c751e4bdff6a35eaedccd90cb67f6f888238a27a6d75409cf45",
+      "size": 6670,
       "updatedAt": "2026-09-01"
     }
   ]
