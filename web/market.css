@@ -207,3 +207,36 @@ details.inst .menu {
 .detail-link { color: var(--cinnabar); text-decoration: none; font-size: 13px; font-weight: 600; white-space: nowrap; }
 .detail-link:hover { text-decoration: underline; }
 .foot-right { display: flex; align-items: center; gap: 10px; }
+
+/* ── 详情页：加载态 / 降级提示 / README 渲染 / dshhome ── */
+.d-loading, .d-warn { color: var(--ink-2); font-size: 14px; padding: 16px 0; }
+.d-warn { color: var(--cinnabar); background: var(--cinnabar-soft); border: 1px solid var(--cinnabar-border); border-radius: 10px; padding: 10px 14px; margin-bottom: 14px; }
+.d-line { font-size: 13px; color: var(--ink-2); margin-bottom: 10px; }
+.d-prof { display: block !important; }
+.d-prof > b { font-family: var(--display); color: var(--ink); }
+.d-prof ul { list-style: none; margin: 4px 0 8px 12px; display: flex; flex-direction: column; gap: 4px; }
+.d-readme { font-size: 14px; color: var(--ink-2); line-height: 1.7; }
+.d-readme h1, .d-readme h2, .d-readme h3, .d-readme h4, .d-readme h5, .d-readme h6 {
+  font-family: var(--display); color: var(--ink); margin: 18px 0 8px; line-height: 1.3;
+}
+.d-readme h1 { font-size: 22px; } .d-readme h2 { font-size: 19px; }
+.d-readme h3 { font-size: 16px; } .d-readme h4 { font-size: 14px; }
+.d-readme h5, .d-readme h6 { font-size: 13px; }
+.d-readme p { margin: 8px 0; }
+.d-readme ul, .d-readme ol { margin: 8px 0 8px 22px; }
+.d-readme li { margin: 3px 0; }
+.d-readme code {
+  font-family: var(--mono); font-size: 12.5px; background: var(--paper-2);
+  border: 1px solid var(--line); border-radius: 5px; padding: 1px 6px;
+}
+.d-readme pre.md-code {
+  background: var(--paper-2); border: 1px solid var(--line); border-radius: 10px;
+  padding: 12px 14px; overflow-x: auto; margin: 10px 0;
+}
+.d-readme pre.md-code code { background: transparent; border: 0; padding: 0; font-size: 12.5px; }
+.d-readme a { color: var(--cinnabar); text-decoration: underline; text-underline-offset: 2px; }
+.d-readme table { border-collapse: collapse; margin: 12px 0; width: 100%; font-size: 13px; display: block; overflow-x: auto; }
+.d-readme th, .d-readme td { border: 1px solid var(--line-2); padding: 6px 12px; text-align: left; }
+.d-readme th { background: var(--paper-2); color: var(--ink); font-weight: 600; }
+.d-readme strong { color: var(--ink); }
+.d-readme blockquote { border-left: 3px solid var(--cinnabar); margin: 10px 0; padding: 2px 14px; color: var(--ink-2); }

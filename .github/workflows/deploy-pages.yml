@@ -1,9 +1,9 @@
 name: 自动收录 dsh-pack 并部署
 
 # 每天定时 / 手动 / push 到 main 时：
-#   1) 扫 GitHub topic `dsh-pack` → scripts/collect.mjs → 生成 index/index.json
+#   1) 扫 GitHub topic `dsh-pack` → scripts/collect.mjs → 生成 index/index.json + index/packs/<owner>.<repo>/
 #   2) 提交回 main（有变化才提交）
-#   3) 复制 index/index.json → web/index.json
+#   3) 复制 index/index.json → web/index.json，index/packs → web/packs
 #   4) 部署 GitHub Pages
 #
 # 为什么把“采集”和“部署”合在同一个 workflow：
@@ -40,7 +40,7 @@ jobs:
         with:
           node-version: 22
 
-      - name: 扫描 dsh-pack 标签，生成 index/index.json
+      - name: 扫描 dsh-pack 标签，生成 index/index.json + index/packs
         run: node scripts/collect.mjs
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -49,7 +49,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add index/index.json
+          git add index/index.json index/packs
           if git diff --cached --quiet; then
             echo "索引无变化，跳过提交"
           else
@@ -57,8 +57,11 @@ jobs:
             git push
           fi
 
-      - name: 复制事实源索引 → web/index.json
-        run: cp index/index.json web/index.json
+      - name: 复制事实源索引 → web（index.json + packs）
+        run: |
+          cp index/index.json web/index.json
+          rm -rf web/packs
+          cp -r index/packs web/packs
 
       - name: 上传 Pages 产物
         uses: actions/upload-pages-artifact@v3

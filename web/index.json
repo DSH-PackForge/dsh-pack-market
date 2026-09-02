@@ -1,42 +1,33 @@
 {
-  "schemaVersion": 1,
-  "generatedAt": "2026-08-15T09:36:47.625Z",
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-02T15:44:00.000Z",
   "modpacks": [
     {
-      "manifestVersion": 3,
+      "manifestVersion": 4,
+      "type": "profile",
       "name": "all-about-whales",
+      "version": "1.0.0",
       "displayName": {
         "en-US": "All About Whales",
         "zh-CN": "大肥鱼套装"
       },
-      "version": "1.0.0",
       "description": {
         "en-US": "Make your DSH smell like big fat whales (beautify webUI with DeepSeek mascot theme)",
         "zh-CN": "让你的DSH充满大肥鱼的味道（用DeepSeek吉祥物主题美化webUI）"
       },
       "author": "hxh230802",
-      "icon": "",
-      "dshVersion": "0.1.1-rc.2",
-      "profileName": "all-about-whales",
-      "bundles": [
-        "@deepseek-ai/dsh-base",
-        "@deepseek-ai/dsh-web-app",
-        "dafy-whale-theme",
-        "dsh-whale-widget",
-        "dsh-reasoning-effort",
-        "dsh-pet"
-      ],
-      "dependencies": {
-        "github:DViridescent/dafy-whale-theme": "99e8c57",
-        "dsh-pet": "0.2.0",
-        "github:HanaAyane/dsh-reasoning-effort": "83bc8c5",
-        "github:MeteorNOX/DeepSeek-Balance-Whale-Widget": "4448c61"
-      },
       "category": "coding",
-      "downloadUrl": "https://raw.githubusercontent.com/hxh230802/dsh-modpacks/main/all-about-whales-1.0.0.tgz",
-      "sha256": "c53f18814e8912dc045e9da61ccef0afa92d54f57df9d2ddf08db19476e9b2c2",
-      "size": 10916,
-      "updatedAt": "2026-08-27"
+      "dshVersion": "0.1.0-rc.8",
+      "profileName": "all-about-whales",
+      "downloadUrl": "https://github.com/DSH-PackForge/all-about-whales/releases/download/v1.0.0/all-about-whales-1.0.0.dspack",
+      "sha256": "6dfaf5cc50f45c751e4bdff6a35eaedccd90cb67f6f888238a27a6d75409cf45",
+      "size": 6670,
+      "updatedAt": "2026-09-01",
+      "id": "DSH-PackForge.all-about-whales",
+      "owner": "DSH-PackForge",
+      "repo": "all-about-whales",
+      "bundleCount": 6,
+      "depCount": 4
     }
   ]
 }

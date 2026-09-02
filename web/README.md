@@ -11,10 +11,11 @@ npx serve .            # 任意静态服务器即可
 
 ## 数据源
 
-- 默认读取 `./index.json`（内置演示副本，来自 `ModPack-Index`）
+- 默认读取 `./index.json`（部署副本，来自 `index/index.json`）
 - 用 `?index=<url>` 指向远端索引仓库：`https://your-host/modpack-market/?index=https://raw.githubusercontent.com/org/modpack-index/main/index.json`
+- 详情页会按条目的 `id`（`<owner>.<repo>`）懒加载 `./packs/<owner>.<repo>/manifest.json` 与 `README.md`
 
-数据契约见 `ModPack-Index` 仓库的 `index.json`（schemaVersion 1）。
+数据契约见 `index/index.json`（schemaVersion 2，精简指针制）。
 
 ## 设计
 

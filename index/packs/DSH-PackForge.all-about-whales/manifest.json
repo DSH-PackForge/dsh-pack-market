@@ -1,0 +1,33 @@
+{
+  "manifestVersion": 4,
+  "type": "profile",
+  "name": "all-about-whales",
+  "version": "1.0.0",
+  "displayName": {
+    "en-US": "All About Whales",
+    "zh-CN": "大肥鱼套装"
+  },
+  "description": {
+    "en-US": "Make your DSH smell like big fat whales (beautify webUI with DeepSeek mascot theme)",
+    "zh-CN": "让你的DSH充满大肥鱼的味道（用DeepSeek吉祥物主题美化webUI）"
+  },
+  "author": "hxh230802",
+  "icon": "",
+  "dshVersion": "0.1.0-rc.8",
+  "profileName": "all-about-whales",
+  "bundles": [
+    "@deepseek-ai/dsh-base",
+    "@deepseek-ai/dsh-web-app",
+    "dafy-whale-theme",
+    "dsh-whale-widget",
+    "dsh-reasoning-effort",
+    "dsh-pet"
+  ],
+  "dependencies": {
+    "github:DViridescent/dafy-whale-theme": "99e8c571c40eee8d2e0599af8eddfcbf4f47fc89",
+    "dsh-pet": "0.2.0",
+    "github:HanaAyane/dsh-reasoning-effort": "83bc8c548749d7156a03d11d875d8117e9b5d994",
+    "github:MeteorNOX/DeepSeek-Balance-Whale-Widget": "4448c61db7d180c4c307aa3fa734db7c8507658d"
+  },
+  "category": "coding"
+}
