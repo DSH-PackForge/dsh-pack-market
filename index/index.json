@@ -1,7 +1,28 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-09-02T15:44:00.000Z",
+  "generatedAt": "2026-09-02T15:56:27.313Z",
   "modpacks": [
+    {
+      "manifestVersion": 4,
+      "type": "profile",
+      "name": "better-sidebar",
+      "version": "1.0.0",
+      "displayName": "更好的侧边栏",
+      "description": "为DSH提供更好的侧边栏",
+      "author": "HXH",
+      "category": "uncategorized",
+      "dshVersion": "",
+      "profileName": "better-sidebar",
+      "downloadUrl": "https://github.com/hxh230802/better-sidebar/releases/download/v1.0.0/better-sidebar-1.0.0.dspack",
+      "sha256": "",
+      "size": 18067,
+      "updatedAt": "2026-09-02",
+      "id": "hxh230802.better-sidebar",
+      "owner": "hxh230802",
+      "repo": "better-sidebar",
+      "bundleCount": 4,
+      "depCount": 2
+    },
     {
       "manifestVersion": 4,
       "type": "profile",

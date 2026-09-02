@@ -1,0 +1,24 @@
+{
+  "manifestVersion": 4,
+  "type": "profile",
+  "name": "better-sidebar",
+  "version": "1.0.0",
+  "displayName": "更好的侧边栏",
+  "description": "为DSH提供更好的侧边栏",
+  "author": "HXH",
+  "icon": "",
+  "dshVersion": "",
+  "profileName": "better-sidebar",
+  "bundles": [
+    "@deepseek-ai/dsh-base",
+    "@deepseek-ai/dsh-web-app",
+    "@dsh-plugin/dsh-loader",
+    "@dsh-plugin/dsh-better-sidebar-loader"
+  ],
+  "dependencies": {
+    "@dsh-plugin/dsh-better-sidebar-loader": "0.14.4",
+    "@dsh-plugin/dsh-loader": "1.3.3-dev.33218986978"
+  },
+  "patch": "# Your patch layer for this dsh profile, applied after every bundle layer:\n# a top-level YAML array of loader patch entries (id-targeted config\n# overrides, disables, and insert lists; `!!js` expressions allowed).\n[]\n",
+  "files": []
+}
