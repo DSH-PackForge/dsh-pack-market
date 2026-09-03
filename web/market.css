@@ -257,6 +257,13 @@ details.inst .menu {
   margin-top: 22px; background: var(--card); border: 1px solid var(--line);
   border-radius: 14px; padding: 16px 20px;
 }
+.eco-section-title { font-family: var(--display); font-weight: 800; font-size: 15px; margin: 26px 0 4px; }
+.eco-section-sub { color: var(--ink-3); font-size: 13px; margin-bottom: 14px; }
+.eco-badge {
+  align-self: flex-start; font-size: 12px; color: var(--cinnabar);
+  border: 1px solid var(--cinnabar-border); background: var(--cinnabar-soft);
+  border-radius: 999px; padding: 2px 10px; font-weight: 600;
+}
 .eco-flow h3 { font-family: var(--display); font-weight: 800; font-size: 15px; margin-bottom: 8px; }
 .eco-flow p { color: var(--ink-2); font-size: 14px; }
 .eco-flow code { font-family: var(--mono); font-size: 12.5px; background: var(--paper-2); border: 1px solid var(--line); border-radius: 5px; padding: 1px 6px; }

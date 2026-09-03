@@ -271,12 +271,36 @@ function showEcosystem() {
   window.scrollTo(0, 0);
 }
 
+// 启动器（导入整合包的一方）：特别列出，各自支持的规范版本不同
+const LAUNCHERS = [
+  {
+    name: 'dsh-plugins/dsh-launcher',
+    url: 'https://github.com/dsh-plugins/dsh-launcher/',
+    support: '最新规范',
+    desc: '支持最新 manifest 契约与 .dspack 结构，导入整合包的首选。',
+  },
+  {
+    name: '121103qwq/DSH-Launcher',
+    url: 'https://github.com/121103qwq/DSH-Launcher',
+    support: '清单 v2 · 结构 v1',
+    desc: '支持 manifest v2 与 pack-structure v1（.tgz），旧格式整合包的兼容入口。',
+  },
+];
+
 function ecosystemHTML() {
   const cards = ECOSYSTEM.map((e) => `
     <a class="eco-card" href="${esc(e.url)}" target="_blank" rel="noopener">
       <div class="eco-role">${esc(e.role)}</div>
       <div class="eco-name">${esc(e.name)}</div>
       <p class="eco-desc">${esc(e.desc)}</p>
+      <div class="eco-arrow">→</div>
+    </a>`).join('');
+  const launchers = LAUNCHERS.map((l) => `
+    <a class="eco-card eco-launcher" href="${esc(l.url)}" target="_blank" rel="noopener">
+      <div class="eco-role">启动器</div>
+      <div class="eco-name">${esc(l.name)}</div>
+      <span class="eco-badge">${esc(l.support)}</span>
+      <p class="eco-desc">${esc(l.desc)}</p>
       <div class="eco-arrow">→</div>
     </a>`).join('');
   return `
@@ -289,6 +313,9 @@ function ecosystemHTML() {
         <h3>内容流水线</h3>
         <p><code>dspack 打包</code> → <code>dsh-pack-market 分发</code> → <code>dspack install / dsh 启动器导入</code></p>
       </div>
+      <h3 class="eco-section-title">启动器</h3>
+      <p class="eco-section-sub">导入整合包的一端。不同启动器支持的规范版本不同，请按你的整合包格式选择。</p>
+      <div class="eco-grid">${launchers}</div>
     </div>`;
 }
 
