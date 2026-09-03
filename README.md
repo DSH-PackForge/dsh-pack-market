@@ -24,6 +24,7 @@ dsh-pack-market/
 │   └── packs/                  # 懒加载快照（线上由 CI 从 index/packs 复制）
 ├── .github/workflows/
 │   └── deploy-pages.yml        # 采集 dsh-pack 标签 → 部署 GitHub Pages
+├── LICENSE                      # CC0 1.0（全仓库）
 └── README.md
 ```
 
