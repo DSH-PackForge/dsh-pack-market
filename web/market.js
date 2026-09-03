@@ -1,4 +1,4 @@
-// ModPack 市场页：读取 index.json → 渲染整合包卡片（搜索 / 分类 / 安装复制）
+// DSH 整合包市场页：读取 index.json → 渲染整合包卡片（搜索 / 分类 / 安装复制）
 // 数据源：默认 ./index.json（由 CI 从 ../index/index.json 同步的部署副本）；可用 ?index=<url> 指向远端索引
 //
 // 索引是「精简指针制」（schemaVersion 2）：只含列表/搜索/安装必需字段；
@@ -16,18 +16,18 @@ const FALLBACK = {
       name: 'web',
       displayName: '网页开发助手',
       version: '1.0.0',
-      description: 'DSH 官方 web 预设整合包，含 dshmarket 与 dsh-tui。安装后 dsh --profile web 启动 Web 界面。',
+      description: 'DSH 官方 web 预设整合包，含 dsh-pack-market 与 dsh-tui。安装后 dsh --profile web 启动 Web 界面。',
       author: 'hxh230802',
       category: 'coding',
       dshVersion: '>=0.1.0',
       profileName: 'web',
-      downloadUrl: 'https://github.com/your-org/modpack-index/releases/download/web-1.0.0/web-1.0.0.tgz',
+      downloadUrl: 'https://github.com/your-org/dsh-pack-market/releases/download/web-1.0.0/web-1.0.0.tgz',
       sha256: 'c53f18814e8912dc045e9da61ccef0afa92d54f57df9d2ddf08db19476e9b2c2',
       size: 10916,
       updatedAt: '2026-08-15',
-      id: 'your-org.modpack-index',
+      id: 'your-org.dsh-pack-market',
       owner: 'your-org',
-      repo: 'modpack-index',
+      repo: 'dsh-pack-market',
       bundleCount: 4,
       depCount: 2,
     },
@@ -102,7 +102,7 @@ function matches(m) {
 
 function cardHTML(m) {
   const size = m.size ? `${(m.size / 1024).toFixed(1)} KB` : '';
-  const cmd = `modpack install ${m.downloadUrl}`;
+  const cmd = `dspack install ${m.downloadUrl}`;
   const unitChip = m.type === 'dshhome'
     ? `${m.profileCount ?? 0} 个 profile`
     : `${m.bundleCount ?? 0} 个 bundle`;
@@ -130,7 +130,7 @@ function cardHTML(m) {
           <summary>安装 ▾</summary>
           <div class="menu">
             <b>安装到本机 Profile</b>
-            <small>需要 modpack-cli：npm install -g modpack-cli</small>
+            <small>需要 dspack CLI：npm install -g @dsh-packforge/cli</small>
             <div class="mi-cli">
               <b>命令</b>
               <span class="cli">
@@ -220,7 +220,7 @@ async function showDetail(name) {
 
 function detailHTML(m, readme, hasFull) {
   const size = m.size ? `${(m.size / 1024).toFixed(1)} KB` : '';
-  const cmd = `modpack install ${m.downloadUrl}`;
+  const cmd = `dspack install ${m.downloadUrl}`;
   const type = m.type === 'dshhome' ? 'dshhome' : 'profile';
 
   // profile 形态：bundles + dependencies；dshhome 形态：profiles/presets/skills/instructions
@@ -310,7 +310,7 @@ function detailHTML(m, readme, hasFull) {
         <h3>安装</h3>
         <div class="d-install">
           <div class="mi-cli">
-            <b>命令（需 modpack-cli）</b>
+            <b>命令（需 dspack CLI）</b>
             <span class="cli">
               <input readonly value="${esc(cmd)}" spellcheck="false">
               <button class="copy" type="button">复制</button>

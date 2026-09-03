@@ -42,10 +42,10 @@ body {
 }
 .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); }
 .brand-mark {
-  width: 34px; height: 34px; border-radius: 9px;
+  width: 46px; height: 34px; border-radius: 9px;
   background: var(--cinnabar); color: var(--on-cinnabar);
   display: grid; place-items: center;
-  font-family: var(--display); font-weight: 800; font-size: 15px;
+  font-family: var(--display); font-weight: 800; font-size: 13px; letter-spacing: .5px;
 }
 .brand-name { font-family: var(--display); font-weight: 800; font-size: 18px; letter-spacing: .2px; }
 .brand-name em { font-style: normal; color: var(--cinnabar); }

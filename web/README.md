@@ -1,4 +1,4 @@
-# ModPack 市场网页
+# DSH 整合包市场网页
 
 DSH 整合包平台的静态市场页：浏览、搜索、分类筛选整合包，安装命令一键复制。
 
@@ -12,7 +12,7 @@ npx serve .            # 任意静态服务器即可
 ## 数据源
 
 - 默认读取 `./index.json`（部署副本，来自 `index/index.json`）
-- 用 `?index=<url>` 指向远端索引仓库：`https://your-host/modpack-market/?index=https://raw.githubusercontent.com/org/modpack-index/main/index.json`
+- 用 `?index=<url>` 指向远端索引仓库：`https://your-host/dsh-pack-market/?index=https://raw.githubusercontent.com/org/dsh-pack-market/main/index.json`
 - 详情页会按条目的 `id`（`<owner>.<repo>`）懒加载 `./packs/<owner>.<repo>/manifest.json` 与 `README.md`
 
 数据契约见 `index/index.json`（schemaVersion 2，精简指针制）。
@@ -23,37 +23,27 @@ npx serve .            # 任意静态服务器即可
 - **设计灵感：[awesome-dsh-plugin.com](https://awesome-dsh-plugin.com)（CC0 1.0）**，页脚已署名
 - 纯静态（HTML/CSS/JS），无构建步骤
 
-## 部署：Cloudflare Pages（免费）
+## 部署：GitHub Pages
 
-### 方式一：Git 集成（推荐，push 即自动部署）
+部署由仓库根目录的 `.github/workflows/deploy-pages.yml` 完成（采集 `dsh-pack` 标签 → 生成索引 + packs → 复制到 `web/` → 部署 Pages）。站点输出目录是 `web/`。
 
-1. 推送到 GitHub：
+一次性设置（仓库 Settings → Pages）：
+
+1. **Build and deployment → Source** 选 **GitHub Actions**；
+2. 之后每次 push 到 `main`（或定时/手动触发），workflow 自动：
+   - 复制 `index/index.json` → `web/index.json`、`index/packs` → `web/packs`
+   - `upload-pages-artifact` 上传 `web/` → `deploy-pages` 发布
+
+### 本地预览
 
 ```bash
-git remote add origin git@github.com:<你的用户名>/ModPack-Web.git
-git push -u origin main
+npx serve .            # 任意静态服务器即可
+# 或直接浏览器打开 index.html（本地数据演示）
 ```
 
-2. [dash.cloudflare.com](https://dash.cloudflare.com) → 登录 → **Workers & Pages → Create → Pages → Connect to Git**
-3. 授权并选择 `ModPack-Web` 仓库
-4. **Build settings**（纯静态，无构建）：
-   - 构建命令：**留空**
-   - 输出目录：`/`（文件在仓库根目录）
-5. **Save and Deploy** → 得到 `https://<项目名>.pages.dev`
+### 指向真实索引
 
-### 方式二：直接上传（无需 GitHub）
-
-Dashboard → **Pages → Create → Upload assets** → 把 `index.html`、`market.css`、`market.js`、`index.json` 一起拖进去 → 部署。
-
-### 上线后指向真实索引
-
-页面默认读 `./index.json`（演示副本）。指向真实索引仓库：
-
-```
-https://<项目名>.pages.dev/?index=https://raw.githubusercontent.com/<org>/ModPack-Index/main/index.json
-```
-
-也可修改 `market.js` 顶部的 `DEFAULT_SOURCE` 改为远端地址作为默认值。
+页面默认读 `./index.json`（部署副本）。也可用 `?index=<url>` 指向其它索引源，或修改 `market.js` 顶部的 `DEFAULT_SOURCE`。
 
 ## 许可证
 
