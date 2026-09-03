@@ -203,6 +203,10 @@ function currentName() {
   return m ? decodeURIComponent(m[1]) : null;
 }
 
+function isEcosystem() {
+  return location.hash === '#/ecosystem';
+}
+
 async function fetchJson(url) {
   const res = await fetch(url, { cache: 'no-store' });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -224,13 +228,75 @@ function showList() {
   document.querySelector('.hero').hidden = false;
   document.querySelector('main').hidden = false;
   $('#detail').hidden = true;
+  $('#ecosystem').hidden = true;
   window.scrollTo(0, 0);
+}
+
+// —— 生态页：介绍 DSH-PackForge 生态各仓库 ——
+
+const ECOSYSTEM = [
+  {
+    name: 'DSH-PackForge',
+    url: 'https://github.com/DSH-PackForge/DSH-PackForge',
+    role: '规范仓库',
+    desc: 'manifest / pack-structure / index / publishing 全套格式契约，定义「整合包」是什么、怎么打包、怎么收录。',
+  },
+  {
+    name: 'dsh-packforge-app',
+    url: 'https://github.com/DSH-PackForge/dsh-packforge-app',
+    role: '桌面端 + CLI',
+    desc: '图形化管理工具（Electron GUI + DSH 插件）与 dspack 命令：一键导出、浏览、安装整合包。',
+  },
+  {
+    name: 'dsh-pack-market',
+    url: 'https://github.com/DSH-PackForge/dsh-pack-market',
+    role: '市场（本页）',
+    desc: '整合包市场仓库：索引 + packs/ 懒加载源 + 你现在看到的这个网页。',
+  },
+  {
+    name: 'all-about-whales',
+    url: 'https://github.com/DSH-PackForge/all-about-whales',
+    role: '参考实现',
+    desc: '端到端示例整合包（manifest v4 + .dspack），照着它建仓就能被市场自动收录。',
+  },
+];
+
+function showEcosystem() {
+  document.querySelector('.hero').hidden = true;
+  document.querySelector('main').hidden = true;
+  $('#detail').hidden = true;
+  const el = $('#ecosystem');
+  el.innerHTML = ecosystemHTML();
+  el.hidden = false;
+  window.scrollTo(0, 0);
+}
+
+function ecosystemHTML() {
+  const cards = ECOSYSTEM.map((e) => `
+    <a class="eco-card" href="${esc(e.url)}" target="_blank" rel="noopener">
+      <div class="eco-role">${esc(e.role)}</div>
+      <div class="eco-name">${esc(e.name)}</div>
+      <p class="eco-desc">${esc(e.desc)}</p>
+      <div class="eco-arrow">→</div>
+    </a>`).join('');
+  return `
+    <div class="eco">
+      <a class="back" href="#">← 返回市场</a>
+      <h2 class="eco-title">了解我们的生态</h2>
+      <p class="eco-sub">DSH 整合包平台由几个分工明确的仓库组成，从「规范」到「工具」到「市场」形成一条完整流水线。</p>
+      <div class="eco-grid">${cards}</div>
+      <div class="eco-flow">
+        <h3>内容流水线</h3>
+        <p><code>dspack 打包</code> → <code>dsh-pack-market 分发</code> → <code>dspack install / dsh 启动器导入</code></p>
+      </div>
+    </div>`;
 }
 
 async function showDetail(name) {
   const entry = index.modpacks.find((x) => x.name === name);
   document.querySelector('.hero').hidden = true;
   document.querySelector('main').hidden = true;
+  $('#ecosystem').hidden = true;
   const d = $('#detail');
   d.hidden = false;
   window.scrollTo(0, 0);
@@ -477,6 +543,7 @@ function renderMarkdown(src) {
 
 function route() {
   if (!index) return;
+  if (isEcosystem()) { showEcosystem(); return; }
   const name = currentName();
   if (name) showDetail(name); else showList();
 }
