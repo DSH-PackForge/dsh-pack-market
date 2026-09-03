@@ -96,10 +96,12 @@ body {
   background: var(--card); border: 1px solid var(--line); border-radius: 14px;
   padding: 18px 20px; display: flex; flex-direction: column; gap: 10px;
   transition: border-color .15s, transform .15s;
+  cursor: pointer;
 }
 .card:hover { border-color: var(--cinnabar-border); transform: translateY(-2px); }
 .card .top { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
-.card .title { font-family: var(--display); font-weight: 800; font-size: 19px; letter-spacing: -.2px; }
+.card .title { font-family: var(--display); font-weight: 800; font-size: 19px; letter-spacing: -.2px; color: var(--ink); }
+.card:hover .title { color: var(--cinnabar); }
 .card .ver {
   font-family: var(--mono); font-size: 12px; color: var(--cinnabar);
   background: var(--cinnabar-soft); border: 1px solid var(--cinnabar-border);
@@ -141,9 +143,12 @@ button.d-oneclick { padding: 8px 16px; }
 details.inst { position: relative; }
 details.inst > summary {
   list-style: none; cursor: pointer; user-select: none;
-  background: var(--cinnabar); color: var(--on-cinnabar);
-  border-radius: 9px; padding: 7px 14px; font-size: 13px; font-weight: 600;
+  background: transparent; color: var(--ink-2);
+  border: 1px solid var(--line-2); border-radius: 9px;
+  padding: 4px 10px; font-size: 12px; font-weight: 500;
+  white-space: nowrap;
 }
+details.inst > summary:hover { color: var(--cinnabar); border-color: var(--cinnabar); }
 details.inst > summary::-webkit-details-marker { display: none; }
 details.inst .menu {
   position: absolute; right: 0; top: calc(100% + 6px); z-index: 10;
@@ -223,10 +228,6 @@ details.inst .menu {
 .d-info code.mono.break { white-space: normal; }
 
 /* 卡片“详情”入口 */
-.card a.title { color: var(--ink); text-decoration: none; }
-.card a.title:hover { color: var(--cinnabar); }
-.detail-link { color: var(--cinnabar); text-decoration: none; font-size: 13px; font-weight: 600; white-space: nowrap; }
-.detail-link:hover { text-decoration: underline; }
 .foot-right { display: flex; align-items: center; gap: 10px; }
 
 /* ── 详情页：加载态 / 降级提示 / README 渲染 / dshhome ── */

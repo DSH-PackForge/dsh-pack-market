@@ -148,9 +148,9 @@ function cardHTML(m) {
     ? `${m.profileCount ?? 0} 个 profile`
     : `${m.bundleCount ?? 0} 个 bundle`;
   return `
-    <li class="card">
+    <li class="card" data-name="${esc(m.name)}" tabindex="0" role="link">
       <div class="top">
-        <a class="title" href="#/pack/${encodeURIComponent(m.name)}">${esc(pickLang(m.displayName) || m.name)}</a>
+        <span class="title">${esc(pickLang(m.displayName) || m.name)}</span>
         <span class="ver">${esc(m.version)}</span>
       </div>
       <div class="pkg">${esc(m.name)}</div>
@@ -166,7 +166,6 @@ function cardHTML(m) {
       <div class="foot">
         <span class="sha" title="${esc(m.sha256)}">sha256 ${esc((m.sha256 || '').slice(0, 12))}…</span>
         <span class="foot-right">
-          <a class="detail-link" href="#/pack/${encodeURIComponent(m.name)}">详情 →</a>
           <button class="oneclick" type="button" data-url="${esc(m.downloadUrl)}" data-cmd="${esc(cmd)}">一键安装</button>
           <details class="inst">
           <summary>复制命令</summary>
@@ -501,16 +500,23 @@ document.addEventListener('click', (e) => {
     return;
   }
   const btn = e.target.closest('button.copy');
-  if (!btn) return;
-  const input = btn.closest('.cli').querySelector('input');
-  navigator.clipboard.writeText(input.value).then(() => {
-    btn.textContent = '已复制 ✓';
-    btn.classList.add('copied');
-    setTimeout(() => { btn.textContent = '复制'; btn.classList.remove('copied'); }, 1500);
-  }).catch(() => {
-    input.select();
-    document.execCommand('copy');
-  });
+  if (btn) {
+    const input = btn.closest('.cli').querySelector('input');
+    navigator.clipboard.writeText(input.value).then(() => {
+      btn.textContent = '已复制 ✓';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = '复制'; btn.classList.remove('copied'); }, 1500);
+    }).catch(() => {
+      input.select();
+      document.execCommand('copy');
+    });
+    return;
+  }
+  // 点击卡片 → 跳详情（排除卡片内的按钮/下拉交互区）
+  const card = e.target.closest('.card[data-name]');
+  if (card && !e.target.closest('button, details, a, input, summary')) {
+    location.hash = `#/pack/${encodeURIComponent(card.dataset.name)}`;
+  }
 });
 
 window.addEventListener('hashchange', route);
