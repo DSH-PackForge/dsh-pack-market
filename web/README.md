@@ -47,4 +47,4 @@ npx serve .            # 任意静态服务器即可
 
 ## 许可证
 
-[MIT](LICENSE)
+[CC0 1.0](LICENSE)

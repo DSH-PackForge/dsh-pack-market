@@ -19,7 +19,7 @@ dsh-pack-market/
 ├── web/
 │   ├── index.html              # 市场页
 │   ├── market.css / market.js  # 样式与渲染逻辑
-│   ├── LICENSE                 # MIT（网页代码）
+│   ├── LICENSE                 # CC0 1.0（网页代码）
 │   ├── index.json              # 本地预览快照（线上由 CI 实时生成）
 │   └── packs/                  # 懒加载快照（线上由 CI 从 index/packs 复制）
 ├── .github/workflows/
