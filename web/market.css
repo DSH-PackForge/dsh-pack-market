@@ -184,7 +184,7 @@ details.inst .menu {
 .site-foot code { font-family: var(--mono); font-size: 12px; background: var(--card); border: 1px solid var(--line); padding: 1px 6px; border-radius: 5px; }
 .site-foot .foot-nav {
   display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 18px;
-  margin-bottom: 14px; padding-bottom: 14px; border-bottom: 1px solid var(--line);
+  margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--line);
 }
 .site-foot .foot-nav a { color: var(--ink-2); text-decoration: none; font-size: 13px; font-weight: 500; }
 .site-foot .foot-nav a:hover { color: var(--cinnabar); }
