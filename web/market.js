@@ -52,6 +52,47 @@ let index = null;
 let activeCat = 'all';
 let query = '';
 
+// 一键安装：唤起本地协议 dspack://install?url=<downloadUrl>（桌面端 dsh-packforge-app）。
+// 浏览器无法直接检测协议是否注册，用「失焦 / visibilitychange」启发式判断是否唤起成功；
+// 超时未失焦 → 判定未装桌面端，回退复制命令。
+function installViaProtocol(url, cmd) {
+  if (!url) return;
+  const protocolUrl = `dspack://install?url=${encodeURIComponent(url)}`;
+  let opened = false;
+  const markOpened = () => { opened = true; };
+  window.addEventListener('blur', markOpened, { once: true });
+  document.addEventListener('visibilitychange', () => { if (document.hidden) markOpened(); }, { once: true });
+  try {
+    location.href = protocolUrl;
+  } catch {
+    /* 某些环境设置 location.href 可能抛错，直接走兜底 */
+  }
+  setTimeout(() => {
+    window.removeEventListener('blur', markOpened);
+    if (opened) return;
+    const text = cmd || `dspack install ${url}`;
+    navigator.clipboard.writeText(text).then(
+      () => toast('未检测到桌面端 dsh-packforge-app，已复制安装命令'),
+      () => toast('未检测到桌面端，请先安装 dsh-packforge-app'),
+    );
+  }, 1500);
+}
+
+// 轻量 toast 提示（右下角，自动消失）。
+let toastEl = null;
+let toastTimer = null;
+function toast(msg) {
+  if (!toastEl) {
+    toastEl = document.createElement('div');
+    toastEl.className = 'toast';
+    document.body.appendChild(toastEl);
+  }
+  toastEl.textContent = msg;
+  toastEl.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toastEl.classList.remove('show'), 3200);
+}
+
 async function load() {
   const url = new URLSearchParams(location.search).get('index') || DEFAULT_SOURCE;
   $('#data-src').textContent = url;
@@ -126,8 +167,9 @@ function cardHTML(m) {
         <span class="sha" title="${esc(m.sha256)}">sha256 ${esc((m.sha256 || '').slice(0, 12))}…</span>
         <span class="foot-right">
           <a class="detail-link" href="#/pack/${encodeURIComponent(m.name)}">详情 →</a>
+          <button class="oneclick" type="button" data-url="${esc(m.downloadUrl)}" data-cmd="${esc(cmd)}">一键安装</button>
           <details class="inst">
-          <summary>安装 ▾</summary>
+          <summary>复制命令</summary>
           <div class="menu">
             <b>安装到本机 Profile</b>
             <small>需要 dspack CLI：npm install -g @dsh-packforge/cli</small>
@@ -317,6 +359,7 @@ function detailHTML(m, readme, hasFull) {
             </span>
           </div>
           <div class="d-install-row">
+            <button class="d-oneclick" type="button" data-url="${esc(m.downloadUrl)}" data-cmd="${esc(cmd)}">一键安装</button>
             <a class="d-dl" href="${esc(m.downloadUrl)}" target="_blank" rel="noopener">直接下载包</a>
             <small>装完启动：<code>dsh --profile ${esc(m.profileName || m.name)}</code></small>
           </div>
@@ -452,6 +495,11 @@ $('#search').addEventListener('input', (e) => {
 });
 
 document.addEventListener('click', (e) => {
+  const oneclick = e.target.closest('button.oneclick, button.d-oneclick');
+  if (oneclick) {
+    installViaProtocol(oneclick.dataset.url, oneclick.dataset.cmd);
+    return;
+  }
   const btn = e.target.closest('button.copy');
   if (!btn) return;
   const input = btn.closest('.cli').querySelector('input');

@@ -116,6 +116,27 @@ body {
 .card .foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; border-top: 1px solid var(--line); padding-top: 12px; }
 .card .sha { font-family: var(--mono); font-size: 11px; color: var(--ink-3); }
 
+/* 一键安装主按钮 */
+button.oneclick, button.d-oneclick {
+  background: var(--cinnabar); color: var(--on-cinnabar);
+  border: 1px solid var(--cinnabar); border-radius: 9px;
+  padding: 7px 14px; font-size: 13px; font-weight: 600;
+  cursor: pointer; font-family: var(--sans); white-space: nowrap;
+}
+button.oneclick:hover, button.d-oneclick:hover { background: var(--cinnabar-deep); border-color: var(--cinnabar-deep); }
+button.d-oneclick { padding: 8px 16px; }
+
+/* 轻量 toast */
+.toast {
+  position: fixed; right: 20px; bottom: 20px; z-index: 99;
+  background: var(--ink); color: var(--paper);
+  border-radius: 10px; padding: 10px 16px; font-size: 13px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.25);
+  opacity: 0; transform: translateY(8px); pointer-events: none;
+  transition: opacity .2s, transform .2s; max-width: 78vw;
+}
+.toast.show { opacity: 1; transform: translateY(0); }
+
 /* 安装下拉 */
 details.inst { position: relative; }
 details.inst > summary {
