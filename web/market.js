@@ -402,7 +402,7 @@ function pluginsHTML() {
     <div class="pl">
       <a class="back" href="#">← 返回市场</a>
       <h2 class="pl-title">插件目录</h2>
-      <p class="pl-sub">整合包里的基础件都在这里。带「整合包必备」徽章的插件是打造整合包的必备件。</p>
+      <p class="pl-sub">整合包会用到的好插件都在这里。带「整合包必备」徽章的，是我们强烈推荐放进整合包的插件。</p>
       <div class="pl-grid">${cards}</div>
       <div class="eco-flow">
         <h3>给插件申请徽章</h3>
