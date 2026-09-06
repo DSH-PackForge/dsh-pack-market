@@ -12,6 +12,18 @@
       },
       "install": "dsh plugin add github:dsh-plugins/dsh-loader",
       "badges": ["essential"]
+    },
+    {
+      "id": "DSH-PackForge/dsh-packforge-app",
+      "name": "dsh-packforge-app",
+      "url": "https://github.com/DSH-PackForge/dsh-packforge-app",
+      "category": { "zh": "工具", "en": "Tool" },
+      "description": {
+        "zh": "DSH 整合包管理工具：图形客户端（Electron GUI + DSH 插件）+ dspack CLI，一键导出、浏览、安装整合包。",
+        "en": "DSH modpack management: a desktop client (Electron GUI + DSH plugin) and the dspack CLI for one-click export, browse and install."
+      },
+      "install": "dsh plugin add github:DSH-PackForge/dsh-packforge-app",
+      "badges": ["essential"]
     }
   ]
 }
