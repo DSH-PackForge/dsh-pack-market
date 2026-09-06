@@ -332,6 +332,13 @@ function ecosystemHTML() {
       <h3 class="eco-section-title">启动器</h3>
       <p class="eco-section-sub">导入整合包的一端。不同启动器支持的规范版本不同，请按你的整合包格式选择。</p>
       <div class="eco-grid">${launchers}</div>
+      <div class="eco-flow">
+        <h3>维护者</h3>
+        <p class="pl-maintainers">
+          <a href="https://github.com/hxh230802" target="_blank" rel="noopener">hxh230802</a>
+          <a href="https://github.com/Gu-ZT" target="_blank" rel="noopener">Gu-ZT</a>
+        </p>
+      </div>
     </div>`;
 }
 
@@ -407,13 +414,6 @@ function pluginsHTML() {
       <div class="eco-flow">
         <h3>给插件申请徽章</h3>
         <p>想给你的插件挂「整合包必备」徽章？提 PR 到 <code>dsh-pack-market</code> 修改 <code>index/plugins.json</code>，详见 <a href="https://github.com/DSH-PackForge/dsh-pack-market/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener">CONTRIBUTING.md</a>。</p>
-      </div>
-      <div class="eco-flow">
-        <h3>维护者</h3>
-        <p class="pl-maintainers">
-          <a href="https://github.com/hxh230802" target="_blank" rel="noopener">hxh230802</a>
-          <a href="https://github.com/Gu-ZT" target="_blank" rel="noopener">Gu-ZT</a>
-        </p>
       </div>
     </div>`;
 }
