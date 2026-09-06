@@ -30,15 +30,23 @@ const HEIGHT = 20;             // 徽章高
 const FONT = 11;               // 字号
 const RADIUS = 4;              // 圆角
 
-// 估算文本渲染宽度（px）：
-//   CJK 全角按字号；空格/中点等窄字符按 ~0.32 字号；其余 ASCII 半角按 ~0.6 字号。
+// 估算文本渲染宽度（px），按字符宽度逐字估算（避免英文被估宽）。
+// 窄字符（i/l/t/f/r/j/标点/空格）单独给更小的系数。
+const CHAR_W = {
+  i: 0.28, l: 0.28, I: 0.30, j: 0.30, t: 0.40, f: 0.38, r: 0.42,
+  ' ': 0.28, '.': 0.28, ',': 0.28, ':': 0.28, ';': 0.28, "'": 0.25, '|': 0.30, '!': 0.30, '·': 0.32,
+  w: 0.82, m: 0.82, W: 0.85, M: 0.85, '@': 0.90, '%': 0.85,
+};
 function textWidth(s) {
   let w = 0;
   for (const ch of String(s)) {
-    const c = ch.charCodeAt(0);
-    if (c > 0x2e80) w += FONT;
-    else if (c === 0x20 || c === 0xb7) w += FONT * 0.32; // 空格 / ·（中点）
-    else w += FONT * 0.6;
+    const c = ch.codePointAt(0);
+    if (c > 0x2e80) { w += FONT; continue; }            // CJK 全角
+    if (Object.hasOwn(CHAR_W, ch)) { w += FONT * CHAR_W[ch]; continue; }
+    if (ch >= 'A' && ch <= 'Z') w += FONT * 0.62;
+    else if (ch >= 'a' && ch <= 'z') w += FONT * 0.52;
+    else if (ch >= '0' && ch <= '9') w += FONT * 0.55;
+    else w += FONT * 0.5;
   }
   return w;
 }
