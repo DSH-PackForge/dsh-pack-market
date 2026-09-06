@@ -1,0 +1,63 @@
+# 收录插件 / 申请徽章（CONTRIBUTING）
+
+本仓库的插件清单 `index/plugins.json` 由社区通过 PR 维护。作者可以给**自己的插件**提 PR 申请收录，或申请「整合包必备」徽章。
+
+## 徽章「整合包必备」（essential）是什么
+
+> 徽章贴在插件 README 上，读作「**这个插件是整合包的必备插件**」。它代表：打造 DSH 整合包时，这个插件是被广泛依赖的基础件。
+
+中文徽章：`整合包 · 必备` · 英文徽章：`Essential for packs`。
+
+### 审核门槛（当前）
+
+满足**其一**即可授 essential：
+
+1. **被 ≥1 个已收录整合包引用** —— 即该插件出现在某个整合包 manifest 的 `dependencies` 坐标里；
+2. **维护者主观判断** —— 维护者认为它是整合包的基础件。
+
+> 后期平台规模变大后，将改为按引用量自动判定。
+
+## 如何提 PR
+
+1. **Fork** 本仓库；
+2. 编辑 `index/plugins.json`，在 `plugins` 数组里加/改你的插件条目：
+   ```jsonc
+   {
+     "id": "owner/repo",              // GitHub owner/仓库名，唯一
+     "name": "repo",
+     "url": "https://github.com/owner/repo",
+     "category": "tools",             // 领域，可省略；有则显示在徽章勾前
+     "description": { "zh": "…", "en": "…" },
+     "install": "dsh plugin add github:owner/repo",
+     "badges": ["essential"]          // 申请徽章才加；只收录不加这个数组
+   }
+   ```
+3. 提 PR。CI 会自动跑 `scripts/validate-plugins.mjs` 校验结构；
+4. 维护者 review 后合并。合并后 CI 自动生成徽章并部署。
+
+## 字段说明
+
+| 字段 | 必填 | 说明 |
+|---|---|---|
+| `id` | ✅ | `owner/repo`，全局唯一键 |
+| `name` | ✅ | 插件名 |
+| `url` | ✅ | 插件仓库 http(s) 地址 |
+| `category` | 否 | 领域（显示在徽章文字与勾之间） |
+| `description` | 否 | 描述，字符串或 `{zh,en}` 多语言 map |
+| `install` | 否 | 安装命令（站点展示用） |
+| `badges` | 否 | 徽章数组，当前仅 `"essential"` |
+
+## 徽章用法
+
+合并后，徽章 URL：
+
+```
+https://dsh-packforge.github.io/dsh-pack-market/badges/plugins/<owner>-<repo>-zh.svg   # 中文
+https://dsh-packforge.github.io/dsh-pack-market/badges/plugins/<owner>-<repo>-en.svg   # 英文
+```
+
+挂到你插件 README（点徽章跳插件详情页）：
+
+```markdown
+[![整合包必备](https://dsh-packforge.github.io/dsh-pack-market/badges/plugins/owner-repo-zh.svg)](https://dsh-packforge.github.io/dsh-pack-market/#/plugin/owner%2Frepo)
+```

@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "plugins": [
+    {
+      "id": "dsh-plugins/dsh-loader",
+      "name": "dsh-loader",
+      "url": "https://github.com/dsh-plugins/dsh-loader",
+      "category": "compat",
+      "description": {
+        "zh": "版本感知的运行时兼容 shim：让第三方插件在 dsh（DeepSeek Harness）升级后无需改动继续工作。",
+        "en": "A version-aware runtime compatibility shim that keeps third-party plugins working unchanged across dsh (DeepSeek Harness) upgrades."
+      },
+      "install": "dsh plugin add github:dsh-plugins/dsh-loader",
+      "badges": [
+        "essential"
+      ]
+    }
+  ]
+}

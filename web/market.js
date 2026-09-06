@@ -96,14 +96,19 @@ function toast(msg) {
 async function load() {
   const url = new URLSearchParams(location.search).get('index') || DEFAULT_SOURCE;
   $('#data-src').textContent = url;
-  try {
-    const res = await fetch(url, { cache: 'no-store' });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    index = await res.json();
-  } catch {
-    console.warn(`加载 ${url} 失败，使用内置演示数据`);
-    index = FALLBACK;
-  }
+  await Promise.all([
+    (async () => {
+      try {
+        const res = await fetch(url, { cache: 'no-store' });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        index = await res.json();
+      } catch {
+        console.warn(`加载 ${url} 失败，使用内置演示数据`);
+        index = FALLBACK;
+      }
+    })(),
+    loadPlugins(),
+  ]);
   render();
 }
 
@@ -207,6 +212,15 @@ function isEcosystem() {
   return location.hash === '#/ecosystem';
 }
 
+function isPlugins() {
+  return location.hash === '#/plugins';
+}
+
+function currentPluginId() {
+  const m = location.hash.match(/^#\/plugin\/(.+)$/);
+  return m ? decodeURIComponent(m[1]) : null;
+}
+
 async function fetchJson(url) {
   const res = await fetch(url, { cache: 'no-store' });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -229,6 +243,7 @@ function showList() {
   document.querySelector('main').hidden = false;
   $('#detail').hidden = true;
   $('#ecosystem').hidden = true;
+  $('#plugins').hidden = true;
   window.scrollTo(0, 0);
 }
 
@@ -265,6 +280,7 @@ function showEcosystem() {
   document.querySelector('.hero').hidden = true;
   document.querySelector('main').hidden = true;
   $('#detail').hidden = true;
+  $('#plugins').hidden = true;
   const el = $('#ecosystem');
   el.innerHTML = ecosystemHTML();
   el.hidden = false;
@@ -319,11 +335,133 @@ function ecosystemHTML() {
     </div>`;
 }
 
+// —— 插件专区：读 web/plugins.json → 列表 + 详情 ——
+
+let plugins = null;
+
+async function loadPlugins() {
+  try {
+    const res = await fetch('./plugins.json', { cache: 'no-store' });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    plugins = await res.json();
+  } catch {
+    console.warn('加载 plugins.json 失败');
+    plugins = { plugins: [] };
+  }
+}
+
+function pluginList() {
+  return Array.isArray(plugins?.plugins) ? plugins.plugins : [];
+}
+
+function showPlugins() {
+  document.querySelector('.hero').hidden = true;
+  document.querySelector('main').hidden = true;
+  $('#detail').hidden = true;
+  $('#ecosystem').hidden = true;
+  const el = $('#plugins');
+  el.innerHTML = pluginsHTML();
+  el.hidden = false;
+  window.scrollTo(0, 0);
+}
+
+function showPluginDetail(id) {
+  const p = pluginList().find((x) => x.id === id);
+  document.querySelector('.hero').hidden = true;
+  document.querySelector('main').hidden = true;
+  $('#detail').hidden = true;
+  $('#ecosystem').hidden = true;
+  const el = $('#plugins');
+  el.innerHTML = p ? pluginDetailHTML(p) : `<div class="pl"><a class="back" href="#">← 返回市场</a><p class="d-desc">未找到插件「${esc(id)}」。</p></div>`;
+  el.hidden = false;
+  window.scrollTo(0, 0);
+}
+
+function hasEssential(p) {
+  return Array.isArray(p.badges) && p.badges.includes('essential');
+}
+
+function pluginsHTML() {
+  const list = pluginList();
+  const cards = list.map((p) => {
+    const essential = hasEssential(p);
+    return `
+    <a class="pl-card" href="#/plugin/${encodeURIComponent(p.id)}">
+      <div class="pl-head">
+        <span class="pl-name">${esc(p.name)}</span>
+        ${essential ? '<span class="pl-badge">整合包必备</span>' : ''}
+      </div>
+      <div class="pl-id">${esc(p.id)}</div>
+      <p class="pl-desc">${esc(pickLang(p.description) || '（无描述）')}</p>
+      <div class="pl-meta">
+        ${p.category ? `<span class="chip">${esc(p.category)}</span>` : ''}
+      </div>
+    </a>`;
+  }).join('') || '<p class="empty">暂无插件。</p>';
+  return `
+    <div class="pl">
+      <a class="back" href="#">← 返回市场</a>
+      <h2 class="pl-title">插件目录</h2>
+      <p class="pl-sub">整合包里的基础件都在这里。带「整合包必备」徽章的插件是打造整合包的必备件。</p>
+      <div class="pl-grid">${cards}</div>
+      <div class="eco-flow">
+        <h3>给插件申请徽章</h3>
+        <p>想给你的插件挂「整合包必备」徽章？提 PR 到 <code>dsh-pack-market</code> 修改 <code>index/plugins.json</code>，详见 <a href="https://github.com/DSH-PackForge/dsh-pack-market/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener">CONTRIBUTING.md</a>。</p>
+      </div>
+    </div>`;
+}
+
+function pluginDetailHTML(p) {
+  const essential = hasEssential(p);
+  return `
+    <div class="pl">
+      <a class="back" href="#/plugins">← 返回插件目录</a>
+      <header class="d-head">
+        <div>
+          <h2>${esc(p.name)}</h2>
+          <div class="d-sub">${esc(p.id)}</div>
+        </div>
+        <div class="d-chips">
+          ${essential ? '<span class="chip tag">整合包必备</span>' : ''}
+          ${p.category ? `<span class="chip">${esc(p.category)}</span>` : ''}
+        </div>
+      </header>
+      <p class="d-desc">${esc(pickLang(p.description) || '（无描述）')}</p>
+      <section class="d-block">
+        <h3>安装</h3>
+        <div class="mi-cli">
+          <b>命令（需 dsh）</b>
+          <span class="cli">
+            <input readonly value="${esc(p.install || `dsh plugin add github:${p.id}`)}" spellcheck="false">
+            <button class="copy" type="button">复制</button>
+          </span>
+        </div>
+      </section>
+      <section class="d-block">
+        <h3>徽章</h3>
+        ${essential ? `
+        <p class="pl-badge-line">本插件是「整合包必备」插件，可在你的 README 挂徽章：</p>
+        <div class="pl-badges">
+          <img src="badges/plugins/${esc(p.id.replace(/\//g, '-'))}-zh.svg" alt="整合包必备">
+          <img src="badges/plugins/${esc(p.id.replace(/\//g, '-'))}-en.svg" alt="Essential for packs">
+        </div>
+        <pre class="md-code"><code>&lt;a href="https://dsh-packforge.github.io/dsh-pack-market/#/plugin/${esc(p.id).replace(/\//g, '%2F')}"&gt;&lt;img src="https://dsh-packforge.github.io/dsh-pack-market/badges/plugins/${esc(p.id.replace(/\//g, '-'))}-zh.svg"&gt;&lt;/a&gt;</code></pre>` : '<p class="d-desc">（无徽章）</p>'}
+      </section>
+      <section class="d-block">
+        <h3>链接</h3>
+        <dl class="d-info">
+          <dt>仓库</dt><dd><a href="${esc(p.url)}" target="_blank" rel="noopener">${esc(p.url)}</a></dd>
+        </dl>
+      </section>
+    </div>`;
+}
+
 async function showDetail(name) {
   const entry = index.modpacks.find((x) => x.name === name);
   document.querySelector('.hero').hidden = true;
   document.querySelector('main').hidden = true;
   $('#ecosystem').hidden = true;
+  $('#plugins').hidden = true;
   const d = $('#detail');
   d.hidden = false;
   window.scrollTo(0, 0);
@@ -571,6 +709,9 @@ function renderMarkdown(src) {
 function route() {
   if (!index) return;
   if (isEcosystem()) { showEcosystem(); return; }
+  if (isPlugins()) { showPlugins(); return; }
+  const pid = currentPluginId();
+  if (pid) { showPluginDetail(pid); return; }
   const name = currentName();
   if (name) showDetail(name); else showList();
 }

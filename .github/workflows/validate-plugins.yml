@@ -1,0 +1,24 @@
+name: 校验插件清单
+
+# 在 PR（或直接 push 到 main）时校验 index/plugins.json 结构，不部署。
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: 校验 index/plugins.json
+        run: node scripts/validate-plugins.mjs

@@ -45,11 +45,14 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: 生成插件徽章 → web/badges + web/plugins.json
+        run: node scripts/build-badges.mjs
+
       - name: 提交索引变更
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add index/index.json index/packs
+          git add index/index.json index/packs index/plugins.json
           if git diff --cached --quiet; then
             echo "索引无变化，跳过提交"
           else
