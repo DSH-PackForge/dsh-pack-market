@@ -1,11 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="168.0" height="20" role="img">
-  <defs><clipPath id="c-dsh-plugins-dsh-loader-zh"><rect width="168.0" height="20" rx="4"/></clipPath></defs>
+<svg xmlns="http://www.w3.org/2000/svg" width="167.8" height="20" role="img">
+  <defs><clipPath id="c-dsh-plugins-dsh-loader-zh"><rect width="167.8" height="20" rx="4"/></clipPath></defs>
   <g clip-path="url(#c-dsh-plugins-dsh-loader-zh)">
-    <rect x="0" y="0" width="53.0" height="20" fill="#a12f22"/>
-    <rect x="53.0" y="0" width="42.0" height="20" fill="#d35400"/>
-    <rect x="95.0" y="0" width="73.0" height="20" fill="#2b2620"/>
+    <rect x="0" y="0" width="94.8" height="20" fill="#a12f22"/>
+    <rect x="94.8" y="0" width="73.0" height="20" fill="#2b2620"/>
   </g>
-  <text x="10.0" y="14.5" font-size="11" font-weight="600" fill="#ffffff" font-family="Segoe UI, Arial, sans-serif">整合包</text>
-  <text x="63.0" y="14.5" font-size="11" font-weight="600" fill="#ffffff" font-family="Segoe UI, Arial, sans-serif">必备</text><text x="105.0" y="14.5" font-size="11" font-weight="500" fill="#ffffff" font-family="Segoe UI, Arial, sans-serif">基础件</text>
-  <path d="M 144.0 10 l 3 3 l 6 -7" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="10.0" y="14.5" font-size="11" font-weight="600" fill="#ffffff" font-family="Segoe UI, Arial, sans-serif">整合包 · 必备</text><text x="104.8" y="14.5" font-size="11" font-weight="500" fill="#ffffff" font-family="Segoe UI, Arial, sans-serif">基础件</text>
+  <path d="M 143.8 10 l 3 3 l 6 -7" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>

@@ -1,13 +1,13 @@
 // 徽章生成器：读 index/plugins.json，为每个带 essential 标记的插件生成 SVG 徽章。
 //
 // 产出：
-//   web/badges/plugins/<owner>-<repo>-zh.svg   —— 中文「整合包 | 必备」(+ 领域) + 勾
-//   web/badges/plugins/<owner>-<repo>-en.svg   —— 英文「Packs | Essential」(+ 领域) + 勾
+//   web/badges/plugins/<owner>-<repo>-zh.svg   —— 中文「整合包 · 必备」(+ 领域) + 勾
+//   web/badges/plugins/<owner>-<repo>-en.svg   —— 英文「Essential for packs」(+ 领域) + 勾
 //   web/plugins.json                            —— 插件清单副本（站点数据源）
 //
-// 三段式布局（自左向右）：
-//   [ 整合包/Packs ]（深红） [ 必备/Essential ]（橙红） [ 领域+勾 ]（墨色）
-//   勾用 <path> 画，不是文字字符。领域可省略（省略时第三段只留勾）。
+// 两段式布局（自左向右）：
+//   [ 整合包 · 必备 / Essential for packs ]（左色） [ 领域+勾 ]（右色）
+//   勾用 <path> 画，不是文字字符。领域可省略（省略时右段只留勾）。
 // 用法：node scripts/build-badges.mjs
 
 import fs from 'node:fs';
@@ -21,9 +21,8 @@ const OUT_DIR = path.join(ROOT, 'web', 'badges', 'plugins');
 const OUT_JSON = path.join(ROOT, 'web', 'plugins.json');
 
 // 配色（纸墨朱砂体系）
-const C1 = '#a12f22';          // 深红 —— 「整合包 / Packs」
-const C2 = '#d35400';          // 橙红 —— 「必备 / Essential」
-const C3 = '#2b2620';          // 墨色 —— 领域 + 勾
+const C_LEFT = '#a12f22';      // 左段 —— 「整合包 · 必备 / Essential for packs」
+const C_RIGHT = '#2b2620';     // 右段 —— 领域 + 勾
 const FG = '#ffffff';          // 白字
 const PAD_X = 10;              // 每段左右内边距
 const PAD_SEG = 8;             // 领域与勾之间间隙
@@ -56,22 +55,18 @@ function pickCategory(cat, locale) {
   return '';
 }
 
-// 画一个三段式徽章。
-//   labels = [段1文字, 段2文字]（中文 ['整合包','必备']，英文 ['Packs','Essential']）
-//   cat    = 领域（可选，显示在勾前）
-//   id     = 唯一 id 前缀（避免同一文档多枚 inline 时 clip id 冲突）
-function badgeSvg(id, labels, cat) {
-  const [l1, l2] = labels;
-  const w1 = PAD_X + textWidth(l1) + PAD_X;
-  const w2 = PAD_X + textWidth(l2) + PAD_X;
+// 画一个两段式徽章。
+//   label = 左段文字（中文「整合包 · 必备」，英文「Essential for packs」）
+//   cat   = 领域（可选，显示在勾前）
+//   id    = 唯一 id 前缀（避免同一文档多枚 inline 时 clip id 冲突）
+function badgeSvg(id, label, cat) {
+  const leftW = PAD_X + textWidth(label) + PAD_X;
   const catW = cat ? textWidth(cat) : 0;
-  const w3 = PAD_X + (cat ? catW + PAD_SEG : 0) + 12 + PAD_X; // 领域 + 勾
-  const totalW = w1 + w2 + w3;
+  const rightW = PAD_X + (cat ? catW + PAD_SEG : 0) + 12 + PAD_X; // 领域 + 勾
+  const totalW = leftW + rightW;
 
-  // 各段文字起始 x（居中于本段）
-  const x1 = (w1 - textWidth(l1)) / 2;
-  const x2 = w1 + (w2 - textWidth(l2)) / 2;
-  const catX = w1 + w2 + PAD_X;
+  const labelX = (leftW - textWidth(label)) / 2;
+  const catX = leftW + PAD_X;
   const checkX = totalW - PAD_X - 10; // 勾锚点（靠右）
 
   const catSeg = cat
@@ -84,12 +79,10 @@ function badgeSvg(id, labels, cat) {
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${totalW.toFixed(1)}" height="${HEIGHT}" role="img">
   <defs><clipPath id="${clipId}"><rect width="${totalW.toFixed(1)}" height="${HEIGHT}" rx="${RADIUS}"/></clipPath></defs>
   <g clip-path="url(#${clipId})">
-    <rect x="0" y="0" width="${w1.toFixed(1)}" height="${HEIGHT}" fill="${C1}"/>
-    <rect x="${w1.toFixed(1)}" y="0" width="${w2.toFixed(1)}" height="${HEIGHT}" fill="${C2}"/>
-    <rect x="${(w1 + w2).toFixed(1)}" y="0" width="${w3.toFixed(1)}" height="${HEIGHT}" fill="${C3}"/>
+    <rect x="0" y="0" width="${leftW.toFixed(1)}" height="${HEIGHT}" fill="${C_LEFT}"/>
+    <rect x="${leftW.toFixed(1)}" y="0" width="${rightW.toFixed(1)}" height="${HEIGHT}" fill="${C_RIGHT}"/>
   </g>
-  <text x="${x1.toFixed(1)}" y="14.5" font-size="${FONT}" font-weight="600" fill="${FG}" font-family="Segoe UI, Arial, sans-serif">${escXml(l1)}</text>
-  <text x="${x2.toFixed(1)}" y="14.5" font-size="${FONT}" font-weight="600" fill="${FG}" font-family="Segoe UI, Arial, sans-serif">${escXml(l2)}</text>${catSeg}
+  <text x="${labelX.toFixed(1)}" y="14.5" font-size="${FONT}" font-weight="600" fill="${FG}" font-family="Segoe UI, Arial, sans-serif">${escXml(label)}</text>${catSeg}
   ${checkPath}
 </svg>`;
 }
@@ -117,8 +110,8 @@ function main() {
 
     const catZh = pickCategory(p.category, 'zh');
     const catEn = pickCategory(p.category, 'en');
-    fs.writeFileSync(path.join(OUT_DIR, `${ownerRepo}-zh.svg`), badgeSvg(`${ownerRepo}-zh`, ['整合包', '必备'], catZh), 'utf8');
-    fs.writeFileSync(path.join(OUT_DIR, `${ownerRepo}-en.svg`), badgeSvg(`${ownerRepo}-en`, ['Packs', 'Essential'], catEn), 'utf8');
+    fs.writeFileSync(path.join(OUT_DIR, `${ownerRepo}-zh.svg`), badgeSvg(`${ownerRepo}-zh`, '整合包 · 必备', catZh), 'utf8');
+    fs.writeFileSync(path.join(OUT_DIR, `${ownerRepo}-en.svg`), badgeSvg(`${ownerRepo}-en`, 'Essential for packs', catEn), 'utf8');
     badgeCount++;
   }
 
