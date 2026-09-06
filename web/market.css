@@ -259,6 +259,9 @@ details.inst .menu {
   white-space: nowrap;
 }
 .pl-badge-line { color: var(--ink-2); font-size: 13px; margin-bottom: 8px; }
+.pl-maintainers { display: flex; gap: 8px 16px; flex-wrap: wrap; }
+.pl-maintainers a { color: var(--cinnabar); text-decoration: none; font-weight: 600; }
+.pl-maintainers a:hover { text-decoration: underline; }
 .pl-badge-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
 .pl-badge-row img { height: 20px; }
 .copy-badge {
