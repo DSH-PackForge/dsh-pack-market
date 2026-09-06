@@ -413,7 +413,7 @@ function pluginsHTML() {
       <div class="pl-grid">${cards}</div>
       <div class="eco-flow">
         <h3>收录你的插件</h3>
-        <p>想让你的插件出现在这里？提 PR 到 <code>dsh-pack-market</code> 修改 <code>index/plugins.json</code>，收录后由维护者配发「整合包必备」徽章。详见 <a href="https://github.com/DSH-PackForge/dsh-pack-market/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener">CONTRIBUTING.md</a>。</p>
+        <p>想让你的插件出现在这里？提 PR 到 <code>dsh-pack-market</code> 修改 <code>index/plugins.json</code>，收录后 CI 自动生成「整合包必备」徽章。详见 <a href="https://github.com/DSH-PackForge/dsh-pack-market/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener">CONTRIBUTING.md</a>。</p>
       </div>
     </div>`;
 }
