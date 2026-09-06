@@ -40,6 +40,18 @@ function escXml(s) {
   return String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&apos;' }[c]));
 }
 
+// category 为 string 或 {zh,en} map；按语言取，回退到字符串或空。
+function pickCategory(cat, locale) {
+  if (cat == null) return '';
+  if (typeof cat === 'string') return cat;
+  if (typeof cat === 'object') {
+    if (typeof cat[locale] === 'string') return cat[locale];
+    const first = Object.values(cat).find((v) => typeof v === 'string');
+    if (first) return first;
+  }
+  return '';
+}
+
 // 画一个徽章：label 为主文字，cat 为可选领域，check 是否带勾。
 function badgeSvg(label, cat, check = true) {
   const segW = cat ? PAD_SEG + textWidth(cat) + PAD_SEG : 0;
@@ -90,9 +102,10 @@ function main() {
     if (seen.has(p.id)) { console.warn(`[badge] 重复 id 跳过：${p.id}`); continue; }
     seen.add(p.id);
 
-    const cat = typeof p.category === 'string' && p.category ? p.category : '';
-    fs.writeFileSync(path.join(OUT_DIR, `${ownerRepo}-zh.svg`), badgeSvg('整合包 · 必备', cat), 'utf8');
-    fs.writeFileSync(path.join(OUT_DIR, `${ownerRepo}-en.svg`), badgeSvg('Essential for packs', cat), 'utf8');
+    const catZh = pickCategory(p.category, 'zh');
+    const catEn = pickCategory(p.category, 'en');
+    fs.writeFileSync(path.join(OUT_DIR, `${ownerRepo}-zh.svg`), badgeSvg('整合包 · 必备', catZh), 'utf8');
+    fs.writeFileSync(path.join(OUT_DIR, `${ownerRepo}-en.svg`), badgeSvg('Essential for packs', catEn), 'utf8');
     badgeCount++;
   }
 

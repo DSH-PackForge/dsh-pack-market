@@ -394,7 +394,7 @@ function pluginsHTML() {
       <div class="pl-id">${esc(p.id)}</div>
       <p class="pl-desc">${esc(pickLang(p.description) || '（无描述）')}</p>
       <div class="pl-meta">
-        ${p.category ? `<span class="chip">${esc(p.category)}</span>` : ''}
+        ${p.category ? `<span class="chip">${esc(pickLang(p.category))}</span>` : ''}
       </div>
     </a>`;
   }).join('') || '<p class="empty">暂无插件。</p>';
@@ -423,7 +423,7 @@ function pluginDetailHTML(p) {
         </div>
         <div class="d-chips">
           ${essential ? '<span class="chip tag">整合包必备</span>' : ''}
-          ${p.category ? `<span class="chip">${esc(p.category)}</span>` : ''}
+          ${p.category ? `<span class="chip">${esc(pickLang(p.category))}</span>` : ''}
         </div>
       </header>
       <p class="d-desc">${esc(pickLang(p.description) || '（无描述）')}</p>

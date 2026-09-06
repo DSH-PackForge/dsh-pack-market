@@ -54,6 +54,9 @@ function main() {
     if (p.description != null && typeof p.description !== 'string' && typeof p.description !== 'object') {
       fail(`${at}.description 必须是 string 或 {zh,en} map`);
     }
+    if (p.category != null && typeof p.category !== 'string' && typeof p.category !== 'object') {
+      fail(`${at}.category 必须是 string 或 {zh,en} map`);
+    }
 
     if (p.badges != null) {
       if (!Array.isArray(p.badges)) fail(`${at}.badges 必须是字符串数组`);

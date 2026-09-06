@@ -42,7 +42,7 @@
 | `id` | ✅ | `owner/repo`，全局唯一键 |
 | `name` | ✅ | 插件名 |
 | `url` | ✅ | 插件仓库 http(s) 地址 |
-| `category` | 否 | 领域（显示在徽章文字与勾之间） |
+| `category` | 否 | 领域（显示在徽章文字与勾之间），字符串或 `{zh,en}` 多语言 map |
 | `description` | 否 | 描述，字符串或 `{zh,en}` 多语言 map |
 | `install` | 否 | 安装命令（站点展示用） |
 | `badges` | 否 | 徽章数组，当前仅 `"essential"` |
