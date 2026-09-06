@@ -21,7 +21,7 @@ const OUT_DIR = path.join(ROOT, 'web', 'badges', 'plugins');
 const OUT_JSON = path.join(ROOT, 'web', 'plugins.json');
 
 // 配色（纸墨朱砂体系）
-const C_LEFT = '#a12f22';      // 左段 —— 「整合包 · 必备 / Essential for packs」
+const C_LEFT = '#c0392b';      // 左段 —— 「整合包 · 必备 / Essential for packs」（朱砂红，与市场品牌色统一）
 const C_RIGHT = '#2b2620';     // 右段 —— 领域 + 勾
 const FG = '#ffffff';          // 白字
 const PAD_X = 10;              // 每段左右内边距

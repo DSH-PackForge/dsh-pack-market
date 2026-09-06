@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="146.7" height="20" role="img">
   <defs><clipPath id="c-DSH-PackForge-dsh-packforge-app-zh"><rect width="146.7" height="20" rx="4"/></clipPath></defs>
   <g clip-path="url(#c-DSH-PackForge-dsh-packforge-app-zh)">
-    <rect x="0" y="0" width="84.7" height="20" fill="#a12f22"/>
+    <rect x="0" y="0" width="84.7" height="20" fill="#c0392b"/>
     <rect x="84.7" y="0" width="62.0" height="20" fill="#2b2620"/>
   </g>
   <text x="10.0" y="14.5" font-size="11" font-weight="600" fill="#ffffff" font-family="Segoe UI, Arial, sans-serif">整合包 · 必备</text><text x="94.7" y="14.5" font-size="11" font-weight="500" fill="#ffffff" font-family="Segoe UI, Arial, sans-serif">工具</text>
