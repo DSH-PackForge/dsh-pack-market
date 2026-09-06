@@ -412,8 +412,8 @@ function pluginsHTML() {
       <p class="pl-sub">整合包会用到的好插件都在这里。带「整合包必备」徽章的，是我们强烈推荐放进整合包的插件。</p>
       <div class="pl-grid">${cards}</div>
       <div class="eco-flow">
-        <h3>给插件申请徽章</h3>
-        <p>想给你的插件挂「整合包必备」徽章？提 PR 到 <code>dsh-pack-market</code> 修改 <code>index/plugins.json</code>，详见 <a href="https://github.com/DSH-PackForge/dsh-pack-market/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener">CONTRIBUTING.md</a>。</p>
+        <h3>收录你的插件</h3>
+        <p>想让你的插件出现在这里？提 PR 到 <code>dsh-pack-market</code> 修改 <code>index/plugins.json</code>，收录后由维护者配发「整合包必备」徽章。详见 <a href="https://github.com/DSH-PackForge/dsh-pack-market/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener">CONTRIBUTING.md</a>。</p>
       </div>
     </div>`;
 }
