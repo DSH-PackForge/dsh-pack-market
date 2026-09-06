@@ -259,8 +259,14 @@ details.inst .menu {
   white-space: nowrap;
 }
 .pl-badge-line { color: var(--ink-2); font-size: 13px; margin-bottom: 8px; }
-.pl-badges { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; }
-.pl-badges img { height: 20px; }
+.pl-badge-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+.pl-badge-row img { height: 20px; }
+.copy-badge {
+  border: 1px solid var(--line-2); color: var(--ink-2); background: transparent;
+  border-radius: 7px; padding: 4px 10px; font-size: 12px; cursor: pointer; font-family: var(--sans);
+}
+.copy-badge:hover { color: var(--cinnabar); border-color: var(--cinnabar); }
+.copy-badge.copied { color: var(--cinnabar); border-color: var(--cinnabar); }
 .d-info dd a { color: var(--cinnabar); text-decoration: none; word-break: break-all; }
 .d-info dd a:hover { text-decoration: underline; }
 

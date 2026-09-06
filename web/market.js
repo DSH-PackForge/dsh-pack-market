@@ -411,6 +411,19 @@ function pluginsHTML() {
     </div>`;
 }
 
+// 徽章挂载行：显示徽章图 + 「复制 Markdown」按钮（点一下复制，不摊开长 URL）。
+function badgeRow(p, locale, alt) {
+  const base = 'https://dsh-packforge.github.io/dsh-pack-market';
+  const src = `${base}/badges/plugins/${p.id.replace(/\//g, '-')}-${locale}.svg`;
+  const href = `${base}/#/plugin/${encodeURIComponent(p.id)}`;
+  const md = `[![${alt}](${src})](${href})`;
+  return `
+    <div class="pl-badge-row">
+      <img src="${esc(src)}" alt="${esc(alt)}">
+      <button class="copy-badge" type="button" data-md="${esc(md)}">复制 Markdown</button>
+    </div>`;
+}
+
 function pluginDetailHTML(p) {
   const essential = hasEssential(p);
   return `
@@ -441,11 +454,8 @@ function pluginDetailHTML(p) {
         <h3>徽章</h3>
         ${essential ? `
         <p class="pl-badge-line">本插件是「整合包必备」插件，可在你的 README 挂徽章：</p>
-        <div class="pl-badges">
-          <img src="badges/plugins/${esc(p.id.replace(/\//g, '-'))}-zh.svg" alt="整合包必备">
-          <img src="badges/plugins/${esc(p.id.replace(/\//g, '-'))}-en.svg" alt="Essential for packs">
-        </div>
-        <pre class="md-code"><code>&lt;a href="https://dsh-packforge.github.io/dsh-pack-market/#/plugin/${esc(p.id).replace(/\//g, '%2F')}"&gt;&lt;img src="https://dsh-packforge.github.io/dsh-pack-market/badges/plugins/${esc(p.id.replace(/\//g, '-'))}-zh.svg"&gt;&lt;/a&gt;</code></pre>` : '<p class="d-desc">（无徽章）</p>'}
+        ${badgeRow(p, 'zh', '整合包必备')}
+        ${badgeRow(p, 'en', 'Essential for packs')}` : '<p class="d-desc">（无徽章）</p>'}
       </section>
       <section class="d-block">
         <h3>链接</h3>
@@ -744,6 +754,15 @@ document.addEventListener('click', (e) => {
     }).catch(() => {
       input.select();
       document.execCommand('copy');
+    });
+    return;
+  }
+  const b = e.target.closest('button.copy-badge');
+  if (b) {
+    navigator.clipboard.writeText(b.dataset.md).then(() => {
+      b.textContent = '已复制 ✓';
+      b.classList.add('copied');
+      setTimeout(() => { b.textContent = '复制 Markdown'; b.classList.remove('copied'); }, 1500);
     });
     return;
   }
