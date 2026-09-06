@@ -30,11 +30,15 @@ const HEIGHT = 20;             // 徽章高
 const FONT = 11;               // 字号
 const RADIUS = 4;              // 圆角
 
-// 估算文本渲染宽度（px）：CJK 全角按字号、ASCII 半角按 ~0.6 字号。
+// 估算文本渲染宽度（px）：
+//   CJK 全角按字号；空格/中点等窄字符按 ~0.32 字号；其余 ASCII 半角按 ~0.6 字号。
 function textWidth(s) {
   let w = 0;
   for (const ch of String(s)) {
-    w += ch.charCodeAt(0) > 0x2e80 ? FONT : FONT * 0.6;
+    const c = ch.charCodeAt(0);
+    if (c > 0x2e80) w += FONT;
+    else if (c === 0x20 || c === 0xb7) w += FONT * 0.32; // 空格 / ·（中点）
+    else w += FONT * 0.6;
   }
   return w;
 }
