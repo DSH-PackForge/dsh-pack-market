@@ -1,0 +1,72 @@
+{
+  "manifestVersion": 5,
+  "type": "dshhome",
+  "name": "dsh-home-pack",
+  "displayName": "dsh-game-skin",
+  "version": "1.0.0",
+  "description": "",
+  "author": "HXH",
+  "icon": null,
+  "dshVersion": "0.1.2-alpha.5",
+  "profileName": null,
+  "bundles": [],
+  "dependencies": {},
+  "patch": null,
+  "defaultProfile": "minecraft",
+  "profiles": {
+    "firefly": {
+      "bundles": [
+        "@deepseek-ai/dsh-base",
+        "@deepseek-ai/dsh-web-app",
+        "dsh-theme-firefly"
+      ],
+      "dependencies": {
+        "dsh-theme-firefly": "0.1.3"
+      }
+    },
+    "galgame": {
+      "bundles": [
+        "@deepseek-ai/dsh-base",
+        "@deepseek-ai/dsh-web-app",
+        "gal-view",
+        "dsh-whale-widget"
+      ],
+      "dependencies": {
+        "github:MeteorNOX/DeepSeek-Balance-Whale-Widget": "HEAD",
+        "github:RichardMLe/dsh-deep-whale": "HEAD",
+        "github:RichardMLe/gal-view": "HEAD"
+      }
+    },
+    "genskin": {
+      "bundles": [
+        "@deepseek-ai/dsh-base",
+        "@deepseek-ai/dsh-web-app",
+        "dsh-columbina-theme"
+      ],
+      "dependencies": {
+        "github:hyposelen1a/dsh-columbina-theme": "HEAD"
+      }
+    },
+    "minecraft": {
+      "bundles": [
+        "@deepseek-ai/dsh-base",
+        "@deepseek-ai/dsh-web-app",
+        "@superls-x/dsh-minecraft-theme"
+      ],
+      "dependencies": {
+        "github:SuperLS-X/dsh-minecraft-theme": "HEAD"
+      }
+    },
+    "tarkov": {
+      "bundles": [
+        "@deepseek-ai/dsh-base",
+        "@deepseek-ai/dsh-web-app",
+        "dsh-theme-tarkov"
+      ],
+      "dependencies": {
+        "dsh-theme-tarkov": "0.1.0"
+      }
+    }
+  },
+  "instructions": null
+}
