@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="259.8" height="20" role="img">
+  <defs><clipPath id="c-dsh-packforge-support-en"><rect width="259.8" height="20" rx="4"/></clipPath></defs>
+  <g clip-path="url(#c-dsh-packforge-support-en)">
+    <rect x="0" y="0" width="177.7" height="20" fill="#c0392b"/>
+    <rect x="177.7" y="0" width="82.0" height="20" fill="#2b2620"/>
+  </g>
+  <text x="10.0" y="14.5" font-size="11" font-weight="600" fill="#ffffff" font-family="Segoe UI, Arial, sans-serif">Supports DSH-PackForge packs</text>
+  <text x="187.7" y="14.5" font-size="11" font-weight="500" fill="#ffffff" font-family="Segoe UI, Arial, sans-serif">launcher</text>
+  <path d="M 235.8 10 l 3 3 l 6 -7" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
