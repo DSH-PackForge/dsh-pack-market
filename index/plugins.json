@@ -34,7 +34,8 @@
         "zh": "把本机 Wallpaper Engine 的壁纸变成 DSH 网页界面的背景：Video 动态播放、Web 以 iframe 加载、Scene 壁纸提取主纹理作为静态帧；iOS 液态玻璃设置窗口，可调配色、玻璃透明度、模糊与边框。",
         "en": "Turns your local Wallpaper Engine wallpapers into the DSH web GUI backdrop: Video and Web (iframe) wallpapers, Scene wallpapers as extracted static frames, plus an iOS-style liquid glass settings window for accent color, glass transparency, blur and border."
       },
-      "install": "dsh plugin --profile web add dsh-plugin-wallpaper-engine"
+      "install": "dsh plugin --profile web add dsh-plugin-wallpaper-engine",
+      "badges": ["essential"]
     }
   ]
 }
