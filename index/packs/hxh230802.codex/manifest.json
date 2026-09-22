@@ -1,0 +1,26 @@
+{
+  "manifestVersion": 5,
+  "type": "profile",
+  "name": "codex",
+  "version": "1.0.0",
+  "profileName": "codex",
+  "bundles": [
+    "@deepseek-ai/dsh-base",
+    "@deepseek-ai/dsh-web-app",
+    "@michengai/dsh-codex-ui",
+    "dsh-skills-manager-plus",
+    "@michengai/dsh-agency-agents",
+    "@michengai/dsh-automation"
+  ],
+  "dependencies": {
+    "@michengai/dsh-agency-agents": "1.0.1",
+    "@michengai/dsh-automation": "0.1.45",
+    "@michengai/dsh-codex-ui": "1.1.15",
+    "@michengai/dsh-im-connect": "0.1.51",
+    "dsh-skills-manager-plus": "0.1.1"
+  },
+  "displayName": "CodeX风格整合包",
+  "description": "CodeX风格整合包，包含5个插件与20个skill。特别感谢MichengAI提供的思路与灵感。",
+  "dshVersion": "0.1.5-alpha.2",
+  "patch": "# Your patch layer for this dsh profile, applied after every bundle layer:\n# a top-level YAML array of loader patch entries (id-targeted config\n# overrides, disables, and insert lists; `!!js` expressions allowed).\n- insert:\n    - id: dsh-im-connect\n      name: '@michengai/dsh-im-connect'\n"
+}

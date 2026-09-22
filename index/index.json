@@ -1,7 +1,27 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-09-22T03:04:55.546Z",
+  "generatedAt": "2026-09-22T03:14:35.339Z",
   "modpacks": [
+    {
+      "manifestVersion": 5,
+      "type": "profile",
+      "name": "codex",
+      "version": "1.0.0",
+      "displayName": "CodeX风格整合包",
+      "description": "CodeX风格整合包，包含5个插件与20个skill。特别感谢MichengAI提供的思路与灵感。",
+      "category": "uncategorized",
+      "dshVersion": "0.1.5-alpha.2",
+      "profileName": "codex",
+      "downloadUrl": "https://github.com/hxh230802/codex/releases/download/v1.0.0/codex-1.0.0.dspack",
+      "sha256": "1578e230f627320a1ad515fd28c4eb41d2c2b32badfcc7de8e46992adc03373c",
+      "size": 50318,
+      "updatedAt": "2026-09-22",
+      "id": "hxh230802.codex",
+      "owner": "hxh230802",
+      "repo": "codex",
+      "bundleCount": 6,
+      "depCount": 5
+    },
     {
       "manifestVersion": 5,
       "type": "profile",
