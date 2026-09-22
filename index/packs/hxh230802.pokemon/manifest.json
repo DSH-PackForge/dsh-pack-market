@@ -1,0 +1,22 @@
+{
+  "manifestVersion": 5,
+  "type": "profile",
+  "name": "pokemon",
+  "version": "1.0.0",
+  "profileName": "pokemon",
+  "bundles": [
+    "@deepseek-ai/dsh-base",
+    "@deepseek-ai/dsh-web-app",
+    "dsh-wildmon",
+    "@hellosz/dsh-pets"
+  ],
+  "dependencies": {
+    "@hellosz/dsh-pets": "0.3.1",
+    "github:swaylq/dsh-wildmon": "a2c7df00b27c2de9f2b0915d3bd5f1acc4d02c68"
+  },
+  "displayName": "宝可梦风格整合包",
+  "description": "加入了宝可梦宠物已经宝可梦玩法，可以 /mon start 启动",
+  "author": "HXH",
+  "dshVersion": "0.1.5-alpha.2",
+  "patch": "# Your patch layer for this dsh profile, applied after every bundle layer:\n# a top-level YAML array of loader patch entries (id-targeted config\n# overrides, disables, and insert lists; `!!js` expressions allowed).\n[]\n"
+}

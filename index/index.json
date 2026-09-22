@@ -1,28 +1,27 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-09-21T14:01:28.588Z",
+  "generatedAt": "2026-09-22T02:54:00.314Z",
   "modpacks": [
     {
       "manifestVersion": 5,
-      "type": "dshhome",
-      "name": "dsh-home-pack",
+      "type": "profile",
+      "name": "pokemon",
       "version": "1.0.0",
-      "displayName": "dsh-game-skin",
-      "description": "",
+      "displayName": "宝可梦风格整合包",
+      "description": "加入了宝可梦宠物已经宝可梦玩法，可以 /mon start 启动",
       "author": "HXH",
       "category": "uncategorized",
-      "dshVersion": "0.1.2-alpha.5",
-      "profileName": null,
-      "downloadUrl": "https://github.com/hxh230802/dsh-game-skin/releases/download/v1.0.0/dsh-game-skin-1.0.0.dspack",
-      "sha256": "",
-      "size": 9478,
-      "updatedAt": "2026-09-08",
-      "id": "hxh230802.dsh-game-skin",
+      "dshVersion": "0.1.5-alpha.2",
+      "profileName": "pokemon",
+      "downloadUrl": "https://github.com/hxh230802/pokemon/releases/download/v1.0.0/pokemon-1.0.0.dspack",
+      "sha256": "3d6a2748f424ecebca2c9dd0ea108a91eaa729fd4ba40cceedaa304d9165087f",
+      "size": 2574,
+      "updatedAt": "2026-09-21",
+      "id": "hxh230802.pokemon",
       "owner": "hxh230802",
-      "repo": "dsh-game-skin",
-      "profileCount": 5,
-      "bundleCount": 16,
-      "depCount": 7
+      "repo": "pokemon",
+      "bundleCount": 4,
+      "depCount": 2
     },
     {
       "manifestVersion": 4,
@@ -44,33 +43,6 @@
       "repo": "better-sidebar",
       "bundleCount": 4,
       "depCount": 2
-    },
-    {
-      "manifestVersion": 4,
-      "type": "profile",
-      "name": "all-about-whales",
-      "version": "1.0.0",
-      "displayName": {
-        "en-US": "All About Whales",
-        "zh-CN": "大肥鱼套装"
-      },
-      "description": {
-        "en-US": "Make your DSH smell like big fat whales (beautify webUI with DeepSeek mascot theme)",
-        "zh-CN": "让你的DSH充满大肥鱼的味道（用DeepSeek吉祥物主题美化webUI）"
-      },
-      "author": "hxh230802",
-      "category": "coding",
-      "dshVersion": "0.1.0-rc.8",
-      "profileName": "all-about-whales",
-      "downloadUrl": "https://github.com/DSH-PackForge/all-about-whales/releases/download/v1.0.0/all-about-whales-1.0.0.dspack",
-      "sha256": "6dfaf5cc50f45c751e4bdff6a35eaedccd90cb67f6f888238a27a6d75409cf45",
-      "size": 6670,
-      "updatedAt": "2026-09-01",
-      "id": "DSH-PackForge.all-about-whales",
-      "owner": "DSH-PackForge",
-      "repo": "all-about-whales",
-      "bundleCount": 6,
-      "depCount": 4
     }
   ]
 }
