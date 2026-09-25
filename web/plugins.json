@@ -34,6 +34,40 @@
       "badges": [
         "essential"
       ]
+    },
+    {
+      "id": "DSH-PackForge/dsh-pack-plugin",
+      "name": "dsh-pack-plugin",
+      "url": "https://github.com/DSH-PackForge/dsh-pack-plugin",
+      "category": {
+        "zh": "工具",
+        "en": "Tool"
+      },
+      "description": {
+        "zh": "DSH 整合包管理插件 bundle：.dspack 导出/安装、多 profile 切换、市场浏览、工作区配置与任务中心。零官方源码改动、零第三方插件，运行时仅依赖 fflate。",
+        "en": "DSH modpack management plugin bundle: .dspack export/install, multi-profile switching, market browsing, workspace config and a task center. Zero official-source changes, zero third-party plugins, only fflate at runtime."
+      },
+      "install": "dsh plugin add github:DSH-PackForge/dsh-pack-plugin",
+      "badges": [
+        "essential"
+      ]
+    },
+    {
+      "id": "elysia395/dsh-wallpaper-engine",
+      "name": "dsh-wallpaper-engine",
+      "url": "https://github.com/elysia395/dsh-wallpaper-engine",
+      "category": {
+        "zh": "外观",
+        "en": "Appearance"
+      },
+      "description": {
+        "zh": "把本机 Wallpaper Engine 的壁纸变成 DSH 网页界面的背景：Video 动态播放、Web 以 iframe 加载、Scene 壁纸提取主纹理作为静态帧；iOS 液态玻璃设置窗口，可调配色、玻璃透明度、模糊与边框。",
+        "en": "Turns your local Wallpaper Engine wallpapers into the DSH web GUI backdrop: Video and Web (iframe) wallpapers, Scene wallpapers as extracted static frames, plus an iOS-style liquid glass settings window for accent color, glass transparency, blur and border."
+      },
+      "install": "dsh plugin --profile web add dsh-plugin-wallpaper-engine",
+      "badges": [
+        "essential"
+      ]
     }
   ]
 }
