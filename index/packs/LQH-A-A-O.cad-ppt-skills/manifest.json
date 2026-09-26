@@ -1,0 +1,17 @@
+{
+  "manifestVersion": 5,
+  "type": "profile",
+  "name": "cad-ppt-skills",
+  "version": "1.1.0",
+  "profileName": "cad-ppt-skills",
+  "bundles": [
+    "@deepseek-ai/dsh-base",
+    "@deepseek-ai/dsh-web-app"
+  ],
+  "dependencies": {},
+  "displayName": "AutoCAD 出图 + PPT 制作技能包",
+  "description": "两个 Windows 原生技能：autocad-draw（COM 驱动本机 AutoCAD 出图 / 改图 / 导出校验）与 pptx-editor（生成 / 编辑 / 预览 PPT，内置 7 套主题 × 11 种版式的宣传风排版引擎）。导入后技能落在 DSH_HOME 的 skills/ 下；首次使用需跑各自的 install.ps1 建 .venv 装依赖。需本机已装 AutoCAD（2020+）与 Microsoft PowerPoint。",
+  "author": "涟崎桦",
+  "dshVersion": "",
+  "patch": "# 本整合包不插入额外插件行（只分发技能）。\n# 需要时按官方格式往这里加 insert/disable 条目。\n[]\n"
+}
