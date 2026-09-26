@@ -296,6 +296,18 @@ const LAUNCHERS = [
     desc: '支持最新 manifest 契约与 .dspack 结构，导入整合包的首选。',
   },
   {
+    name: 'Loliyer520/DSHL-Deepseek-Harness-Launcher',
+    url: 'https://github.com/Loliyer520/DSHL-Deepseek-Harness-Launcher',
+    support: 'Windows 一站式',
+    desc: 'DSHL · DeepSeek Harness Launcher：Windows 上一站式安装、启动与管理 DeepSeek Harness。',
+  },
+  {
+    name: 'MCXCC303/HDSL',
+    url: 'https://github.com/MCXCC303/HDSL',
+    support: '基于 HMCL',
+    desc: '基于 HMCL 打造的 DeepSeek Harness Launcher，Java 实现。',
+  },
+  {
     name: '121103qwq/DSH-Launcher',
     url: 'https://github.com/121103qwq/DSH-Launcher',
     support: '清单 v2 · 结构 v1',
