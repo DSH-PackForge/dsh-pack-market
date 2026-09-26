@@ -108,7 +108,12 @@ body {
   padding: 2px 8px; border-radius: 999px; white-space: nowrap;
 }
 .card .pkg { font-family: var(--mono); font-size: 12px; color: var(--ink-3); word-break: break-all; }
-.card .desc { color: var(--ink-2); font-size: 14px; flex: 1; }
+/* 描述最多 4 行，超出省略，保证卡片高度一致 */
+.card .desc {
+  color: var(--ink-2); font-size: 14px; flex: 1;
+  display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical;
+  overflow: hidden;
+}
 .card .meta { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
 .chip {
   font-size: 12px; color: var(--ink-2); border: 1px solid var(--line-2);
