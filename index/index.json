@@ -1,7 +1,28 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-09-26T15:10:40.559Z",
+  "generatedAt": "2026-09-26T21:12:54.949Z",
   "modpacks": [
+    {
+      "manifestVersion": 5,
+      "type": "profile",
+      "name": "dsh-bcut-edit",
+      "version": "1.0.0",
+      "displayName": "必剪视频剪辑技能包（bcut-edit）",
+      "description": "用代码做视频剪辑：直接读写必剪(Bcut)的 .bjson 草稿工程（多轨道 / 转场 / 字幕 / 配乐），或用 ffmpeg 直接渲染出成品 mp4 —— 同一份「剪辑方案」喂两个后端。技能落在 DSH_HOME 的 skills/ 下。需本机已装必剪（3.10.x）；首帧导出需要 ffmpeg，技能自带 get_ffmpeg.py 一键下载（约 190MB），也可用 BCUT_FFMPEG 指定现成的。",
+      "author": "涟崎桦",
+      "category": "uncategorized",
+      "dshVersion": "",
+      "profileName": "bcut-edit",
+      "downloadUrl": "https://github.com/LQH-A-A-O/dsh-bcut-edit/releases/download/v1.0.0/dsh-bcut-edit-1.0.0.dspack",
+      "sha256": "8e970129ca92b61fcd9bff6ffa418f6d6239232d5fd4707f16c2d42862b8ec4b",
+      "size": 65407,
+      "updatedAt": "2026-09-26",
+      "id": "LQH-A-A-O.dsh-bcut-edit",
+      "owner": "LQH-A-A-O",
+      "repo": "dsh-bcut-edit",
+      "bundleCount": 2,
+      "depCount": 0
+    },
     {
       "manifestVersion": 5,
       "type": "profile",

@@ -1,0 +1,17 @@
+{
+  "manifestVersion": 5,
+  "type": "profile",
+  "name": "dsh-bcut-edit",
+  "version": "1.0.0",
+  "profileName": "bcut-edit",
+  "bundles": [
+    "@deepseek-ai/dsh-base",
+    "@deepseek-ai/dsh-web-app"
+  ],
+  "dependencies": {},
+  "displayName": "必剪视频剪辑技能包（bcut-edit）",
+  "description": "用代码做视频剪辑：直接读写必剪(Bcut)的 .bjson 草稿工程（多轨道 / 转场 / 字幕 / 配乐），或用 ffmpeg 直接渲染出成品 mp4 —— 同一份「剪辑方案」喂两个后端。技能落在 DSH_HOME 的 skills/ 下。需本机已装必剪（3.10.x）；首帧导出需要 ffmpeg，技能自带 get_ffmpeg.py 一键下载（约 190MB），也可用 BCUT_FFMPEG 指定现成的。",
+  "author": "涟崎桦",
+  "dshVersion": "",
+  "patch": "# 本包只分发技能，不插入额外插件行。\n[]\n"
+}
