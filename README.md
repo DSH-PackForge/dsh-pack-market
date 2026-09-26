@@ -31,7 +31,7 @@ dsh-pack-market/
 ## 索引从哪来（自动收录）
 
 - **事实源 = 各整合包仓库的 `manifest.json`**：作者给仓库打 topic `dsh-pack`、根放 `manifest.json`、建 Release 放 `.dspack`/`.tgz`（或在清单里写 `downloadUrl`）。
-- **`index/index.json` 与 `index/packs/` 由采集器自动生成**：`deploy-pages.yml` 每天定时 / 手动 / 推送时运行 `scripts/collect.mjs`，**不要在这里手改**。
+- **`index/index.json` 与 `index/packs/` 由采集器自动生成**:`deploy-pages.yml` 每 6 小时定时 / 手动 / 推送时运行 `scripts/collect.mjs`,**不要在这里手改**。
 - **索引是精简指针制（schemaVersion 2）**：`index.json` 只保留列表卡片 / 搜索 / 安装命令需要的字段（`name`/`version`/`displayName`/`description`/`author`/`category`/`dshVersion`/`profileName`/`downloadUrl`/`sha256`/`size`/`updatedAt` + `id`/`owner`/`repo` + 计数）。完整 `manifest.json` 与 `README.md` 拆到 `index/packs/<owner>.<repo>/`，市场详情页点开时懒加载。
 - `web/index.json`、`web/packs/` 是部署时从 `index/` 复制的快照，仅用于本地 `npx serve web/` 预览，**也不要手改**。
 
@@ -66,4 +66,4 @@ dsh-pack-market/
 
 | workflow | 触发 | 作用 |
 |---|---|---|
-| `deploy-pages.yml` | 每天定时 / push 到 main / 手动 | 扫 `dsh-pack` 标签 → 生成索引 + packs → 提交 → 复制 → 部署 Pages |
+| `deploy-pages.yml` | 每 6 小时定时 / push 到 main / 手动 | 扫 `dsh-pack` 标签 → 生成索引 + packs → 提交 → 复制 → 部署 Pages |

@@ -1,6 +1,6 @@
 name: 自动收录 dsh-pack 并部署
 
-# 每天定时 / 手动 / push 到 main 时：
+# 每 6 小时定时 / 手动 / push 到 main 时：
 #   1) 扫 GitHub topic `dsh-pack` → scripts/collect.mjs → 生成 index/index.json + index/packs/<owner>.<repo>/
 #   2) 提交回 main（有变化才提交）
 #   3) 复制 index/index.json → web/index.json，index/packs → web/packs
@@ -13,7 +13,7 @@ name: 自动收录 dsh-pack 并部署
 
 on:
   schedule:
-    - cron: '17 5 * * *'   # 每天 UTC 05:17
+    - cron: '17 */6 * * *'   # 每 6 小时（UTC 00:17 / 06:17 / 12:17 / 18:17）
   push:
     branches: [main]
   workflow_dispatch: {}   # 允许手动触发
