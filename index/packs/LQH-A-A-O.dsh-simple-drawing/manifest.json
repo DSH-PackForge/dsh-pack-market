@@ -1,0 +1,17 @@
+{
+  "manifestVersion": 5,
+  "type": "profile",
+  "name": "dsh-simple-drawing",
+  "version": "1.0.0",
+  "profileName": "layered-art",
+  "bundles": [
+    "@deepseek-ai/dsh-base",
+    "@deepseek-ai/dsh-web-app"
+  ],
+  "dependencies": {},
+  "displayName": "dsh简易绘图能力包",
+  "description": "用代码作画，四条路线：①把参考图提取成「多边形骨架 + 内孔 + 调色板」的可编辑结构，再按分层规则重画、换任意配色；②用 MakeHuman 网格数据做七头身人体立绘（十块 canon 分区 → 生成适配衣服 → 按 Live2D 式层序组合 → 像素级细修）；③用轴对齐方块拼《我的世界》式角色，粗细靠像素梯度而不靠几何；④把任何平涂图转成像素画（分格取众数 + 调色板量化 + 硬边放大）。技能落在 DSH_HOME 的 skills/ 下。依赖 numpy / pillow / opencv-python-headless；路线②需要本机 MakeHuman 数据（只读 npz，不用运行它），用环境变量 MAKEHUMAN_DIR 指定。",
+  "author": "涟崎桦",
+  "dshVersion": "",
+  "patch": "# 本包只分发技能，不插入额外插件行。\n[]\n"
+}
