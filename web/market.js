@@ -315,6 +315,12 @@ const LAUNCHERS = [
     support: '清单 v2 · 结构 v1',
     desc: '支持 manifest v2 与 pack-structure v1（.tgz），旧格式整合包的兼容入口。',
   },
+  {
+    name: 'DeepSeek Harness 官方桌面端',
+    id: 'official-desktop',
+    support: '官方',
+    desc: 'DeepSeek Harness 官方桌面端。',
+  },
 ];
 
 function ecosystemHTML() {
@@ -326,14 +332,14 @@ function ecosystemHTML() {
       <div class="eco-arrow">→</div>
     </a>`).join('');
   const launchers = LAUNCHERS.map((l) => `
-    <a class="eco-card eco-launcher" href="${esc(l.url)}" target="_blank" rel="noopener">
+    <${l.url ? 'a' : 'div'} class="eco-card eco-launcher"${l.url ? ` href="${esc(l.url)}" target="_blank" rel="noopener"` : ''}>
       <div class="eco-role">启动器</div>
       <div class="eco-name">${esc(l.name)}</div>
       <span class="eco-badge">${esc(l.support)}</span>
       ${l.id ? `<span class="eco-id" title="launcher-registry 认领的 canonical ID，可写入 manifest 的 launchers 字段">ID: ${esc(l.id)}</span>` : ''}
       <p class="eco-desc">${esc(l.desc)}</p>
-      <div class="eco-arrow">→</div>
-    </a>`).join('');
+      ${l.url ? '<div class="eco-arrow">→</div>' : ''}
+    </${l.url ? 'a' : 'div'}>`).join('');
   return `
     <div class="eco">
       <a class="back" href="#">← 返回市场</a>
