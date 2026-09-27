@@ -60,9 +60,10 @@ jobs:
             git push
           fi
 
-      - name: 复制事实源索引 → web（index.json + packs）
+      - name: 复制事实源索引 → web（index.json + packs + launchers.json）
         run: |
           cp index/index.json web/index.json
+          cp index/launchers.json web/launchers.json
           rm -rf web/packs
           cp -r index/packs web/packs
 

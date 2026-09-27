@@ -276,18 +276,23 @@ const ECOSYSTEM = [
   },
 ];
 
-function showEcosystem() {
+async function showEcosystem() {
   document.querySelector('.hero').hidden = true;
   document.querySelector('main').hidden = true;
   $('#detail').hidden = true;
   $('#plugins').hidden = true;
   const el = $('#ecosystem');
-  el.innerHTML = ecosystemHTML();
+  // 先用内置列表渲染，launchers.json 拉到后再替换（失败保持内置兜底）
+  el.innerHTML = ecosystemHTML(LAUNCHERS);
   el.hidden = false;
   window.scrollTo(0, 0);
+  const launcherList = await loadLaunchers();
+  if (launcherList !== LAUNCHERS) el.innerHTML = ecosystemHTML(launcherList);
 }
 
-// 启动器（导入整合包的一方）：特别列出；id 为 launcher-registry 认领的 canonical ID（manifest v5 r2 `launchers` 字段的 key）
+// 启动器（导入整合包的一方）：内置兜底列表；id 为 launcher-registry 认领的 canonical ID（manifest v5 r2 `launchers` 字段的 key）。
+// 线上优先懒加载 ./launchers.json（由 index/launchers.json 复制，事实源对齐 DSH-PackForge 的 launcher-registry.md），
+// 加载成功后与内置列表合并（内置中 URL 未出现在 JSON 的条目追加在后面，未认领 ID 的启动器不丢）。
 const LAUNCHERS = [
   {
     name: 'dsh-plugins/dsh-launcher',
@@ -315,15 +320,24 @@ const LAUNCHERS = [
     support: '清单 v2 · 结构 v1',
     desc: '支持 manifest v2 与 pack-structure v1（.tgz），旧格式整合包的兼容入口。',
   },
-  {
-    name: 'DeepSeek Harness 官方桌面端',
-    id: 'official-desktop',
-    support: '官方',
-    desc: 'DeepSeek Harness 官方桌面端。',
-  },
 ];
 
-function ecosystemHTML() {
+// 懒加载认领 ID 的启动器表（launchers.json），与内置列表合并
+async function loadLaunchers() {
+  try {
+    const res = await fetch('./launchers.json', { cache: 'no-store' });
+    if (!res.ok) return LAUNCHERS;
+    const data = await res.json();
+    const remote = Array.isArray(data.launchers) ? data.launchers.filter((l) => l && typeof l.id === 'string') : [];
+    if (!remote.length) return LAUNCHERS;
+    const urls = new Set(remote.map((l) => l.url).filter(Boolean));
+    return [...remote, ...LAUNCHERS.filter((l) => !l.url || !urls.has(l.url.replace(/\/+$/, '')))];
+  } catch {
+    return LAUNCHERS; // 拉取失败 → 内置兜底
+  }
+}
+
+function ecosystemHTML(launcherList) {
   const cards = ECOSYSTEM.map((e) => `
     <a class="eco-card" href="${esc(e.url)}" target="_blank" rel="noopener">
       <div class="eco-role">${esc(e.role)}</div>
@@ -331,7 +345,7 @@ function ecosystemHTML() {
       <p class="eco-desc">${esc(e.desc)}</p>
       <div class="eco-arrow">→</div>
     </a>`).join('');
-  const launchers = LAUNCHERS.map((l) => `
+  const launchers = (launcherList || LAUNCHERS).map((l) => `
     <${l.url ? 'a' : 'div'} class="eco-card eco-launcher"${l.url ? ` href="${esc(l.url)}" target="_blank" rel="noopener"` : ''}>
       <div class="eco-role">启动器</div>
       <div class="eco-name">${esc(l.name)}</div>

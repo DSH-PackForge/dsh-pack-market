@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "source": "https://github.com/DSH-PackForge/DSH-PackForge/blob/main/specs/launcher-registry.md",
+  "comment": "启动器 canonical ID 认领表（manifest v5 r2 `launchers` 字段的 key）。认领/变更请向 DSH-PackForge 仓库提 PR 更新 launcher-registry.md，本文件随之同步。",
+  "launchers": [
+    {
+      "id": "dshl",
+      "name": "DSHL · DeepSeek Harness Launcher",
+      "url": "https://github.com/Loliyer520/DSHL-Deepseek-Harness-Launcher",
+      "support": "Windows 一站式",
+      "desc": "PCL2 魔改（Plain Craft Launcher 二次开发）：Windows 上一站式安装、启动与管理 DeepSeek Harness，四段式版本自报（如 0.1.1.2）。"
+    },
+    {
+      "id": "hdsl",
+      "name": "HDSL · Hello DeepSeek Launcher",
+      "url": "https://github.com/MCXCC303/HDSL",
+      "support": "基于 HMCL",
+      "desc": "HMCL 内核 JavaFX；.dspack 市场采纳者，另维护自有 .hdslp 格式。注意与 dshl（PCL 系）一个字母之差、完全无关。"
+    },
+    {
+      "id": "dsh-packforge-app",
+      "name": "DSH PackForge GUI / dspack CLI",
+      "url": "https://github.com/DSH-PackForge/dsh-packforge-app",
+      "support": "官方工具链",
+      "desc": "DSH PackForge 图形客户端与 dspack 命令行：导出、浏览、安装整合包。"
+    },
+    {
+      "id": "official-desktop",
+      "name": "DeepSeek Harness 官方桌面端",
+      "support": "官方",
+      "desc": "DeepSeek Harness 官方桌面端。"
+    },
+    {
+      "id": "dsh-cli",
+      "name": "裸 dsh 命令行",
+      "support": "无启动器",
+      "desc": "不依赖任何启动器，直接使用 dsh 命令行（dsh --version 自报版本）。"
+    }
+  ]
+}

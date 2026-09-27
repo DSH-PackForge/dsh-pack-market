@@ -12,6 +12,7 @@ dsh-pack-market/
 │   └── collect.mjs             # 采集器：扫 topic `dsh-pack` → 生成 index/index.json + index/packs/
 ├── index/
 │   ├── index.json              # 精简索引（schemaVersion 2，仅列表/搜索/安装必需字段，采集器生成，勿手改）
+│   ├── launchers.json          # 启动器 canonical ID 认领表（对齐 DSH-PackForge/specs/launcher-registry.md，规范仓库 PR 后手动同步）
 │   └── packs/
 │       └── <owner>.<repo>/     # 每个整合包一个目录（懒加载源）
 │           ├── manifest.json    # 完整 manifest（v3/v4/v5，原始文本）
