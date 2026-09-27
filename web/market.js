@@ -593,6 +593,36 @@ function detailHTML(m, readme, hasFull) {
     ? `<section class="d-block"><h3>README</h3><div class="d-readme">${renderMarkdown(readme)}</div></section>`
     : '';
 
+  // ── v5 r2 新字段：launchers 兼容声明 + vendored 内嵌依赖 + dshVersions 实测集 ──
+  let compatBlock = '';
+  const launcherEntries = Object.entries(m.launchers || {});
+  const vendoredEntries = Object.entries(m.vendored || {});
+  if (launcherEntries.length || vendoredEntries.length) {
+    const normLauncher = (v) => {
+      if (v === true) return { supported: true };
+      if (v === false) return { supported: false };
+      if (typeof v === 'string') return { supported: true, minVersion: v };
+      return v || {};
+    };
+    const lRows = launcherEntries.map(([id, v]) => {
+      const n = normLauncher(v);
+      const st = n.supported === false
+        ? '<span class="chip" style="color:var(--cinnabar);border-color:var(--cinnabar-border)">冲突</span>'
+        : '<span class="chip tag">支持</span>';
+      return `<li><code>${esc(id)}</code>${st}${n.minVersion ? `<span class="arrow">≥</span><code>${esc(n.minVersion)}</code>` : ''}${n.reason ? `<span>· ${esc(n.reason)}</span>` : ''}</li>`;
+    }).join('');
+    const vRows = vendoredEntries.map(([coord, v]) => {
+      const reasonMap = { 'upstream-missing': '上游已消失', 'unpublished': '从未发布', 'local-modified': '本地修改版', 'explicit': '显式内嵌' };
+      return `<li><span class="dk">${esc(coord)}</span><span class="arrow">→</span><code>${esc(v.version)}</code>${v.reason ? `<span>· ${esc(reasonMap[v.reason] || v.reason)}</span>` : ''}</li>`;
+    }).join('');
+    compatBlock = `
+      <section class="d-block">
+        <h3>兼容性与内嵌依赖（v5 r2）</h3>
+        ${launcherEntries.length ? `<h4>启动器声明（launchers）</h4><ul class="d-list">${lRows}</ul>` : ''}
+        ${vendoredEntries.length ? `<h4>内嵌依赖（vendored，${vendoredEntries.length} 项）</h4><ul class="d-list">${vRows}</ul>` : ''}
+      </section>`;
+  }
+
   return `
     <div class="detail">
       <a class="back" href="#">← 返回市场</a>
@@ -606,6 +636,7 @@ function detailHTML(m, readme, hasFull) {
           <span class="chip">${type === 'dshhome' ? 'DSH_HOME 快照' : '单 Profile'}</span>
           ${m.author ? `<span class="chip">作者 ${esc(m.author)}</span>` : ''}
           ${m.dshVersion ? `<span class="chip">DSH ${esc(m.dshVersion)}</span>` : ''}
+          ${(m.dshVersions || []).length ? `<span class="chip">实测 DSH ${m.dshVersions.map(esc).join(' / ')}</span>` : ''}
           <span class="chip">manifest v${esc(m.manifestVersion ?? 3)}</span>
           ${m.updatedAt ? `<span class="chip">更新 ${esc(m.updatedAt)}</span>` : ''}
           ${size ? `<span class="chip">${size}</span>` : ''}
@@ -635,6 +666,7 @@ function detailHTML(m, readme, hasFull) {
       </section>
 
       ${contentBlock}
+      ${compatBlock}
       ${readmeBlock}
 
       <section class="d-block">
