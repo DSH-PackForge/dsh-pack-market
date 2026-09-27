@@ -294,6 +294,13 @@ details.inst .menu {
 .eco-name { font-family: var(--mono); font-weight: 700; font-size: 17px; }
 .eco-desc { color: var(--ink-2); font-size: 14px; flex: 1; }
 .eco-arrow { position: absolute; right: 18px; top: 18px; color: var(--ink-3); font-size: 18px; }
+/* launcher-registry 认领的 canonical ID（manifest v5 r2 `launchers` key） */
+.eco-id {
+  align-self: flex-start; font-family: var(--mono); font-size: 12px;
+  color: var(--ink-2); background: var(--paper-2);
+  border: 1px dashed var(--line-2); border-radius: 7px; padding: 2px 8px;
+  cursor: help;
+}
 .eco-card:hover .eco-arrow { color: var(--cinnabar); }
 .eco-flow {
   margin-top: 22px; background: var(--card); border: 1px solid var(--line);

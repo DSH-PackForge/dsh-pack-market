@@ -287,7 +287,7 @@ function showEcosystem() {
   window.scrollTo(0, 0);
 }
 
-// 启动器（导入整合包的一方）：特别列出，各自支持的规范版本不同
+// 启动器（导入整合包的一方）：特别列出；id 为 launcher-registry 认领的 canonical ID（manifest v5 r2 `launchers` 字段的 key）
 const LAUNCHERS = [
   {
     name: 'dsh-plugins/dsh-launcher',
@@ -298,12 +298,14 @@ const LAUNCHERS = [
   {
     name: 'Loliyer520/DSHL-Deepseek-Harness-Launcher',
     url: 'https://github.com/Loliyer520/DSHL-Deepseek-Harness-Launcher',
+    id: 'dshl',
     support: 'Windows 一站式',
     desc: 'DSHL · DeepSeek Harness Launcher：Windows 上一站式安装、启动与管理 DeepSeek Harness。',
   },
   {
     name: 'MCXCC303/HDSL',
     url: 'https://github.com/MCXCC303/HDSL',
+    id: 'hdsl',
     support: '基于 HMCL',
     desc: '基于 HMCL 打造的 DeepSeek Harness Launcher，Java 实现。',
   },
@@ -328,6 +330,7 @@ function ecosystemHTML() {
       <div class="eco-role">启动器</div>
       <div class="eco-name">${esc(l.name)}</div>
       <span class="eco-badge">${esc(l.support)}</span>
+      ${l.id ? `<span class="eco-id" title="launcher-registry 认领的 canonical ID，可写入 manifest 的 launchers 字段">ID: ${esc(l.id)}</span>` : ''}
       <p class="eco-desc">${esc(l.desc)}</p>
       <div class="eco-arrow">→</div>
     </a>`).join('');
