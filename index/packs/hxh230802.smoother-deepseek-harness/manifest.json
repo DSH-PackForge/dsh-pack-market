@@ -1,0 +1,37 @@
+{
+  "manifestVersion": 5,
+  "type": "profile",
+  "name": "smoother-deepseek-harness",
+  "version": "1.0.1",
+  "displayName": "丝滑的DSH",
+  "description": "【推荐官方桌面端安装】你的DSH——比想象的更丝滑！本整合包添加了dsh-smooth-stream插件使流式输出更丝滑，添加dsh-client-ui-task-board插件添加方便的任务看板，添加底部信息栏插件、小鯨鱼插件为工作区增添趣味，以及dsh-pack-plugin管理整合包。添加20个skill用于优化以及编码指导。",
+  "author": "HXH",
+  "icon": "",
+  "dshVersion": "",
+  "profileName": "smoother-deepseek-harness",
+  "bundles": [
+    "@deepseek-ai/dsh-base",
+    "@deepseek-ai/dsh-web-app",
+    "@dsh-packforge/dsh-pack-plugin",
+    "dsh-plugin-whale-pet",
+    "dsh-smooth-stream",
+    "@linxin666/dsh-client-ui-task-board",
+    "dsh-bottom-info-bar"
+  ],
+  "dependencies": {
+    "@dsh-packforge/dsh-pack-plugin": "0.3.5",
+    "@linxin666/dsh-client-ui-task-board": "0.4.3",
+    "dsh-bottom-info-bar": "1.20.8",
+    "dsh-plugin-whale-pet": "0.2.8",
+    "dsh-smooth-stream": "0.6.1"
+  },
+  "patch": "# Your patch layer for this dsh profile, applied after every bundle layer:\n# a top-level YAML array of loader patch entries (id-targeted config\n# overrides, disables, and insert lists; `!!js` expressions allowed).\n- id: ui-settings-account\n  name: \"@deepseek-ai/dsh-client-ui-settings-account\"\n  config:\n    version: 1\n    step: done\n    purpose: null\n    process: standard\n    completion: skipped\n    usage: compact\n    developerTools: false\n- id: ui-chat\n  name: \"@deepseek-ai/dsh-client-ui-chat\"\n  config:\n    transcriptView: standard\n    performanceUsage: compact\n- id: ui-settings\n  name: \"@deepseek-ai/dsh-client-ui-settings\"\n  config:\n    enabled: false\n- id: agent-default-model\n  name: \"@deepseek-ai/dsh-agent-default-model\"\n  config:\n    provider: deepseek-account\n    model: deepseek-flash\n    reasoningEffort: high\n",
+  "files": [],
+  "launchers": {
+    "dshl": true,
+    "hdsl": true,
+    "dsh-packforge-app": true,
+    "official-desktop": true
+  },
+  "sha256": "b2ed99b7315a98b33e21c56db9fd62b57548a3a5550faf2396b27ff04a295bfb"
+}

@@ -1,7 +1,28 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-09-29T12:56:58.561Z",
+  "generatedAt": "2026-09-29T13:54:10.368Z",
   "modpacks": [
+    {
+      "manifestVersion": 5,
+      "type": "profile",
+      "name": "smoother-deepseek-harness",
+      "version": "1.0.1",
+      "displayName": "丝滑的DSH",
+      "description": "【推荐官方桌面端安装】你的DSH——比想象的更丝滑！本整合包添加了dsh-smooth-stream插件使流式输出更丝滑，添加dsh-client-ui-task-board插件添加方便的任务看板，添加底部信息栏插件、小鯨鱼插件为工作区增添趣味，以及dsh-pack-plugin管理整合包。添加20个skill用于优化以及编码指导。",
+      "author": "HXH",
+      "category": "uncategorized",
+      "dshVersion": "",
+      "profileName": "smoother-deepseek-harness",
+      "downloadUrl": "https://github.com/hxh230802/smoother-deepseek-harness/releases/download/v1.0.1/smoother-deepseek-harness-1.0.1.dspack",
+      "sha256": "b2ed99b7315a98b33e21c56db9fd62b57548a3a5550faf2396b27ff04a295bfb",
+      "size": 50106,
+      "updatedAt": "2026-09-29",
+      "id": "hxh230802.smoother-deepseek-harness",
+      "owner": "hxh230802",
+      "repo": "smoother-deepseek-harness",
+      "bundleCount": 7,
+      "depCount": 5
+    },
     {
       "manifestVersion": 5,
       "type": "profile",
@@ -91,26 +112,6 @@
       "repo": "better-deepseek-harness",
       "bundleCount": 13,
       "depCount": 11
-    },
-    {
-      "manifestVersion": 5,
-      "type": "profile",
-      "name": "codex",
-      "version": "1.0.0",
-      "displayName": "CodeX风格整合包",
-      "description": "CodeX风格整合包，包含5个插件与20个skill。特别感谢MichengAI提供的思路与灵感。",
-      "category": "uncategorized",
-      "dshVersion": "0.1.5-alpha.2",
-      "profileName": "codex",
-      "downloadUrl": "https://github.com/hxh230802/codex/releases/download/v1.0.0/codex-1.0.0.dspack",
-      "sha256": "1578e230f627320a1ad515fd28c4eb41d2c2b32badfcc7de8e46992adc03373c",
-      "size": 50318,
-      "updatedAt": "2026-09-22",
-      "id": "hxh230802.codex",
-      "owner": "hxh230802",
-      "repo": "codex",
-      "bundleCount": 6,
-      "depCount": 5
     },
     {
       "manifestVersion": 5,
