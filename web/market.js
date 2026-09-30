@@ -269,10 +269,10 @@ const ECOSYSTEM = [
     desc: '整合包市场仓库：索引 + packs/ 懒加载源 + 你现在看到的这个网页。',
   },
   {
-    name: 'all-about-whales',
-    url: 'https://github.com/DSH-PackForge/all-about-whales',
+    name: 'dsh-pack-plugin',
+    url: 'https://github.com/DSH-PackForge/dsh-pack-plugin',
     role: '参考实现',
-    desc: '端到端示例整合包（manifest v4 + .dspack），照着它建仓就能被市场自动收录。',
+    desc: '整合包管理插件 bundle 的参考实现：.dspack 导出/安装、多 profile 切换、市场浏览、工作区配置与任务中心。',
   },
 ];
 
