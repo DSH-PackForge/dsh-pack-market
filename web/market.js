@@ -559,7 +559,7 @@ function detailHTML(m, readme, hasFull, stats) {
     statsBlock = `
       <section class="d-block">
         <h3>下载量</h3>
-        <p class="d-line">累计 <b>${num(stats.total)}</b> 次 · 发布以来日均 <b>${num(stats.dailyAvg)}</b> 次${stats.since ? ` · 统计自 ${esc(stats.since)}` : ''}${typeof stats.currentDownloads === 'number' ? ` · 当前版本 ${esc(stats.current)} 为 ${num(stats.currentDownloads)} 次` : ''}</p>
+        <p class="d-line">累计 <b>${num(stats.total)}</b> 次${stats.since ? ` · 统计自 ${esc(stats.since)}` : ''}${typeof stats.currentDownloads === 'number' ? ` · 当前版本 ${esc(stats.current)} 为 ${num(stats.currentDownloads)} 次` : ''}</p>
         <h4>分版本（${stats.versions.length}）</h4>
         <ul class="d-list">${rows}</ul>
         <p class="d-note">口径：只统计 GitHub Release 里 .dspack / .tgz 包资产的下载次数，不含 .sha256 侧车；含重复下载与自动化拉取，<b>不等于安装量</b>。数据每 6 小时随采集刷新。</p>

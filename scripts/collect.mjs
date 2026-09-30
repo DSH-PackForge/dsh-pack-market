@@ -136,19 +136,19 @@ function buildStats(releases, m, src, warnings) {
 
   versions.sort((a, b) => String(b.publishedAt).localeCompare(String(a.publishedAt)));
   const since = versions[versions.length - 1].publishedAt;
-  const days = since ? Math.max(1, Math.round((Date.now() - Date.parse(since)) / 86400000)) : 0;
   const current = String(m.version || '').replace(/^v/i, '');
   const currentHit = versions.find((v) => v.version === current);
 
+  // 刻意**不做**"日均"：它等于 累计 ÷ 发布以来天数，是个终身平均速率，
+  // 结构上只会随发布初期那一波下载的稀释而单调下降——包没变差数字却在跌，
+  // 对作者是没必要的压力；真要热度榜应当用"近 7 天增量"这类窗口指标。
   return {
     schemaVersion: 1,
     generatedAt: new Date().toISOString(),
     source: 'github-releases',
     repo: src,
     total,
-    dailyAvg: days ? Math.round((total / days) * 10) / 10 : 0, // 发布以来日均，抵消"老包占便宜"
     since,
-    days,
     current,
     currentDownloads: currentHit ? currentHit.downloads : null,
     versions,
