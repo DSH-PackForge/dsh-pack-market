@@ -74,7 +74,7 @@ body {
    --d 为各元素相位，--ha-freeze 供预览抽帧（生产恒为 0）。*/
 .hero { display: flex; align-items: center; justify-content: space-between; gap: 36px; }
 .hero-copy { flex: 1 1 auto; min-width: 0; }
-.hero-art { flex: 0 0 auto; width: 272px; max-width: 30vw; }
+.hero-art { flex: 0 0 auto; width: 228px; max-width: 25vw; }
 .hero-anim { display: block; width: 100%; height: auto; overflow: visible; }
 @media (max-width: 880px) { .hero-art { display: none; } }
 
