@@ -16,7 +16,8 @@ dsh-pack-market/
 │   └── packs/
 │       └── <owner>.<repo>/     # 每个整合包一个目录（懒加载源）
 │           ├── manifest.json    # 完整 manifest（v3/v4/v5，原始文本）
-│           └── README.md        # 源仓库 README（若有）
+│           ├── README.md        # 源仓库 README（若有）
+│           └── stats.json       # 下载量快照（GitHub Release 资产；详情页懒加载）
 ├── web/
 │   ├── index.html              # 市场页
 │   ├── market.css / market.js  # 样式与渲染逻辑
@@ -35,6 +36,28 @@ dsh-pack-market/
 - **`index/index.json` 与 `index/packs/` 由采集器自动生成**:`deploy-pages.yml` 每 6 小时定时 / 手动 / 推送时运行 `scripts/collect.mjs`,**不要在这里手改**。
 - **索引是精简指针制（schemaVersion 2）**：`index.json` 只保留列表卡片 / 搜索 / 安装命令需要的字段（`name`/`version`/`displayName`/`description`/`author`/`category`/`dshVersion`/`profileName`/`downloadUrl`/`sha256`/`size`/`updatedAt` + `id`/`owner`/`repo` + 计数）。完整 `manifest.json` 与 `README.md` 拆到 `index/packs/<owner>.<repo>/`，市场详情页点开时懒加载。
 - `web/index.json`、`web/packs/` 是部署时从 `index/` 复制的快照，仅用于本地 `npx serve web/` 预览，**也不要手改**。
+
+## 采集器的可靠性约定
+
+采集是「扫描 + 抓取 + 写回 + 提交」的自动化流水线，因此**宁可这一轮不更新，也不发一个残缺索引**：
+
+| 情况 | 处理 |
+| --- | --- |
+| 网络错误 / 403 / 429 / 5xx（**瞬时失败**） | 本轮**沿用上一轮**的索引条目与 `packs/` 文件，不删任何东西（失败信息打在日志里） |
+| 404 / 410 / 451（**确定不存在**） | 视为「不是整合包 / 作者已撤下」，按 topic 命中但不收录处理 |
+| 仓库仍命中 topic，但抓取失败 | 保留旧目录（**只有撤出 topic / 归档 / 删库才会清理目录**） |
+| topic 命中数或最终收录数跌破上轮的 70% | **熔断**：本轮直接不写入任何文件并非零退出（CI 因此不会提交）。确认是有意收缩时设 `ALLOW_SHRINK=1` 重跑 |
+| 索引条目与上轮完全一致 | 不重写 `index.json`（避免只改 `generatedAt` 的空提交） |
+
+其他实现细节：包级并发 5（I/O 密集）；每轮对 `api.github.com` 的请求数 ≈ `1 + 包数`（Release 列表一次拿到最新资产与全部版本下载量）；`sha256` 优先取 GitHub 资产元数据的 `digest` 字段，省一次请求，也避免采集器自己刷高作者的 `.sha256` 侧车下载计数。
+
+### 下载量口径（`stats.json`）
+
+- 来源：GitHub Releases API 的 `assets[].download_count`（**累计值**，GitHub 侧本身有刷新延迟）；
+- **只统计包资产**（`.dspack` / `.tgz`，无则回退 `.zip`），**不含** `.sha256` 侧车与说明文件（侧车实测能占包资产的 10%~25%，混进去会虚高）；
+- 含重复下载与自动化拉取，**不等于安装量**；
+- `dailyAvg` = 累计 ÷ 发布以来天数，用于抵消「老包占便宜」；
+- 下载源不是 GitHub Release（清单直连到自有 CDN / jsDelivr 等）的包**没有该文件**，详情页不显示下载量——用「无数据」而不是「0」表示。
 
 ## 如何发布（让整合包被收录）
 
