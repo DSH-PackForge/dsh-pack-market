@@ -18,6 +18,9 @@
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
+/* 作者样式里的 display 会盖过 UA 的 [hidden]{display:none}（来源层级高于优先级），
+   这里显式兜底，避免给元素加了 display 之后 hidden 属性失效（如 .hero 用 flex 布局）。*/
+[hidden] { display: none !important; }
 html { color-scheme: light dark; }
 body {
   background: var(--paper);
