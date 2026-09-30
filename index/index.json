@@ -1,7 +1,55 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-09-30T12:38:53.764Z",
+  "generatedAt": "2026-09-30T17:11:39.779Z",
   "modpacks": [
+    {
+      "manifestVersion": 5,
+      "type": "profile",
+      "name": "smoother-deepseek-harness",
+      "version": "1.0.2",
+      "displayName": "丝滑的DSH",
+      "description": "【推荐官方桌面端安装】你的DSH——比想象的更丝滑！本整合包添加了dsh-smooth-stream插件使流式输出更丝滑、dsh-myskin自定义皮肤，添加dsh-client-ui-task-board插件添加方便的任务看板，添加底部信息栏插件、小鯨鱼插件为工作区增添趣味，以及dsh-pack-plugin管理整合包。添加20个skill用于优化以及编码指导。",
+      "author": "HXH",
+      "category": "uncategorized",
+      "dshVersion": "",
+      "profileName": "smoother-deepseek-harness",
+      "downloadUrl": "https://github.com/hxh230802/smoother-deepseek-harness/releases/download/v1.0.2/smoother-deepseek-harness-1.0.2.dspack",
+      "sha256": "eab4ed70d83e3cb986d04a57e88898b667168e054a1dfb672cdee7dba4854f0f",
+      "size": 52371,
+      "updatedAt": "2026-09-30",
+      "id": "hxh230802.smoother-deepseek-harness",
+      "owner": "hxh230802",
+      "repo": "smoother-deepseek-harness",
+      "bundleCount": 8,
+      "depCount": 6
+    },
+    {
+      "manifestVersion": 5,
+      "type": "profile",
+      "name": "better-deepseek-harness-codex",
+      "version": "2.0.0",
+      "displayName": {
+        "zh-CN": "更好的 deepseek harness（codex 风格）",
+        "en-US": "Better DeepSeek Harness (Codex Style)"
+      },
+      "description": {
+        "zh-CN": "面向 Coding 用户的 DSH 整合包：Codex 风格工作区侧栏与轮次导航、/review 独立子 Agent 代码审查、/simplify Git 范围代码简化、只读旁问、Codex 式思考强度连续滑块、费用与余额计量、DeepSeek 鲸鱼娘桌宠、AST 上下文压缩与 token 预算守卫、Git 分支图、Windows Computer Use 桌面操控（22 个工具，含安全护栏）。基座 DSH 0.2.0-rc.2，全部插件已更新到最新版本并校验兼容性。",
+        "en-US": "A coding-oriented DSH modpack: Codex-style workspace sidebar and turn navigation, /review independent code review, /simplify Git-scoped simplification, read-only side-ask, Codex-style reasoning-effort slider, cost and balance metering, a DeepSeek whale-girl desk pet, AST context compression with token budget guard, a Git graph, and Windows Computer Use desktop control (22 tools with safety guards). Built for DSH 0.2.0-rc.2; all plugins updated to latest versions and verified for compatibility."
+      },
+      "author": "yukitakasama",
+      "category": "coding",
+      "dshVersion": "0.2.0-rc.2",
+      "profileName": "better-deepseek-harness-codex",
+      "downloadUrl": "https://github.com/yukitakasama/better-deepseek-harness-codex/releases/download/v2.0.0/better-deepseek-harness-codex-2.0.0.dspack",
+      "sha256": "8326e7a9f559cef9362851c7bf7fe455f7816002433af74e6e738883ee140912",
+      "size": 4364,
+      "updatedAt": "2026-09-30",
+      "id": "yukitakasama.better-deepseek-harness-codex",
+      "owner": "yukitakasama",
+      "repo": "better-deepseek-harness-codex",
+      "bundleCount": 12,
+      "depCount": 10
+    },
     {
       "manifestVersion": 5,
       "type": "profile",
@@ -47,27 +95,6 @@
     {
       "manifestVersion": 5,
       "type": "profile",
-      "name": "smoother-deepseek-harness",
-      "version": "1.0.1",
-      "displayName": "丝滑的DSH",
-      "description": "【推荐官方桌面端安装】你的DSH——比想象的更丝滑！本整合包添加了dsh-smooth-stream插件使流式输出更丝滑，添加dsh-client-ui-task-board插件添加方便的任务看板，添加底部信息栏插件、小鯨鱼插件为工作区增添趣味，以及dsh-pack-plugin管理整合包。添加20个skill用于优化以及编码指导。",
-      "author": "HXH",
-      "category": "uncategorized",
-      "dshVersion": "",
-      "profileName": "smoother-deepseek-harness",
-      "downloadUrl": "https://github.com/hxh230802/smoother-deepseek-harness/releases/download/v1.0.1/smoother-deepseek-harness-1.0.1.dspack",
-      "sha256": "b2ed99b7315a98b33e21c56db9fd62b57548a3a5550faf2396b27ff04a295bfb",
-      "size": 50106,
-      "updatedAt": "2026-09-29",
-      "id": "hxh230802.smoother-deepseek-harness",
-      "owner": "hxh230802",
-      "repo": "smoother-deepseek-harness",
-      "bundleCount": 7,
-      "depCount": 5
-    },
-    {
-      "manifestVersion": 5,
-      "type": "profile",
       "name": "dsh-bcut-edit",
       "version": "1.0.0",
       "displayName": "必剪视频剪辑技能包（bcut-edit）",
@@ -106,33 +133,6 @@
       "repo": "cad-ppt-skills",
       "bundleCount": 2,
       "depCount": 0
-    },
-    {
-      "manifestVersion": 5,
-      "type": "profile",
-      "name": "better-deepseek-harness",
-      "version": "2.0.0",
-      "displayName": {
-        "zh-CN": "更好的 DeepSeek Harness",
-        "en-US": "Better DeepSeek Harness"
-      },
-      "description": {
-        "zh-CN": "面向 Coding 用户的 DSH 整合包：Codex 风格工作区侧栏与轮次导航、/review 独立子 Agent 代码审查、/simplify Git 范围代码简化、只读旁问、Codex 式思考强度连续滑块、费用与余额计量、DeepSeek 鲸鱼娘桌宠、AST 上下文压缩与 token 预算守卫、Git 分支图、Windows Computer Use 桌面操控（22 个工具，含安全护栏）。基座 DSH 0.2.0-rc.2，全部插件已更新到最新版本并校验兼容性。",
-        "en-US": "A coding-oriented DSH modpack: Codex-style workspace sidebar and turn navigation, /review independent code review, /simplify Git-scoped simplification, read-only side-ask, Codex-style reasoning-effort slider, cost and balance metering, a DeepSeek whale-girl desk pet, AST context compression with token budget guard, a Git graph, and Windows Computer Use desktop control (22 tools with safety guards). Built for DSH 0.2.0-rc.2; all plugins updated to latest versions and verified for compatibility."
-      },
-      "author": "yukitakasama",
-      "category": "coding",
-      "dshVersion": "0.2.0-rc.2",
-      "profileName": "better-deepseek-harness",
-      "downloadUrl": "https://github.com/yukitakasama/better-deepseek-harness/releases/download/v1.1.0/better-deepseek-harness-1.1.0.dspack",
-      "sha256": "c40859841289f1a5ee265c4123c88e1541d5f3917f6cc44b5eb895bb77d2858d",
-      "size": 4226,
-      "updatedAt": "2026-09-25",
-      "id": "yukitakasama.better-deepseek-harness",
-      "owner": "yukitakasama",
-      "repo": "better-deepseek-harness",
-      "bundleCount": 12,
-      "depCount": 10
     },
     {
       "manifestVersion": 5,
