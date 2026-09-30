@@ -30,9 +30,56 @@
     </div>
   </nav>
   <div class="hero">
-    <h1>DSH 整合包市场</h1>
-    <p class="sub">像玩 Minecraft 整合包一样，<strong>一键导出、分享、安装</strong> DSH AI 智能体配置包。</p>
-    <div class="stats" id="stats"><span class="stat"><b id="stat-count">–</b>个整合包</span><span class="stat"><b id="stat-cats">–</b>个分类</span><span class="stat"><b id="stat-authors">–</b>位作者</span></div>
+    <div class="hero-copy">
+      <h1>DSH 整合包市场</h1>
+      <p class="sub">像玩 Minecraft 整合包一样，<strong>一键导出、分享、安装</strong> DSH AI 智能体配置包。</p>
+      <div class="stats" id="stats"><span class="stat"><b id="stat-count">–</b>个整合包</span><span class="stat"><b id="stat-cats">–</b>个分类</span><span class="stat"><b id="stat-authors">–</b>位作者</span></div>
+    </div>
+    <!-- 装饰动图：等距堆叠的三层「整合包」+ 缓慢环绕的生态轨道（纯 SVG + CSS，无外部依赖） -->
+    <div class="hero-art" aria-hidden="true">
+      <svg class="hero-anim" viewBox="0 0 260 220" focusable="false">
+        <defs>
+          <radialGradient id="haGlow" cx="50%" cy="50%" r="55%">
+            <stop class="ha-glow-s1" offset="0%"/>
+            <stop class="ha-glow-s2" offset="100%"/>
+          </radialGradient>
+          <linearGradient id="haTop" x1="0.15" y1="0" x2="0.85" y2="1">
+            <stop class="ha-top-s1" offset="0%"/>
+            <stop class="ha-top-s2" offset="100%"/>
+          </linearGradient>
+        </defs>
+
+        <!-- 背景柔光 -->
+        <ellipse class="ha-glow" cx="130" cy="110" rx="116" ry="100" fill="url(#haGlow)"/>
+
+        <!-- 生态轨道：虚线圆环 + 一粒朱砂点（同心，点恰好走在环上） -->
+        <g class="ha-orbit">
+          <circle class="ha-ring" cx="130" cy="110" r="96" fill="none" stroke-width="1" stroke-dasharray="3 7"/>
+          <circle class="ha-node" cx="226" cy="110" r="3.5"/>
+        </g>
+
+        <!-- 投影 -->
+        <ellipse class="ha-shadow" cx="130" cy="176" rx="82" ry="8"/>
+
+        <!-- 三层等距纸片（自下而上） -->
+        <g class="ha-l3">
+          <path class="ha-side ha-side-3" d="M44 124 L130 167 L216 124 L216 130 L130 173 L44 130 Z"/>
+          <path class="ha-face ha-face-3" d="M130 81 L216 124 L130 167 L44 124 Z"/>
+        </g>
+        <g class="ha-l2">
+          <path class="ha-side ha-side-2" d="M44 110 L130 153 L216 110 L216 116 L130 159 L44 116 Z"/>
+          <path class="ha-face ha-face-2" d="M130 67 L216 110 L130 153 L44 110 Z"/>
+        </g>
+        <g class="ha-l1">
+          <path class="ha-side ha-side-1" d="M44 96 L130 139 L216 96 L216 102 L130 145 L44 102 Z"/>
+          <path class="ha-face ha-face-top" d="M130 53 L216 96 L130 139 L44 96 Z" fill="url(#haTop)"/>
+        </g>
+
+        <!-- 墨点 -->
+        <circle class="ha-speck ha-speck-1" cx="74" cy="72" r="2"/>
+        <circle class="ha-speck ha-speck-2" cx="196" cy="64" r="1.6"/>
+      </svg>
+    </div>
   </div>
 </header>
 

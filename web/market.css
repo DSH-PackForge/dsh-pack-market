@@ -66,6 +66,67 @@ body {
 }
 .stat b { color: var(--cinnabar); font-family: var(--display); font-size: 15px; }
 
+/* ── hero 装饰动图（等距三层纸片 + 环绕轨道）─────────────
+   动效时长互相整除（bob 6s / orbit 12s），便于离线抽帧预览；
+   --d 为各元素相位，--ha-freeze 供预览抽帧（生产恒为 0）。*/
+.hero { display: flex; align-items: center; justify-content: space-between; gap: 36px; }
+.hero-copy { flex: 1 1 auto; min-width: 0; }
+.hero-art { flex: 0 0 auto; width: 320px; max-width: 34vw; }
+.hero-anim { display: block; width: 100%; height: auto; overflow: visible; }
+@media (max-width: 880px) { .hero-art { display: none; } }
+
+/* 配色（跟随明暗主题） */
+.hero-anim .ha-glow-s1 { stop-color: var(--cinnabar); stop-opacity: .17; }
+.hero-anim .ha-glow-s2 { stop-color: var(--cinnabar); stop-opacity: 0; }
+.hero-anim .ha-top-s1 { stop-color: var(--cinnabar); stop-opacity: .95; }
+.hero-anim .ha-top-s2 { stop-color: var(--cinnabar-deep); stop-opacity: .95; }
+.hero-anim .ha-ring { stroke: var(--line-2); opacity: .5; }
+.hero-anim .ha-node { fill: var(--cinnabar); }
+.hero-anim .ha-shadow { fill: rgba(43, 38, 32, .11); transform-origin: 130px 176px; }
+.hero-anim .ha-face { fill: var(--card); stroke: var(--line-2); stroke-width: 1; }
+.hero-anim .ha-side { fill: var(--line-2); }
+.hero-anim .ha-face-3 { fill: var(--paper-2); stroke: var(--line); }
+.hero-anim .ha-side-3 { fill: var(--line); }
+.hero-anim .ha-face-top { fill: url(#haTop); stroke: none; }
+.hero-anim .ha-side-1 { fill: var(--cinnabar-deep); }
+.hero-anim .ha-speck { fill: var(--cinnabar); opacity: 0; }
+@media (prefers-color-scheme: dark) {
+  .hero-anim .ha-shadow { fill: rgba(0, 0, 0, .2); }
+  .hero-anim .ha-glow-s1 { stop-opacity: .22; }
+}
+
+/* 动效 */
+.hero-anim .ha-l1,
+.hero-anim .ha-l2,
+.hero-anim .ha-l3,
+.hero-anim .ha-orbit,
+.hero-anim .ha-glow,
+.hero-anim .ha-shadow,
+.hero-anim .ha-speck {
+  animation-duration: 6s; animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+  animation-delay: calc(var(--d, 0s) - var(--ha-freeze, 0s));
+}
+.hero-anim .ha-l1, .hero-anim .ha-l2, .hero-anim .ha-l3 { animation-name: ha-bob; }
+.hero-anim .ha-l2 { --d: .5s; }
+.hero-anim .ha-l1 { --d: 1s; }
+.hero-anim .ha-orbit { animation-name: ha-spin; animation-duration: 12s; animation-timing-function: linear; transform-origin: 130px 110px; }
+.hero-anim .ha-glow { animation-name: ha-pulse; }
+.hero-anim .ha-shadow { animation-name: ha-shadow; }
+.hero-anim .ha-speck-1 { animation-name: ha-float; --d: 1.6s; }
+.hero-anim .ha-speck-2 { animation-name: ha-float; --d: 3.8s; }
+
+@keyframes ha-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+@keyframes ha-spin { to { transform: rotate(360deg); } }
+@keyframes ha-pulse { 0%, 100% { opacity: .6; } 50% { opacity: 1; } }
+@keyframes ha-shadow { 0%, 100% { opacity: .9; transform: scale(1); } 50% { opacity: .6; transform: scale(.94); } }
+@keyframes ha-float { 0% { opacity: 0; transform: translateY(6px); } 30% { opacity: .75; } 70% { opacity: .55; } 100% { opacity: 0; transform: translateY(-14px); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-anim * { animation: none !important; }
+  .hero-anim .ha-speck { opacity: .5; }
+}
+
 /* ── controls ───────────────────────────────────────── */
 .controls { max-width: 1080px; margin: 26px auto 8px; padding: 0 24px; }
 .search {
