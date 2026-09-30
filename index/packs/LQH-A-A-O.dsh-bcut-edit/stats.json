@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-09-30T17:39:47.003Z",
+  "source": "github-releases",
+  "repo": "LQH-A-A-O/dsh-bcut-edit",
+  "total": 75,
+  "dailyAvg": 15,
+  "since": "2026-09-26",
+  "days": 5,
+  "current": "1.0.0",
+  "currentDownloads": 75,
+  "versions": [
+    {
+      "version": "1.0.0",
+      "tag": "v1.0.0",
+      "downloads": 75,
+      "publishedAt": "2026-09-26"
+    }
+  ]
+}
