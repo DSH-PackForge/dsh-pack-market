@@ -271,8 +271,8 @@ const ECOSYSTEM = [
   {
     name: 'dsh-pack-plugin',
     url: 'https://github.com/DSH-PackForge/dsh-pack-plugin',
-    role: '参考实现',
-    desc: '整合包管理插件 bundle 的参考实现：.dspack 导出/安装、多 profile 切换、市场浏览、工作区配置与任务中心。',
+    role: '桌面端插件',
+    desc: 'DSH 整合包管理插件：.dspack 导出/安装、多 profile 切换、市场浏览、工作区配置与任务中心。',
   },
 ];
 
