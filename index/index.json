@@ -1,7 +1,49 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-09-30T05:36:07.949Z",
+  "generatedAt": "2026-09-30T12:38:53.764Z",
   "modpacks": [
+    {
+      "manifestVersion": 5,
+      "type": "profile",
+      "name": "dsh-simple-drawing",
+      "version": "1.1.0",
+      "displayName": "dsh简易绘图能力包",
+      "description": "用代码作画，四条路线：①把参考图提取成「多边形骨架 + 内孔 + 调色板」的可编辑结构，再按分层规则重画、换任意配色；②用 MakeHuman 网格数据做七头身人体立绘（十块 canon 分区 → 生成适配衣服 → 按 Live2D 式层序组合 → 像素级细修）；③用轴对齐方块拼《我的世界》式角色，粗细靠像素梯度而不靠几何；④把任何平涂图转成像素画（分格取众数 + 调色板量化 + 硬边放大）。技能落在 DSH_HOME 的 skills/ 下。依赖 numpy / pillow / opencv-python-headless；路线②需要本机 MakeHuman 数据（只读 npz，不用运行它），用环境变量 MAKEHUMAN_DIR 指定。",
+      "author": "涟崎桦",
+      "category": "uncategorized",
+      "dshVersion": "",
+      "profileName": "layered-art",
+      "downloadUrl": "https://github.com/LQH-A-A-O/dsh-simple-drawing/releases/download/v1.1.0/dsh-simple-drawing-1.1.0.dspack",
+      "sha256": "56060aa7d4f529437496b2b846393f5a815e354c94535a809181610b2022affc",
+      "size": 129785,
+      "updatedAt": "2026-09-30",
+      "id": "LQH-A-A-O.dsh-simple-drawing",
+      "owner": "LQH-A-A-O",
+      "repo": "dsh-simple-drawing",
+      "bundleCount": 2,
+      "depCount": 0
+    },
+    {
+      "manifestVersion": 5,
+      "type": "profile",
+      "name": "desktop-pack",
+      "version": "1.0.0",
+      "displayName": "桌面端整合包",
+      "description": "DeepSeek Harness 桌面端整合包：packforge 打包 + 上下文管理 + 插件市场 + 模型代理",
+      "author": "1900992335",
+      "category": "uncategorized",
+      "dshVersion": "0.2.0-rc.2",
+      "profileName": "desktop",
+      "downloadUrl": "https://github.com/1900992335/desktop-pack/releases/download/v1.0.0/desktop-pack-1.0.0.dspack",
+      "sha256": "cc4c0a1650649c8bd37edc2587b081f8e28a08f2ade78d39a26e14fccd0373e1",
+      "size": 3967,
+      "updatedAt": "2026-09-30",
+      "id": "1900992335.desktop-pack",
+      "owner": "1900992335",
+      "repo": "desktop-pack",
+      "bundleCount": 7,
+      "depCount": 4
+    },
     {
       "manifestVersion": 5,
       "type": "profile",
@@ -22,27 +64,6 @@
       "repo": "smoother-deepseek-harness",
       "bundleCount": 7,
       "depCount": 5
-    },
-    {
-      "manifestVersion": 5,
-      "type": "profile",
-      "name": "dsh-simple-drawing",
-      "version": "1.0.0",
-      "displayName": "dsh简易绘图能力包",
-      "description": "用代码作画，四条路线：①把参考图提取成「多边形骨架 + 内孔 + 调色板」的可编辑结构，再按分层规则重画、换任意配色；②用 MakeHuman 网格数据做七头身人体立绘（十块 canon 分区 → 生成适配衣服 → 按 Live2D 式层序组合 → 像素级细修）；③用轴对齐方块拼《我的世界》式角色，粗细靠像素梯度而不靠几何；④把任何平涂图转成像素画（分格取众数 + 调色板量化 + 硬边放大）。技能落在 DSH_HOME 的 skills/ 下。依赖 numpy / pillow / opencv-python-headless；路线②需要本机 MakeHuman 数据（只读 npz，不用运行它），用环境变量 MAKEHUMAN_DIR 指定。",
-      "author": "涟崎桦",
-      "category": "uncategorized",
-      "dshVersion": "",
-      "profileName": "layered-art",
-      "downloadUrl": "https://github.com/LQH-A-A-O/dsh-simple-drawing/releases/download/v1.0.0/dsh-simple-drawing-1.0.0.dspack",
-      "sha256": "dc0c876693d868043a8f0fa5f6c33580d2f5e03821ab36c400610e294e270f2b",
-      "size": 82609,
-      "updatedAt": "2026-09-27",
-      "id": "LQH-A-A-O.dsh-simple-drawing",
-      "owner": "LQH-A-A-O",
-      "repo": "dsh-simple-drawing",
-      "bundleCount": 2,
-      "depCount": 0
     },
     {
       "manifestVersion": 5,
@@ -90,18 +111,18 @@
       "manifestVersion": 5,
       "type": "profile",
       "name": "better-deepseek-harness",
-      "version": "1.1.0",
+      "version": "2.0.0",
       "displayName": {
         "zh-CN": "更好的 DeepSeek Harness",
         "en-US": "Better DeepSeek Harness"
       },
       "description": {
-        "zh-CN": "面向 Coding 用户的 DSH 整合包：Codex 风格工作区侧栏与轮次导航、/review 独立子 Agent 代码审查、/simplify Git 范围代码简化、只读旁问、Codex 式思考强度连续滑块、费用与余额计量、DeepSeek 鲸鱼娘桌宠、AST 上下文压缩与 token 预算守卫、消息回改、Git 分支图、Windows Computer Use 桌面操控（22 个工具，含安全护栏）。基座 DSH 0.1.7-rc.2，全部插件已逐一校验 peer 兼容与 UI 插槽不冲突。",
-        "en-US": "A coding-oriented DSH modpack: Codex-style workspace sidebar and turn navigation, /review independent code review, /simplify Git-scoped simplification, read-only side-ask, Codex-style reasoning-effort slider, cost and balance metering, a DeepSeek whale-girl desk pet, AST context compression with token budget guard, message re-edit, a Git graph, and Windows Computer Use desktop control (22 tools with safety guards). Built for DSH 0.1.7-rc.2; every plugin verified for peer compatibility and non-overlapping UI slots."
+        "zh-CN": "面向 Coding 用户的 DSH 整合包：Codex 风格工作区侧栏与轮次导航、/review 独立子 Agent 代码审查、/simplify Git 范围代码简化、只读旁问、Codex 式思考强度连续滑块、费用与余额计量、DeepSeek 鲸鱼娘桌宠、AST 上下文压缩与 token 预算守卫、Git 分支图、Windows Computer Use 桌面操控（22 个工具，含安全护栏）。基座 DSH 0.2.0-rc.2，全部插件已更新到最新版本并校验兼容性。",
+        "en-US": "A coding-oriented DSH modpack: Codex-style workspace sidebar and turn navigation, /review independent code review, /simplify Git-scoped simplification, read-only side-ask, Codex-style reasoning-effort slider, cost and balance metering, a DeepSeek whale-girl desk pet, AST context compression with token budget guard, a Git graph, and Windows Computer Use desktop control (22 tools with safety guards). Built for DSH 0.2.0-rc.2; all plugins updated to latest versions and verified for compatibility."
       },
       "author": "yukitakasama",
       "category": "coding",
-      "dshVersion": "0.1.7-rc.2",
+      "dshVersion": "0.2.0-rc.2",
       "profileName": "better-deepseek-harness",
       "downloadUrl": "https://github.com/yukitakasama/better-deepseek-harness/releases/download/v1.1.0/better-deepseek-harness-1.1.0.dspack",
       "sha256": "c40859841289f1a5ee265c4123c88e1541d5f3917f6cc44b5eb895bb77d2858d",
@@ -110,8 +131,8 @@
       "id": "yukitakasama.better-deepseek-harness",
       "owner": "yukitakasama",
       "repo": "better-deepseek-harness",
-      "bundleCount": 13,
-      "depCount": 11
+      "bundleCount": 12,
+      "depCount": 10
     },
     {
       "manifestVersion": 5,

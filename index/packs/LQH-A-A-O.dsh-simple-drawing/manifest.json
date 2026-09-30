@@ -2,7 +2,7 @@
   "manifestVersion": 5,
   "type": "profile",
   "name": "dsh-simple-drawing",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "profileName": "layered-art",
   "bundles": [
     "@deepseek-ai/dsh-base",

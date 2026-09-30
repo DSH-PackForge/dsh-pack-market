@@ -1,0 +1,30 @@
+{
+  "manifestVersion": 5,
+  "type": "profile",
+  "name": "desktop-pack",
+  "version": "1.0.0",
+  "displayName": "桌面端整合包",
+  "description": "DeepSeek Harness 桌面端整合包：packforge 打包 + 上下文管理 + 插件市场 + 模型代理",
+  "author": "1900992335",
+  "icon": "",
+  "dshVersion": "0.2.0-rc.2",
+  "profileName": "desktop",
+  "bundles": [
+    "@deepseek-ai/dsh-base",
+    "@deepseek-ai/dsh-web-app",
+    "@deepseek-ai/dsh-experimental-auto-review",
+    "dsh-context",
+    "dsh-plugin-marketplace",
+    "dsh-plugin-model-proxy",
+    "@dsh-packforge/dsh-pack-plugin"
+  ],
+  "dependencies": {
+    "@dsh-packforge/dsh-pack-plugin": "0.3.5",
+    "dsh-context": "0.61.0",
+    "dsh-plugin-marketplace": "0.4.0",
+    "dsh-plugin-model-proxy": "0.1.6"
+  },
+  "patch": "# Your patch layer for this dsh profile, applied after every bundle layer:\n# a top-level YAML array of loader patch entries (id-targeted config\n# overrides, disables, and insert lists; `!!js` expressions allowed).\n- id: agent-default-model\n  name: \"@deepseek-ai/dsh-agent-default-model\"\n  config:\n    provider: deepseek-account\n    model: deepseek-flash\n    reasoningEffort: high\n- id: ui-settings-account\n  name: \"@deepseek-ai/dsh-client-ui-settings-account\"\n  config:\n    version: 1\n    step: done\n    purpose: office\n    process: compact\n    completion: completed\n    usage: compact\n    developerTools: false\n- id: ui-chat\n  name: \"@deepseek-ai/dsh-client-ui-chat\"\n  config:\n    transcriptView: detailed\n    performanceUsage: detailed\n    linkOpening: sidebar\n- id: ui-settings\n  name: \"@deepseek-ai/dsh-client-ui-settings\"\n  config:\n    enabled: true\n",
+  "files": [],
+  "sha256": "cc4c0a1650649c8bd37edc2587b081f8e28a08f2ade78d39a26e14fccd0373e1"
+}
