@@ -527,25 +527,44 @@ async function showDetail(name) {
 
   let full = null;
   let readme = '';
+  let stats = null;
   if (entry.id && entry.owner && entry.repo) {
     const base = `packs/${entry.id}/`;
     try {
-      [full, readme] = await Promise.all([
+      [full, readme, stats] = await Promise.all([
         fetchJson(base + 'manifest.json').catch(() => null),
         fetchText(base + 'README.md').catch(() => ''),
+        fetchJson(base + 'stats.json').catch(() => null),
       ]);
     } catch {
       /* 懒加载失败则降级为仅用索引条目渲染 */
     }
   }
 
-  d.innerHTML = detailHTML(mergeDetail(entry, full), readme, Boolean(full));
+  d.innerHTML = detailHTML(mergeDetail(entry, full), readme, Boolean(full), stats);
 }
 
-function detailHTML(m, readme, hasFull) {
+function detailHTML(m, readme, hasFull, stats) {
   const size = m.size ? `${(m.size / 1024).toFixed(1)} KB` : '';
   const cmd = `dspack install ${m.downloadUrl}`;
   const type = m.type === 'dshhome' ? 'dshhome' : 'profile';
+
+  // 下载量（来自 packs/<id>/stats.json，CI 每轮采集时刷新；统计不到就整块不渲染）
+  const num = (n) => (typeof n === 'number' ? n.toLocaleString('en-US') : '–');
+  let statsBlock = '';
+  if (stats && stats.source === 'github-releases' && Array.isArray(stats.versions) && stats.versions.length) {
+    const rows = stats.versions
+      .map((v) => `<li><code>${esc(v.tag || v.version)}</code><span class="arrow">→</span><span>${num(v.downloads)} 次</span>${v.publishedAt ? `<span>· ${esc(v.publishedAt)}</span>` : ''}</li>`)
+      .join('');
+    statsBlock = `
+      <section class="d-block">
+        <h3>下载量</h3>
+        <p class="d-line">累计 <b>${num(stats.total)}</b> 次 · 发布以来日均 <b>${num(stats.dailyAvg)}</b> 次${stats.since ? ` · 统计自 ${esc(stats.since)}` : ''}${typeof stats.currentDownloads === 'number' ? ` · 当前版本 ${esc(stats.current)} 为 ${num(stats.currentDownloads)} 次` : ''}</p>
+        <h4>分版本（${stats.versions.length}）</h4>
+        <ul class="d-list">${rows}</ul>
+        <p class="d-note">口径：只统计 GitHub Release 里 .dspack / .tgz 包资产的下载次数，不含 .sha256 侧车；含重复下载与自动化拉取，<b>不等于安装量</b>。数据每 6 小时随采集刷新。</p>
+      </section>`;
+  }
 
   // profile 形态：bundles + dependencies；dshhome 形态：profiles/presets/skills/instructions
   let contentBlock = '';
@@ -679,6 +698,7 @@ function detailHTML(m, readme, hasFull) {
         </div>
       </section>
 
+      ${statsBlock}
       ${contentBlock}
       ${compatBlock}
       ${readmeBlock}
