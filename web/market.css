@@ -172,9 +172,11 @@ body {
   padding: 2px 8px; border-radius: 999px; white-space: nowrap;
 }
 .card .pkg { font-family: var(--mono); font-size: 12px; color: var(--ink-3); word-break: break-all; }
-/* 描述最多 4 行，超出省略，保证卡片高度一致 */
+/* 描述最多 4 行，超出省略。注意用 flex: 0 0 auto 而不是 flex: 1：
+   flex:1 等价 flex-basis:0，高度会改由「网格拉伸后的剩余空间」决定，
+   可能不足 4 行且非行高整数倍，overflow:hidden 就会把末行拦腰截断。*/
 .card .desc {
-  color: var(--ink-2); font-size: 14px; flex: 1;
+  color: var(--ink-2); font-size: 14px; flex: 0 0 auto;
   display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -184,7 +186,8 @@ body {
   border-radius: 999px; padding: 2px 10px;
 }
 .chip.tag { color: var(--cinnabar); border-color: var(--cinnabar-border); background: var(--cinnabar-soft); }
-.card .foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; border-top: 1px solid var(--line); padding-top: 12px; }
+/* 底部信息贴底：代替原先描述上的 flex:1，让同排卡片高度一致时尾巴对齐 */
+.card .foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; border-top: 1px solid var(--line); padding-top: 12px; margin-top: auto; }
 .card .sha { font-family: var(--mono); font-size: 11px; color: var(--ink-3); }
 
 /* 一键安装主按钮 */
