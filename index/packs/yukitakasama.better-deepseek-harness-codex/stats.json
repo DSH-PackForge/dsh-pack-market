@@ -1,17 +1,17 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-02T12:39:46.694Z",
+  "generatedAt": "2026-10-02T22:16:38.898Z",
   "source": "github-releases",
   "repo": "yukitakasama/better-deepseek-harness-codex",
-  "total": 1877,
+  "total": 1940,
   "since": "2026-09-25",
   "current": "2.0.0",
-  "currentDownloads": 350,
+  "currentDownloads": 413,
   "versions": [
     {
       "version": "2.0.0",
       "tag": "v2.0.0",
-      "downloads": 350,
+      "downloads": 413,
       "publishedAt": "2026-09-30"
     },
     {
