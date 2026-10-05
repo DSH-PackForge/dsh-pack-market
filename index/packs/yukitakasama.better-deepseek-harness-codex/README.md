@@ -1,5 +1,7 @@
 # 更好的 deepseek harness（codex 风格）
 
+[English](README.en.md) | 简体中文
+
 面向 **Coding 用户**的 DeepSeek Harness 整合包，向 Codex 的风格与功能看齐。
 基座 **DSH 0.2.0-rc.2**。
 
@@ -18,6 +20,16 @@
 - **桌宠** —— DeepSeek 娘鲸鱼女仆，报开工收工与单轮花费
 - **上下文守卫** —— AST 压缩、测试日志过滤、token 预算
 - **Git 图** —— 分支选择与提交图
+- **多智能体协作** —— agent-teams 多 Agent 团队协作；dsh-agent-arena 多智能体议事厅与提示词竞技场（可调协作栏、渠道限流、自动接话）
+- **上下文仪表盘** —— dsh-context 上下文可视化
+- **子代理选模型** —— subagent-director 为每个子代理独立指定模型
+- **循环守护** —— loop-guard 检测模型空转退化循环，自动打断并注入纠正提示
+- **跨会话记忆** —— mneme 让 agent 记住项目背景与既往决策
+- **视觉理解** —— modlens 视觉桥，截图/图片路由到视觉模型理解
+- **内嵌配图** —— inline-figures 让回答变成「文字-图-文字」
+- **Prompt 工具箱** —— dsh-prompt 24 条深度模板随手点选
+- **动态壁纸** —— Wallpaper Engine 壁纸搬进 DSH 网页界面
+- **额度上限** —— key-limits 显示 API key / 订阅剩余额度（与 cost-meter 互补）
 - **Computer Use** —— 操控 Windows 原生桌面：UIA 无障碍树观察、截图、鼠标键盘、窗口管理（22 个工具）
 
 ## 安装
@@ -29,6 +41,9 @@ dsh --profile better-deepseek-harness-codex
 ```
 
 或由 DSH 启动器导入 `.dspack`。
+
+> **注意**：自 v2.2.0 起，`dsh-agent-arena` 以 git fork 依赖（`github:yukitakasama/dsh-agent-arena#25e2c55`）
+> 引入，安装时需能访问 GitHub。上游发布面向 0.2.0-rc.2 的官方版本后将改回 npm registry 版本。
 
 ## v2.0.0 变更说明
 
@@ -57,7 +72,7 @@ dsh --profile better-deepseek-harness-codex
 - `dshVersions`: 声明实测兼容版本集合（0.2.0-rc.2、0.2.0-rc.1）
 - `launchers`: 声明启动器兼容性（dshl、dsh-packforge-app）
 
-## 插件清单（10 个）
+## 插件清单（21 个）
 
 | 插件 | 版本 | 作用 |
 |---|---|---|
@@ -71,6 +86,17 @@ dsh --profile better-deepseek-harness-codex
 | `@goodandready/dsh-context-lens` | 0.1.28 | AST 上下文压缩、token 预算守卫 |
 | `@linxin666/dsh-client-ui-git-graph` | 0.4.4 | Git 分支图 |
 | `dsh-computer-use-win` | 0.2.3 | Windows Computer Use 桌面操控（22 工具） |
+| `@nanmicoder/dsh-agent-teams` | 0.1.22 | 多智能体团队协作 |
+| `dsh-context` | 0.63.0 | 上下文可视化仪表盘 |
+| `dsh-plugin-subagent-director` | 0.5.5 | 子代理独立选模型 |
+| `dsh-agent-arena` | 0.6.0（fork `25e2c55`） | 多智能体议事厅与提示词竞技场 |
+| `@mrweicodes/dsh-loop-guard` | 1.0.8 | 思考循环守护，自动打断空转 |
+| `@modusensus/dsh-mneme` | 0.8.13 | 跨会话长期记忆 |
+| `@liustack/modlens` | 3.26.6 | 视觉桥与截图理解 |
+| `dsh-inline-figures` | 0.1.0 | 回答内嵌矢量图 |
+| `dsh-prompt` | 0.3.0 | Prompt 模板工具箱 |
+| `dsh-plugin-wallpaper-engine` | 1.2.0 | Wallpaper Engine 动态壁纸 |
+| `@goodandready/dsh-key-limits` | 0.2.19 | API key / 订阅额度上限 |
 
 ### Computer Use 说明
 
@@ -131,8 +157,8 @@ DSH 用 `semver.satisfies(版本, peer范围, { includePrerelease: true })` 校�
 - `>=0.1.0-rc.5 <0.2.0` 这类宽范围 **匹配** rc.2；
 - 钉死精确版本（如 `0.1.7-rc.1`）的插件在 rc.2 上会**硬失败**，本包一律不选。
 
-本包 10 个插件的 peerDependencies 全部通过 rc.2 自带的
-`evaluatePluginCompatibility()` 实测，10/10 无阻断。
+本包 21 个插件的 peerDependencies 全部通过 rc.2 自带的
+`evaluatePluginCompatibility()` 实测，21/21 无阻断（`docs/compat-check.cjs` 门禁）。
 
 ### 冲突排除
 
@@ -181,6 +207,40 @@ dsh --profile better-deepseek-harness-codex --dump-config
 格式规范：[DSH-PackForge](https://github.com/DSH-PackForge/DSH-PackForge)。
 
 ## 更新日志
+
+### v2.3.0 (2026-10-05)
+- **新增 7 个插件**（经交互式选型器勾选，peer 门禁全过 + 真机 `dsh --dump-config` 零 stderr）：
+  - `@mrweicodes/dsh-loop-guard@1.0.8` —— 思考循环守护
+  - `@modusensus/dsh-mneme@0.8.13` —— 跨会话长期记忆
+  - `@liustack/modlens@3.26.6` —— 视觉桥与截图理解
+  - `dsh-inline-figures@0.1.0` —— 回答内嵌矢量图
+  - `dsh-prompt@0.3.0` —— Prompt 模板工具箱
+  - `dsh-plugin-wallpaper-engine@1.2.0` —— Wallpaper Engine 动态壁纸（npm 最新为 1.2.0，repo 的 1.3.0 未发布）
+  - `@goodandready/dsh-key-limits@0.2.19` —— API key / 订阅额度上限（npm 已到 0.2.19，高于 repo 的 0.2.15）
+- **移除**：`dsh-edit-resend@0.1.0` —— npm 发布产物声明 peer `^0.1.0-rc.6`，
+  0.2.0-rc.2 下被 runtime 拒装（v2.1.0 时按 GitHub 源码判定「无 peer」有误，真机实测修正）
+- **修复**：仓库 `package.json` 自 v2.1.0 起落后于 manifest（缺 4 个插件），本次全量重同步；
+  manifest 中 codex-ui 重复条目一并清理（保持层栈末位唯一）
+- 插件总数 15 → 21，依赖 14 → 21；`pnpm-workspace.yaml` 补录新插件 `minimumReleaseAgeExclude`
+- 真机验证：`dsh --dump-config` exit 0、零 stderr，23 bundle 全部加载（隔离安装 @deepseek-ai/dsh@0.2.0-rc.2 实测）
+
+### v2.2.0 (2026-10-05)
+- **新增**：dsh-agent-arena —— 多智能体议事厅与提示词竞技场（可调协作栏、渠道限流、自动接话控制）
+- **兼容性处理**：上游 `Tikzen/dsh-agent-arena@0.6.0` 把核心 peer 精确锁定 `0.1.7-rc.2`，
+  无法在 DSH 0.2.0-rc.2 下安装；经授权采用 **fork 放宽**方案——
+  `yukitakasama/dsh-agent-arena@feat/relax-peers-0.2.0-rc.2`（commit `25e2c55`），
+  10 条核心 peer 由精确 `0.1.7-rc.2` 放宽为 `>=0.1.7-rc.2`，依赖精确钉到该 fork commit
+- **注意**：安装需可访问 GitHub（git fork 依赖）；上游出 0.2.0-rc.2 官方版后建议改回 npm 版本
+- `.gitignore` 新增忽略 `.workbuddy/`（本地记忆目录）
+
+### v2.1.0 (2026-10-04)
+- **新增 4 个社区插件**（全部 peer 兼容 0.2.0-rc.2，`docs/compat-check.cjs` 门禁通过）：
+  - `@nanmicoder/dsh-agent-teams@0.1.22` —— 多智能体团队协作
+  - `dsh-context@0.63.0` —— 上下文可视化仪表盘
+  - `dsh-plugin-subagent-director@0.5.5` —— 子代理独立选模型
+  - `dsh-edit-resend@0.1.0` —— 消息编辑重发，补回早前移除的 edit-message 缺口
+- 插件总数 12 → 16（bundles），依赖 10 → 14，全部钉死精确版本；同步更新中英文 description
+- 新增 `docs/`：插件调研报告、交互式选型器（`plugin-selector.html`）、兼容性测试脚本（`compat-check.cjs`）与结果
 
 ### v2.0.0 (2026-09-30)
 - **破坏性变更**：升级基座到 DSH 0.2.0-rc.2
