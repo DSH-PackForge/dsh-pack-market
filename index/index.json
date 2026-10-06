@@ -1,33 +1,54 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-06T00:05:22.257Z",
+  "generatedAt": "2026-10-06T18:24:27.333Z",
   "modpacks": [
     {
       "manifestVersion": 5,
       "type": "profile",
       "name": "better-deepseek-harness-codex",
-      "version": "2.5.1",
+      "version": "2.7.0",
       "displayName": {
         "zh-CN": "更好的 deepseek harness（codex 风格）",
         "en-US": "Better DeepSeek Harness (Codex Style)"
       },
       "description": {
-        "zh-CN": "面向 Coding 用户的 DSH 整合包：Codex 风格工作区侧栏与轮次导航、/review 独立子 Agent 代码审查、/simplify Git 范围代码简化、只读旁问、Codex 式思考强度连续滑块、费用与余额计量、DeepSeek 鲸鱼娘桌宠、AST 上下文压缩与 token 预算守卫、Git 分支图、多智能体协作（agent-teams）、上下文可视化仪表盘（dsh-context）、子代理独立选模型（subagent-director）、多智能体议事厅（agent-arena）、思考循环守护（loop-guard）、跨会话长期记忆（mneme）、视觉桥与截图理解（modlens）、回答内嵌矢量图（inline-figures）、Prompt 模板工具箱（dsh-prompt）、Wallpaper Engine 动态壁纸、API 额度上限显示（key-limits）、Windows Computer Use 桌面操控（22 个工具，含安全护栏）、QQ 机器人频道（dsh-qqbot，默认关闭、按需启用）。基座 DSH 0.2.0-rc.2，全部插件已钉死精确版本并校验 peer 兼容。v2.5.0 起整合包额外自带 47 个跨 harness 精选 skill（安装时由 home/skills/ 落入 DSH_HOME/skills/）。",
-        "en-US": "A coding-oriented DSH modpack: Codex-style workspace sidebar and turn navigation, /review independent code review, /simplify Git-scoped simplification, read-only side-ask, Codex-style reasoning-effort slider, cost and balance metering, a DeepSeek whale-girl desk pet, AST context compression with token budget guard, a Git graph, multi-agent teams (agent-teams), a context visualization dashboard (dsh-context), per-subagent model director (subagent-director), a multi-agent council (agent-arena), thought-loop guard (loop-guard), cross-session memory (mneme), vision bridge & screenshot understanding (modlens), inline vector figures (inline-figures), a prompt template toolbox (dsh-prompt), Wallpaper Engine live wallpapers, API key quota limits (key-limits), and Windows Computer Use desktop control (22 tools with safety guards), plus a QQ Bot IM channel (dsh-qqbot, official Tencent plugin). Built for DSH 0.2.0-rc.2; all plugins pinned to exact versions and peer-verified. As of v2.5.0 the pack also bundles 47 curated cross-harness skills (shipped via home/skills/, landing in DSH_HOME/skills/ on install)."
+        "zh-CN": "面向 Coding 用户的 DSH 整合包：Codex 风格工作区侧栏与轮次导航、/review 独立子 Agent 代码审查、/simplify Git 范围代码简化、只读旁问、Codex 式思考强度连续滑块、费用与余额计量、DeepSeek 鲸鱼娘桌宠、AST 上下文压缩与 token 预算守卫、Git 分支图、多智能体协作（agent-teams）、上下文可视化仪表盘（dsh-context）、子代理独立选模型（subagent-director）、多智能体议事厅（agent-arena）、思考循环守护（loop-guard）、跨会话长期记忆（mneme）、视觉桥与截图理解（modlens）、回答内嵌矢量图（inline-figures）、Prompt 模板工具箱（dsh-prompt）、Wallpaper Engine 动态壁纸、API 额度上限显示（key-limits）、Windows Computer Use 桌面操控（22 个工具，含安全护栏）、Codex 风格 Computer Use（dsh-computer-use，13 个 window2 原生工具 + 可见合成光标覆盖层 + Esc 急停，挂在独立 computer-use preset）、QQ 机器人频道（dsh-qqbot，默认关闭、按需启用）、WorkBuddy 桌面端模型接入（dsh-workbuddy-connect，复用 WorkBuddy App 登录态，零配置在 DSH 模型选择器里选用 GLM-5.3、DeepSeek-V4、Kimi-K3、MiniMax-M3、Hy3 等，国内版与国际版分组并存；未登录时该分组自动隐藏，不影响启动）。基座 DSH 0.2.0-rc.2，全部插件已钉死精确版本并校验 peer 兼容。v2.5.0 起整合包额外自带 49 个跨 harness 精选 skill（安装时由 home/skills/ 落入 DSH_HOME/skills/）。",
+        "en-US": "A coding-oriented DSH modpack: Codex-style workspace sidebar and turn navigation, /review independent code review, /simplify Git-scoped simplification, read-only side-ask, Codex-style reasoning-effort slider, cost and balance metering, a DeepSeek whale-girl desk pet, AST context compression with token budget guard, a Git graph, multi-agent teams (agent-teams), a context visualization dashboard (dsh-context), per-subagent model director (subagent-director), a multi-agent council (agent-arena), thought-loop guard (loop-guard), cross-session memory (mneme), vision bridge & screenshot understanding (modlens), inline vector figures (inline-figures), a prompt template toolbox (dsh-prompt), Wallpaper Engine live wallpapers, API key quota limits (key-limits), and Windows Computer Use desktop control (22 tools with safety guards), Codex-style Computer Use (dsh-computer-use: 13 native window2 tools, a visible synthetic-cursor overlay and an Esc interrupt, mounted in its own computer-use preset), plus a QQ Bot IM channel (dsh-qqbot, official Tencent plugin), and WorkBuddy desktop model access (dsh-workbuddy-connect: reuses the WorkBuddy app sign-in so GLM-5.3, DeepSeek-V4, Kimi-K3, MiniMax-M3, Hy3 and more appear in the DSH model picker with zero configuration, with separate groups for the domestic and international editions; when no sign-in is present the group simply hides and startup is unaffected). Built for DSH 0.2.0-rc.2; all plugins pinned to exact versions and peer-verified. As of v2.5.0 the pack also bundles 49 curated cross-harness skills (shipped via home/skills/, landing in DSH_HOME/skills/ on install)."
       },
       "author": "yukitakasama",
       "category": "coding",
       "dshVersion": "0.2.0-rc.2",
       "profileName": "better-deepseek-harness-codex",
-      "downloadUrl": "https://github.com/yukitakasama/better-deepseek-harness-codex/releases/download/v2.5.1/better-deepseek-harness-codex-2.5.1.dspack",
-      "sha256": "68ff23bdbf53c3339fd6310e27db9697109dd3e7f47f424afb516b3ee2444475",
-      "size": 1600791,
-      "updatedAt": "2026-10-05",
+      "downloadUrl": "https://github.com/yukitakasama/better-deepseek-harness-codex/releases/download/v2.7.0/better-deepseek-harness-codex-2.7.0.dspack",
+      "sha256": "e16568c88848bf938713602ec1ba183da57c0893abf698ca88853cbf3e38b403",
+      "size": 1628155,
+      "updatedAt": "2026-10-06",
       "id": "yukitakasama.better-deepseek-harness-codex",
       "owner": "yukitakasama",
       "repo": "better-deepseek-harness-codex",
-      "bundleCount": 24,
-      "depCount": 22
+      "bundleCount": 26,
+      "depCount": 24
+    },
+    {
+      "manifestVersion": 5,
+      "type": "profile",
+      "name": "dsh-simple-drawing",
+      "version": "1.2.0",
+      "displayName": "dsh简易绘图能力包",
+      "description": "用代码作画，四条路线：①把参考图提取成「多边形骨架 + 内孔 + 调色板」的可编辑结构，再按分层规则重画、换任意配色；②用 MakeHuman 网格数据做七头身人体立绘（十块 canon 分区 → 生成适配衣服 → 按 Live2D 式层序组合 → 像素级细修）；③用轴对齐方块拼《我的世界》式角色，粗细靠像素梯度而不靠几何；④把任何平涂图转成像素画（分格取众数 + 调色板量化 + 硬边放大）；⑤部件装配（一个部件一块画布，按自然尺寸合成母版）；⑥赛博拼豆·渐进生长（白画布→语义分区→每区固定调色板→逐层加色，每层都是完整可用的图 + 逐层豆子清单）；⑦自适应四叉树（按和参考图的误差决定哪里继续切，画布任意大小，每颗豆可渲染成圆角带高光的真拼豆）。技能落在 DSH_HOME 的 skills/ 下。依赖 numpy / pillow / opencv-python-headless；路线②需要本机 MakeHuman 数据（只读 npz，不用运行它），用环境变量 MAKEHUMAN_DIR 指定。",
+      "author": "涟崎桦",
+      "category": "uncategorized",
+      "dshVersion": "",
+      "profileName": "layered-art",
+      "downloadUrl": "https://github.com/LQH-A-A-O/dsh-simple-drawing/releases/download/v1.2.0/dsh-simple-drawing-1.2.0.dspack",
+      "sha256": "9b4518efe9b5a2c1bb370bc6686d5e43ea19ad2c0ff105540c8cef4c347fc5be",
+      "size": 185536,
+      "updatedAt": "2026-10-06",
+      "id": "LQH-A-A-O.dsh-simple-drawing",
+      "owner": "LQH-A-A-O",
+      "repo": "dsh-simple-drawing",
+      "bundleCount": 2,
+      "depCount": 0
     },
     {
       "manifestVersion": 5,
@@ -49,27 +70,6 @@
       "repo": "smoother-deepseek-harness",
       "bundleCount": 9,
       "depCount": 7
-    },
-    {
-      "manifestVersion": 5,
-      "type": "profile",
-      "name": "dsh-simple-drawing",
-      "version": "1.1.0",
-      "displayName": "dsh简易绘图能力包",
-      "description": "用代码作画，四条路线：①把参考图提取成「多边形骨架 + 内孔 + 调色板」的可编辑结构，再按分层规则重画、换任意配色；②用 MakeHuman 网格数据做七头身人体立绘（十块 canon 分区 → 生成适配衣服 → 按 Live2D 式层序组合 → 像素级细修）；③用轴对齐方块拼《我的世界》式角色，粗细靠像素梯度而不靠几何；④把任何平涂图转成像素画（分格取众数 + 调色板量化 + 硬边放大）。技能落在 DSH_HOME 的 skills/ 下。依赖 numpy / pillow / opencv-python-headless；路线②需要本机 MakeHuman 数据（只读 npz，不用运行它），用环境变量 MAKEHUMAN_DIR 指定。",
-      "author": "涟崎桦",
-      "category": "uncategorized",
-      "dshVersion": "",
-      "profileName": "layered-art",
-      "downloadUrl": "https://github.com/LQH-A-A-O/dsh-simple-drawing/releases/download/v1.1.0/dsh-simple-drawing-1.1.0.dspack",
-      "sha256": "56060aa7d4f529437496b2b846393f5a815e354c94535a809181610b2022affc",
-      "size": 129785,
-      "updatedAt": "2026-09-30",
-      "id": "LQH-A-A-O.dsh-simple-drawing",
-      "owner": "LQH-A-A-O",
-      "repo": "dsh-simple-drawing",
-      "bundleCount": 2,
-      "depCount": 0
     },
     {
       "manifestVersion": 5,

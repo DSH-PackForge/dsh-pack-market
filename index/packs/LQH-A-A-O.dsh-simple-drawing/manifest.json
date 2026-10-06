@@ -2,7 +2,7 @@
   "manifestVersion": 5,
   "type": "profile",
   "name": "dsh-simple-drawing",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "profileName": "layered-art",
   "bundles": [
     "@deepseek-ai/dsh-base",
@@ -10,7 +10,7 @@
   ],
   "dependencies": {},
   "displayName": "dsh简易绘图能力包",
-  "description": "用代码作画，四条路线：①把参考图提取成「多边形骨架 + 内孔 + 调色板」的可编辑结构，再按分层规则重画、换任意配色；②用 MakeHuman 网格数据做七头身人体立绘（十块 canon 分区 → 生成适配衣服 → 按 Live2D 式层序组合 → 像素级细修）；③用轴对齐方块拼《我的世界》式角色，粗细靠像素梯度而不靠几何；④把任何平涂图转成像素画（分格取众数 + 调色板量化 + 硬边放大）。技能落在 DSH_HOME 的 skills/ 下。依赖 numpy / pillow / opencv-python-headless；路线②需要本机 MakeHuman 数据（只读 npz，不用运行它），用环境变量 MAKEHUMAN_DIR 指定。",
+  "description": "用代码作画，四条路线：①把参考图提取成「多边形骨架 + 内孔 + 调色板」的可编辑结构，再按分层规则重画、换任意配色；②用 MakeHuman 网格数据做七头身人体立绘（十块 canon 分区 → 生成适配衣服 → 按 Live2D 式层序组合 → 像素级细修）；③用轴对齐方块拼《我的世界》式角色，粗细靠像素梯度而不靠几何；④把任何平涂图转成像素画（分格取众数 + 调色板量化 + 硬边放大）；⑤部件装配（一个部件一块画布，按自然尺寸合成母版）；⑥赛博拼豆·渐进生长（白画布→语义分区→每区固定调色板→逐层加色，每层都是完整可用的图 + 逐层豆子清单）；⑦自适应四叉树（按和参考图的误差决定哪里继续切，画布任意大小，每颗豆可渲染成圆角带高光的真拼豆）。技能落在 DSH_HOME 的 skills/ 下。依赖 numpy / pillow / opencv-python-headless；路线②需要本机 MakeHuman 数据（只读 npz，不用运行它），用环境变量 MAKEHUMAN_DIR 指定。",
   "author": "涟崎桦",
   "dshVersion": "",
   "patch": "# 本包只分发技能，不插入额外插件行。\n[]\n"
