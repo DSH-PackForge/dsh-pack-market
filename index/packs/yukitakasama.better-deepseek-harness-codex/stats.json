@@ -1,35 +1,53 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-05T14:45:21.108Z",
+  "generatedAt": "2026-10-06T00:05:21.325Z",
   "source": "github-releases",
   "repo": "yukitakasama/better-deepseek-harness-codex",
-  "total": 2280,
+  "total": 2324,
   "since": "2026-09-25",
-  "current": "2.3.0",
-  "currentDownloads": 0,
+  "current": "2.5.1",
+  "currentDownloads": 1,
   "versions": [
+    {
+      "version": "2.5.1",
+      "tag": "v2.5.1",
+      "downloads": 1,
+      "publishedAt": "2026-10-05"
+    },
+    {
+      "version": "2.5.0",
+      "tag": "v2.5.0",
+      "downloads": 1,
+      "publishedAt": "2026-10-05"
+    },
+    {
+      "version": "2.4.0",
+      "tag": "v2.4.0",
+      "downloads": 2,
+      "publishedAt": "2026-10-05"
+    },
     {
       "version": "2.3.0",
       "tag": "v2.3.0",
-      "downloads": 0,
+      "downloads": 37,
       "publishedAt": "2026-10-05"
     },
     {
       "version": "2.2.0",
       "tag": "v2.2.0",
-      "downloads": 1,
+      "downloads": 2,
       "publishedAt": "2026-10-05"
     },
     {
       "version": "2.1.0",
       "tag": "v2.1.0",
-      "downloads": 91,
+      "downloads": 92,
       "publishedAt": "2026-10-04"
     },
     {
       "version": "2.0.0",
       "tag": "v2.0.0",
-      "downloads": 653,
+      "downloads": 654,
       "publishedAt": "2026-09-30"
     },
     {

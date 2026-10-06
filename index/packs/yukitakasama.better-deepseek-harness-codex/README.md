@@ -31,6 +31,7 @@
 - **动态壁纸** —— Wallpaper Engine 壁纸搬进 DSH 网页界面
 - **额度上限** —— key-limits 显示 API key / 订阅剩余额度（与 cost-meter 互补）
 - **Computer Use** —— 操控 Windows 原生桌面：UIA 无障碍树观察、截图、鼠标键盘、窗口管理（22 个工具）
+- **自带 47 个 skill** —— 安装即落入 `DSH_HOME/skills/`，开箱即用（覆盖设计/前端、动效、数据分析、代码开发、办公文档、浏览器等；MCP 服务器本次未随包分发，按本机 `cordis.patch.yml` 单独配置）
 
 ## 安装
 
@@ -72,7 +73,7 @@ dsh --profile better-deepseek-harness-codex
 - `dshVersions`: 声明实测兼容版本集合（0.2.0-rc.2、0.2.0-rc.1）
 - `launchers`: 声明启动器兼容性（dshl、dsh-packforge-app）
 
-## 插件清单（21 个）
+## 插件清单（22 个）
 
 | 插件 | 版本 | 作用 |
 |---|---|---|
@@ -97,6 +98,26 @@ dsh --profile better-deepseek-harness-codex
 | `dsh-prompt` | 0.3.0 | Prompt 模板工具箱 |
 | `dsh-plugin-wallpaper-engine` | 1.2.0 | Wallpaper Engine 动态壁纸 |
 | `@goodandready/dsh-key-limits` | 0.2.19 | API key / 订阅额度上限 |
+| `@tencent-connect/dsh-qqbot` | fork 0.5.1 | QQ 机器人频道：**默认关闭、按需启用**。私聊/群聊对话、图片与文件理解、流式回复、主动提问与操作确认、/preset 切换预设、/compact 压缩会话。启用方式见下方「QQ 机器人频道（im-qqbot）」 |
+
+### QQ 机器人频道（im-qqbot）
+
+本插件**默认关闭**。原因是原版在凭据缺失时会于插件加载阶段同步等待扫码，而那个
+Promise 没有超时、二维码过期只会不断刷新——cordis 串行加载插件，于是整个 dsh 实例
+永远停在「等待就绪」（启动器表现为启动窗口一直转圈、Web 服务始终不监听）。
+
+本包已改用 fork 版 `yukitakasama/dsh-qqbot`（凭据缺失时跳过而非阻塞），并默认保持
+关闭：需要时再打开，不必为一个没配凭据的频道付出加载成本。
+
+**启用前先准备凭据**（二选一）：
+
+1. **免扫码**：在 QQ 开放平台创建机器人，拿到 AppID / AppSecret，填入启动器
+   「实例 → 环境变量」：`QQBOT_APPID`、`QQBOT_SECRET`。
+2. **扫码**：在 profile 目录下跑一次 `npx dsh-qqbot-bind`（首次出码会同时用默认
+   浏览器打开扫码页），凭据会自动写入 `cordis.patch.yml`。
+
+**然后启用并重启**：启动器「插件」页把 `im-qqbot` 设为启用，**重启实例**后生效
+（插件开关与环境变量都只在进程启动时读取，不支持热启用）。
 
 ### Computer Use 说明
 
@@ -207,6 +228,18 @@ dsh --profile better-deepseek-harness-codex --dump-config
 格式规范：[DSH-PackForge](https://github.com/DSH-PackForge/DSH-PackForge)。
 
 ## 更新日志
+
+### v2.5.0 (2026-10-06)
+- **整合包自带 47 个 skill**（v2.5.0 起）：dspack 携带 `home/skills/`，安装时落入 `DSH_HOME/skills/`，开箱即用，不再依赖各 harness 本地目录。
+- **47 个 skill**：覆盖设计/前端、动效、数据分析、代码开发、媒体、规划效率、打包、办公文档（docx/pdf/pptx/xlsx/research）、浏览器（agent-browser）及新建的 `qq-chat-style-miner`（从 QQ 聊天记录提炼用户风格）。选择标准：仅通用、可广泛改善体验的 skill；项目级与纯本机自动化类已排除。
+- **MCP 服务器本次未随整合包分发**：维持 `overrides/cordis.patch.yml` 原有 1 条 computer-use 修正，不含任何 MCP 条目；如需扩展 MCP 请在 DSH Launcher 的 MCP 管理页单独配置。
+- 基座与插件组合同 v2.4.0（DSH 0.2.0-rc.2，含 `@tencent-connect/dsh-qqbot@0.5.0`）；`scripts/build-dspack.py` 已更新为携带 `home/skills/`。
+
+### v2.4.0 (2026-10-05)
+- **新增**：`@tencent-connect/dsh-qqbot@0.5.0` —— QQ 机器人频道（腾讯官方插件）：把 QQ Bot 接入 DSH，支持私聊/群聊对话、图片与文件理解、流式回复、主动提问与操作确认、/preset 切换预设、/compact 压缩会话、/bot-ping 网络检测。
+- **适配判定**：peer `@deepseek-ai/dsh-agent/llm/session: >=0.1.0-rc.6` 与 `cordis: >=4.0.1` 均覆盖 0.2.0-rc.2（cordis 4.x 基线同 agent-arena fork）。npm 已发布 0.5.0，**无需 fork**，直接钉 npm 版本。
+- **验证**：`docs/compat-check.cjs` peer 门禁 dsh-qqbot 4/4 ✅；`npm install @tencent-connect/dsh-qqbot@0.5.0` 可下载、自带 `cordis.patch.yml`（dsh 启动自动加载）、传递依赖就位。全量 `pnpm install` + `dsh --dump-config` 真机加载因沙箱无法克隆 git fork（github.com TLS 限制）未能实跑，需在用户 0.2.0-rc.2 宿主确认（与本包既往版本同因）。
+- 插件总数 21 → 22（bundles 23 → 24 含 2 个官方基座；dependencies 21 → 22）。
 
 ### v2.3.0 (2026-10-05)
 - **新增 7 个插件**（经交互式选型器勾选，peer 门禁全过 + 真机 `dsh --dump-config` 零 stderr）：
