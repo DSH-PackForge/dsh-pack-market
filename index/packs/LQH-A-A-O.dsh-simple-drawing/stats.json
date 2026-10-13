@@ -1,17 +1,17 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-13T14:15:41.901Z",
+  "generatedAt": "2026-10-13T22:47:43.180Z",
   "source": "github-releases",
   "repo": "LQH-A-A-O/dsh-simple-drawing",
-  "total": 243,
+  "total": 244,
   "since": "2026-09-27",
   "current": "1.2.0",
-  "currentDownloads": 72,
+  "currentDownloads": 73,
   "versions": [
     {
       "version": "1.2.0",
       "tag": "v1.2.0",
-      "downloads": 72,
+      "downloads": 73,
       "publishedAt": "2026-10-06"
     },
     {
