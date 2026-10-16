@@ -1,17 +1,17 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-16T04:35:33.164Z",
+  "generatedAt": "2026-10-16T11:28:19.340Z",
   "source": "github-releases",
   "repo": "hxh230802/pokemon",
-  "total": 281,
+  "total": 284,
   "since": "2026-09-21",
   "current": "1.0.0",
-  "currentDownloads": 281,
+  "currentDownloads": 284,
   "versions": [
     {
       "version": "1.0.0",
       "tag": "v1.0.0",
-      "downloads": 281,
+      "downloads": 284,
       "publishedAt": "2026-09-21"
     }
   ]
