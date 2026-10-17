@@ -1,17 +1,17 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-16T21:12:50.776Z",
+  "generatedAt": "2026-10-17T04:31:16.749Z",
   "source": "github-releases",
   "repo": "hxh230802/better-sidebar",
-  "total": 498,
+  "total": 500,
   "since": "2026-09-02",
   "current": "1.0.0",
-  "currentDownloads": 498,
+  "currentDownloads": 500,
   "versions": [
     {
       "version": "1.0.0",
       "tag": "v1.0.0",
-      "downloads": 498,
+      "downloads": 500,
       "publishedAt": "2026-09-02"
     }
   ]
