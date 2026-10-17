@@ -26,12 +26,12 @@
 - **循环守护** —— loop-guard 检测模型空转退化循环，自动打断并注入纠正提示
 - **跨会话记忆** —— mneme 让 agent 记住项目背景与既往决策
 - **视觉理解** —— modlens 视觉桥，截图/图片路由到视觉模型理解
-- **内嵌配图** —— inline-figures 让回答变成「文字-图-文字」
 - **Prompt 工具箱** —— dsh-prompt 24 条深度模板随手点选
 - **动态壁纸** —— Wallpaper Engine 壁纸搬进 DSH 网页界面
 - **额度上限** —— key-limits 显示 API key / 订阅剩余额度（与 cost-meter 互补）
 - **Computer Use** —— 操控 Windows 原生桌面：UIA 无障碍树观察、截图、鼠标键盘、窗口管理（22 个工具）
 - **WorkBuddy 模型接入** —— dsh-workbuddy-connect 复用 WorkBuddy 桌面 App 的登录态，GLM-5.3、DeepSeek-V4、Kimi-K3、MiniMax-M3、Hy3 等直接出现在模型选择器中，零配置；国内版与国际版各成一个分组，**本机没装/没登录 WorkBuddy 时该分组自动隐藏，不影响启动**
+- **原生高性能工具链** —— dsh-ops 提供 Rust 编写的 `ops_inspect_local_file` / `ops_grep` / `ops_glob` / `ops_replace` 四个文件工具与 `ops_bash` 命令执行器，Windows 上另附随包 PowerShell 7；输入输出更省 token、覆盖更广
 - **自带 49 个 skill** —— 安装即落入 `DSH_HOME/skills/`，开箱即用（覆盖设计/前端、动效、数据分析、代码开发、办公文档、浏览器等；MCP 服务器本次未随包分发，按本机 `cordis.patch.yml` 单独配置）
 
 ## 安装
@@ -101,12 +101,12 @@ dsh --profile better-deepseek-harness-codex
 | `@mrweicodes/dsh-loop-guard` | 1.0.8 | 思考循环守护，自动打断空转 |
 | `@modusensus/dsh-mneme` | 0.8.13 | 跨会话长期记忆 |
 | `@liustack/modlens` | 3.26.6 | 视觉桥与截图理解 |
-| `dsh-inline-figures` | 0.1.0 | 回答内嵌矢量图 |
 | `dsh-prompt` | 0.3.0 | Prompt 模板工具箱 |
 | `dsh-plugin-wallpaper-engine` | 1.2.0 | Wallpaper Engine 动态壁纸 |
 | `@goodandready/dsh-key-limits` | 0.2.19 | API key / 订阅额度上限 |
 | `@tencent-connect/dsh-qqbot` | fork 0.5.1 | QQ 机器人频道：**默认关闭、按需启用**。私聊/群聊对话、图片与文件理解、流式回复、主动提问与操作确认、/preset 切换预设、/compact 压缩会话。启用方式见下方「QQ 机器人频道（im-qqbot）」 |
 | `dsh-workbuddy-connect` | 0.7.1 | **WorkBuddy 桌面端模型接入**：复用 WorkBuddy App 的本机登录态，把 GLM-5.3、DeepSeek-V4、Kimi-K3、MiniMax-M3、Hy3 等送进 DSH 模型选择器，零配置调用；国内版与国际版分组并存、各用自己的账号与积分，未登录则分组隐藏。详见下方「WorkBuddy 模型接入」 |
+| `dsh-ops` | 0.3.0 | Rust 文件工具四件套 + `ops_bash` + 随包 PowerShell 7 |
 
 ### Codex 风格 Computer Use（dsh-computer-use）
 
@@ -193,6 +193,38 @@ Kimi-K3、MiniMax-M3、Hy3 等）注册成 DSH 的一个 LLM provider（`llm-wor
 > 六个官方包），与本包的 web 基座匹配。若你想把它单独装进 **TUI** profile，需要
 > `@deepseek-harness-tui/dsh-tui` **≥ 0.10.0-beta.5**，更早版本装了会启动失败
 > （报 `events is not iterable`）。
+
+### 原生高性能工具链（dsh-ops）
+
+上游：[T-Auto/dsh-ops](https://github.com/T-Auto/dsh-ops)，钉 npm `0.3.0`（registry 最新版；
+上游 0.3.1 只发了 GitHub Release、未 npm publish，故取 0.3.0），**未做任何源码修改**。
+
+它提供一组常驻工具，由 Rust 编写、经宿主 subprocess 执行固定 worker，不运行模型代码：
+
+- **四个文件工具** —— `ops_inspect_local_file`（有界 UTF-8 文本行 / hex 视图）、`ops_grep`
+  （Rust 正则搜索，多文件过滤、计数与摘要）、`ops_glob`（多模式找路径，支持排除）、
+  `ops_replace`（跨文件字面文本批量替换，精确编辑仍用宿主 `edit`）
+- **`ops_bash`** —— 优先的通用命令执行器；短命令用 `command`，长脚本（heredoc、引号、
+  反斜杠、中文）先写文件再传 `script_path`，避免多层 JSON 转义
+- **随包 PowerShell 7** —— Windows 原生 cmdlet / 注册表 / 服务走宿主 `pwsh` 工具，
+  由插件在执行期指向自带的 7.6.6
+
+工具以 `ops_` 前缀出现，与宿主 `read` / `edit` / `pwsh` 等**并存不冲突**：文件读取与替换
+会登记到宿主的「先读后改」观测表，用 OPS 读过的文件可直接用宿主 `edit`。
+
+**组件开关**（`dsh-ops/shell`、`dsh-ops/file` 默认开；`dsh-ops/ptc`、`dsh-ops/tui` 默认关）：
+
+| 组件 | 默认 | 作用 |
+| --- | --- | --- |
+| `dsh-ops/shell` | 开 | `ops_bash` + 随包 PowerShell 7 |
+| `dsh-ops/file` | 开 | 四个 Rust 文件工具 |
+| `dsh-ops/ptc` | 关 | 原生 PTC 批处理（`ops_batch` / `ops_result`），仅纯 PTC 会话 |
+| `dsh-ops/tui` | 关 | dsh-TUI 只读侧栏 |
+| `dsh-ops/hide-official` | 关 | 遮蔽官方工具（0.3.0 的 bundle patch 未插入该行） |
+
+> **关于 Windows 上的 bash**：受限模式（`workspace-write` / `read-only`）下 `ops_bash` 只运行
+> 已校验 IPC 兼容的随包 MSYS 副本；指向自己的 Git for Windows 会按设计返回
+> `EXECUTOR_UNAVAILABLE`，不会裸执行。`danger-full-access` 下可用 `bashPath` 指定执行器。
 
 ### Computer Use 说明
 
@@ -344,9 +376,11 @@ v2.7.0 新增的 `dsh-workbuddy-connect@0.7.1` 声明 7 个 `@deepseek-ai/dsh-*`
 
 ## 自定义
 
-profile patch 层 `overrides/cordis.patch.yml` 现有 **3 条**：`dsh-computer-use-win` 的 MCP 路径修正、
-`im-qqbot` 默认关闭、`computer-use` preset 注入。其余挂载关系仍由各插件自身的 bundle patch 表达——
-`dsh-workbuddy-connect` 的 provider 行同样由它自带 patch 注册，**不需要在这里补条目**。改动后请跑：
+profile patch 层 `overrides/cordis.patch.yml` 现有 **5 条**：`dsh-computer-use-win` 的 MCP 路径修正、
+`im-qqbot` 默认关闭、`computer-use` preset 注入、`dsh-ops` 的 file/shell 配置记录、
+`pwsh-sandbox` 的 Windows 平台守卫。其余挂载关系仍由各插件自身的 bundle patch 表达——
+`dsh-workbuddy-connect` 的 provider 行、`dsh-ops` 的四个组件行同样由它们自带 patch 注册，
+**不需要在这里补条目**。改动后请跑：
 
 ```bash
 dsh --profile better-deepseek-harness-codex --dump-config
@@ -364,9 +398,9 @@ dsh --profile better-deepseek-harness-codex --dump-config
 - [linxin666](https://www.npmjs.com/~linxin666)（Git Graph）
 - [corrinehu](https://github.com/corrinehu/dsh-workbuddy-connect)（WorkBuddy 模型接入）
 - [wushi2333](https://github.com/wushi2333/dsh-computer-use_codex-style)（Codex 风格 Computer Use）
+- [T-Auto](https://github.com/T-Auto/dsh-ops)（原生高性能工具链 dsh-ops）
 - `dsh-effort-slider`、`dsh-cost-meter`、`dsh-whale-girl-pet`、`dsh-computer-use-win` 各作者
 - `dsh-context`、`@modusensus/dsh-mneme`、`@liustack/modlens`、`dsh-prompt`、
-  `dsh-inline-figures`、`@mrweicodes/dsh-loop-guard`、`dsh-plugin-wallpaper-engine`、
   `@nanmicoder/dsh-agent-teams`、`dsh-plugin-subagent-director`、`@goodandready/dsh-key-limits`
   等各作者
 - fork 依赖 `dsh-agent-arena`、`dsh-qqbot` 由本仓库维护分叉，功能版权归上游原作者
@@ -374,6 +408,26 @@ dsh --profile better-deepseek-harness-codex --dump-config
 格式规范：[DSH-PackForge](https://github.com/DSH-PackForge/DSH-PackForge)。
 
 ## 更新日志
+
+### v2.8.1 (2026-10-10)
+- **移除**：`dsh-inline-figures@0.1.0` —— 其 `draw_figure` 工具返回通道持续报
+  `invalid output: value is not lossless JSON`（用最小 spec 复现，故障与 spec 内容无关，
+  属工具绑定层缺陷，无法配置规避）。绘图能力改由自带 skill `chart-visualization`
+  与宿主原生能力承担。
+- 同步清理 6 处引用：`package.json`、`manifest.json`（含中英文 description）、
+  `pnpm-workspace.yaml`、`docs/compat-check.cjs`、`README.md`、`README.en.md`。
+- 插件 25 → 24（bundles 27 → 26 含 2 个官方基座；dependencies 25 → 24）；
+  compat-check 在装插件 13 → 12；49 个自带 skill 不变。
+- **零版本变更**：其余 24 个插件版本、基座 DSH 0.2.0-rc.2 与 v2.8.0 完全相同。
+- 完整说明见 `docs/release-notes-v2.8.1.md`。
+
+- **新增 dsh-ops 插件**（[T-Auto/dsh-ops](https://github.com/T-Auto/dsh-ops) 0.3.0，npm registry 版本，
+  peer 已声明兼容 DSH 0.2.0-rc.2）：Rust 编写的四个文件工具（`ops_inspect_local_file` / `ops_grep` /
+  `ops_glob` / `ops_replace`）+ `ops_bash` 命令执行器 + Windows 随包 PowerShell 7。
+  file 与 shell 两个组件默认开启；ptc（原生 PTC 批处理）与 tui（只读侧栏）保持上游默认关闭。
+  `overrides/cordis.patch.yml` 记录两个默认开启组件的配置值，并给 `pwsh-sandbox` 行加
+  `disabled: !!js process.platform !== 'win32'` 守卫（非 Windows 上不指向不存在的执行器）。
+- 未改动任何插件源码；worker 二进制与 bash / pwsh 载荷随 npm 依赖安装，无安装期下载脚本。
 
 ### v2.7.1 (2026-10-10)
 - **修复（issue #1）**：6 个自带 skill（agent-browser / docx / pdf / pptx / research / xlsx）目录内误嵌套
