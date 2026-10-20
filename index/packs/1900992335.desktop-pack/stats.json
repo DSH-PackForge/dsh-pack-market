@@ -1,17 +1,17 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-20T04:54:38.304Z",
+  "generatedAt": "2026-10-20T11:42:03.307Z",
   "source": "github-releases",
   "repo": "1900992335/desktop-pack",
-  "total": 533,
+  "total": 539,
   "since": "2026-09-30",
   "current": "1.0.0",
-  "currentDownloads": 533,
+  "currentDownloads": 539,
   "versions": [
     {
       "version": "1.0.0",
       "tag": "v1.0.0",
-      "downloads": 533,
+      "downloads": 539,
       "publishedAt": "2026-09-30"
     }
   ]
