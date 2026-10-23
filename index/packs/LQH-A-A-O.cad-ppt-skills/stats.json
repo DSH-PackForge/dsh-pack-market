@@ -1,17 +1,17 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-23T17:11:27.373Z",
+  "generatedAt": "2026-10-23T21:26:35.452Z",
   "source": "github-releases",
   "repo": "LQH-A-A-O/cad-ppt-skills",
-  "total": 382,
+  "total": 383,
   "since": "2026-09-26",
   "current": "1.1.0",
-  "currentDownloads": 382,
+  "currentDownloads": 383,
   "versions": [
     {
       "version": "1.1.0",
       "tag": "v1.1.0",
-      "downloads": 382,
+      "downloads": 383,
       "publishedAt": "2026-09-26"
     }
   ]
