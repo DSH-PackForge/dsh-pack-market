@@ -1,17 +1,17 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-24T11:05:33.764Z",
+  "generatedAt": "2026-10-24T15:59:24.260Z",
   "source": "github-releases",
   "repo": "hxh230802/smoother-deepseek-harness",
-  "total": 947,
+  "total": 960,
   "since": "2026-09-29",
   "current": "1.0.3",
-  "currentDownloads": 741,
+  "currentDownloads": 754,
   "versions": [
     {
       "version": "1.0.3",
       "tag": "v1.0.3",
-      "downloads": 741,
+      "downloads": 754,
       "publishedAt": "2026-09-30"
     },
     {
