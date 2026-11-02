@@ -18,6 +18,13 @@
       "desc": "HMCL 内核 JavaFX；.dspack 市场采纳者，另维护自有 .hdslp 格式。注意与 dshl（PCL 系）一个字母之差、完全无关。"
     },
     {
+      "id": "pad",
+      "name": "PAD · pack-agent for DSH",
+      "url": "https://github.com/sakikoTGW/pack-agent",
+      "support": "Windows",
+      "desc": "DSH 启动器与整合包管理器（WPF）；支持 PackForge .dspack；自报版本 `pad cli version --json`。"
+    },
+    {
       "id": "dsh-packforge-app",
       "name": "DSH PackForge GUI / dspack CLI",
       "url": "https://github.com/DSH-PackForge/dsh-packforge-app",
