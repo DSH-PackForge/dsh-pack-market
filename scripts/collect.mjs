@@ -1,12 +1,12 @@
 // dsh-pack-market 采集器：扫描 GitHub 上打了 topic `dsh-pack` 的仓库，
-// 读取各仓库根 manifest.json（manifest v3/v4/v5 兼容）+ README.md（若有），
+// 读取各仓库根 manifest.json（manifest v3/v4/v5/v6 兼容）+ README.md（若有），
 // 汇总产出：
 //   1) index/packs/<owner>.<repo>/   —— manifest.json + README.md（+ stats.json 下载量快照）
 //   2) index/index.json              —— 精简索引（schemaVersion 2，仅列表/搜索/安装必需字段）
 //
 // 约定：
 //   - 仓库 About 打 topic `dsh-pack`；
-//   - 根放 `manifest.json`（manifest v3/v4/v5 契约），推荐再放 README.md；
+//   - 根放 `manifest.json`（manifest v3/v4/v5/v6 契约），推荐再放 README.md；
 //   - 清单可选 `downloadUrl`：有则直连 + `<url>.sha256` 侧车；无则默认最新 GitHub Release 资产 + 同名 `.sha256` 侧车。
 //
 // 可靠性约定（重要）：

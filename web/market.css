@@ -417,3 +417,7 @@ details.inst .menu {
 .d-readme th { background: var(--paper-2); color: var(--ink); font-weight: 600; }
 .d-readme strong { color: var(--ink); }
 .d-readme blockquote { border-left: 3px solid var(--cinnabar); margin: 10px 0; padding: 2px 14px; color: var(--ink-2); }
+.pack-items { list-style: none; padding: 0; }
+.pack-items li { display: flex; align-items: start; gap: .7rem; margin-block: .75rem; overflow-wrap: anywhere; }
+.pack-items p { margin: .2rem 0; }
+.pack-icon { object-fit: contain; flex-shrink: 0; border-radius: .3rem; }

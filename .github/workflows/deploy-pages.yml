@@ -41,12 +41,18 @@ jobs:
           node-version: 22
 
       - name: 扫描 dsh-pack 标签，生成 index/index.json + index/packs
-        run: node scripts/collect.mjs
+        run: |
+          node --test scripts/test-pack-details.mjs
+          python3 scripts/test-pack-icons.py
+          node scripts/collect.mjs
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: 生成插件徽章 → web/badges + web/plugins.json
-        run: node scripts/build-badges.mjs
+      - name: 缓存包内图标并生成插件及版本徽章
+        run: |
+          python3 scripts/sync-pack-icons.py
+          node scripts/build-badges.mjs
+          node scripts/build-launcher-badges.mjs
 
       - name: 提交索引变更
         run: |

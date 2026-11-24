@@ -2,8 +2,8 @@
 //
 // 产出：
 //   web/badges/launchers/dsh-packforge-support-{zh,en}.svg   —— 支持徽章（挂启动器 README）
-//   web/badges/versions/manifest-v{1..5}-{zh,en}.svg          —— 清单（manifest）版本徽章
-//   web/badges/versions/pack-v{1..3}-{zh,en}.svg              —— 结构（pack）版本徽章
+//   web/badges/versions/manifest-v{1..6}-{zh,en}.svg          —— 清单（manifest）版本徽章
+//   web/badges/versions/pack-v{1..4}-{zh,en}.svg              —— 结构（pack）版本徽章
 //
 // 两段式布局（自左向右，与插件徽章同款）：
 //   [ 支持 DSH-PackForge 整合包 / Supports DSH-PackForge packs ]（左色） [ 启动器/launcher + 勾 ]（右色）
@@ -56,7 +56,7 @@ function escXml(s) {
 
 // 画一个两段式徽章。
 //   leftText  = 左段文字（支持徽章：中文/英文标题；版本徽章：清单/结构）
-//   rightText = 右段文字（支持徽章：启动器/launcher；版本徽章：v1..v5 / v1..v3）
+//   rightText = 右段文字（支持徽章：启动器/launcher；版本徽章：v1..v6 / v1..v4）
 //   check     = 是否在右段文字后画勾（支持徽章画，版本徽章不画）
 function badgeSvg(id, leftText, rightText, { check = true } = {}) {
   const leftW = PAD_X + textWidth(leftText) + PAD_X;
@@ -108,8 +108,8 @@ function main() {
 
   console.log('[badge] 版本徽章 → web/badges/versions/');
   const versions = [
-    { kind: 'manifest', zh: '清单', en: 'manifest', list: [1, 2, 3, 4, 5] },
-    { kind: 'pack', zh: '结构', en: 'pack', list: [1, 2, 3] },
+    { kind: 'manifest', zh: '清单', en: 'manifest', list: [1, 2, 3, 4, 5, 6] },
+    { kind: 'pack', zh: '结构', en: 'pack', list: [1, 2, 3, 4] },
   ];
   for (const v of versions) {
     for (const n of v.list) {
