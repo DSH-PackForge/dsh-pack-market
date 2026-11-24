@@ -62,7 +62,7 @@ dsh-pack-market/
 ## 如何发布（让整合包被收录）
 
 1. 仓库 **About → Topics** 加 `dsh-pack`；
-2. 根放 `manifest.json`（支持 manifest v3 至 v6，v6 配套使用容器 v4，详见 `DSH-PackForge/specs/manifest/`），**推荐**再放一份 `README.md`；
+2. 根放 `manifest.json`（支持清单（manifest）v3 至 v6，其中 v6 配套容器（pack-structure）v4，详见 `DSH-PackForge/specs/manifest/`），**推荐**再放一份 `README.md`；
 3. 分发方式二选一：
    - **清单直连**：在 `manifest.json` 里写 `downloadUrl`，并在 `<downloadUrl>.sha256` 放 64 位 sha256（侧车文件）；
    - **默认 GitHub Release**：不写 `downloadUrl`，建一个 Release，挂上 `<name>-<version>.dspack`（或过渡期 `.tgz`），再挂一个 `<name>-<version>.dspack.sha256` 侧车文件；
@@ -70,9 +70,9 @@ dsh-pack-market/
 
 ## v6 详情预览
 
-市场从已发布的完整清单读取插件名称、翻译、描述与图标。多配置档整合包分别展示每个配置档的插件。清单的 `resources` 摘要提供所选插件资源、模型提供方、MCP 服务和技能的名称、作用域与来源版本。首页继续读取 `schemaVersion: 2` 索引。
+市场详情页从已发布的完整清单中读取插件名称、多语言翻译、简介与图标；对于多配置档（dshhome）整合包，会按配置档（profile）分组展示各自的插件。清单中的 `resources` 摘要用于展示可选的插件数据、模型服务商（Provider）、MCP 服务与技能（Skill）的名称、作用域（scope）及来源版本；首页列表继续沿用 `schemaVersion: 2` 索引。
 
-HTTPS 图标由浏览器直接加载。对于 `assets/plugins/` 内的图标，CI 使用 Python 3 运行 `scripts/sync-pack-icons.py`，核对整包 SHA-256 后提取指定图片，在详情目录生成 `plugin-icons.json`。相同包摘要复用缓存。提取限制为每个图标 256 KiB、每包图标总计 16 MiB、整包下载 512 MiB。图标不可用时仍显示插件名及说明。
+HTTPS 图标由浏览器直接加载；对于内嵌在 `assets/plugins/` 中的图标，CI 会通过 Python 3 运行 `scripts/sync-pack-icons.py`，在核对整包 SHA-256 后提取对应图片并生成 `plugin-icons.json`（若包摘要未变化则复用缓存）。提取限制为单图标 256 KiB、单包图标总计 16 MiB、整包下载上限 512 MiB；图标不可用时仍正常显示插件名称与说明。
 
 ## GitHub Pages 部署
 

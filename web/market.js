@@ -553,7 +553,7 @@ async function showDetail(name) {
 }
 
 const resourceTypes = {
-  'path.json': '插件资源', 'provider.json': '模型提供方', 'mcp.json': 'MCP 服务', 'skill.json': '技能',
+  'path.json': '插件数据', 'provider.json': '模型服务商', 'mcp.json': 'MCP 服务', 'skill.json': '技能',
 };
 
 function pluginIcon(icon, cache) {
