@@ -15,7 +15,7 @@ dsh-pack-market/
 │   ├── launchers.json          # 启动器 canonical ID 认领表（对齐 DSH-PackForge/specs/launcher-registry.md，规范仓库 PR 后手动同步）
 │   └── packs/
 │       └── <owner>.<repo>/     # 每个整合包一个目录（懒加载源）
-│           ├── manifest.json    # 完整 manifest（v3/v4/v5，原始文本）
+│           ├── manifest.json    # 完整 manifest（v3/v4/v5/v6，原始文本）
 │           ├── README.md        # 源仓库 README（若有）
 │           └── stats.json       # 下载量快照（GitHub Release 资产；详情页懒加载）
 ├── web/
@@ -62,11 +62,17 @@ dsh-pack-market/
 ## 如何发布（让整合包被收录）
 
 1. 仓库 **About → Topics** 加 `dsh-pack`；
-2. 根放 `manifest.json`（支持 manifest v3/v4/v5 契约；v5 为 `manifestVersion: 5` + `type: "profile" | "dshhome"`，详见 `DSH-PackForge/specs/manifest/`），**推荐**再放一份 `README.md`；
+2. 根放 `manifest.json`（支持清单（manifest）v3 至 v6，其中 v6 配套容器（pack-structure）v4，详见 `DSH-PackForge/specs/manifest/`），**推荐**再放一份 `README.md`；
 3. 分发方式二选一：
    - **清单直连**：在 `manifest.json` 里写 `downloadUrl`，并在 `<downloadUrl>.sha256` 放 64 位 sha256（侧车文件）；
    - **默认 GitHub Release**：不写 `downloadUrl`，建一个 Release，挂上 `<name>-<version>.dspack`（或过渡期 `.tgz`），再挂一个 `<name>-<version>.dspack.sha256` 侧车文件；
 4. 采集器会自动收录；想立刻刷新，去 Actions 手动跑「自动收录 dsh-pack 并部署」。
+
+## v6 详情预览
+
+市场详情页从已发布的完整清单中读取插件名称、多语言翻译、简介与图标；对于多配置档（dshhome）整合包，会按配置档（profile）分组展示各自的插件。清单中的 `resources` 摘要用于展示可选的插件数据、模型服务商（Provider）、MCP 服务与技能（Skill）的名称、作用域（scope）及来源版本；首页列表继续沿用 `schemaVersion: 2` 索引。
+
+HTTPS 图标由浏览器直接加载；对于内嵌在 `assets/plugins/` 中的图标，CI 会通过 Python 3 运行 `scripts/sync-pack-icons.py`，在核对整包 SHA-256 后提取对应图片并生成 `plugin-icons.json`（若包摘要未变化则复用缓存）。提取限制为单图标 256 KiB、单包图标总计 16 MiB、整包下载上限 512 MiB；图标不可用时仍正常显示插件名称与说明。
 
 ## GitHub Pages 部署
 

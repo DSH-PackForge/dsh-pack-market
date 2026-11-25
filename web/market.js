@@ -41,11 +41,12 @@ function pickLang(v) {
   if (v == null) return '';
   if (typeof v === 'string') return v;
   const lang = (navigator.language || 'zh-CN').toLowerCase();
-  if (v[lang]) return v[lang];
+  const values = Object.entries(v).filter(([, text]) => typeof text === 'string' && text);
+  const exact = values.find(([tag]) => tag.toLowerCase() === lang);
+  if (exact) return exact[1];
   const base = lang.split('-')[0];
-  const baseHit = Object.keys(v).find((k) => k.toLowerCase().startsWith(base));
-  if (baseHit) return v[baseHit];
-  return v['en-US'] || v['zh-CN'] || Object.values(v)[0] || '';
+  return values.find(([tag]) => tag.toLowerCase().split('-')[0] === base)?.[1] ||
+    values.find(([tag]) => tag.toLowerCase().split('-')[0] === 'en')?.[1] || values[0]?.[1] || '';
 }
 
 let index = null;
@@ -528,6 +529,7 @@ async function showDetail(name) {
   let full = null;
   let readme = '';
   let stats = null;
+  let icons = null;
   if (entry.id && entry.owner && entry.repo) {
     const base = `packs/${entry.id}/`;
     try {
@@ -536,15 +538,92 @@ async function showDetail(name) {
         fetchText(base + 'README.md').catch(() => ''),
         fetchJson(base + 'stats.json').catch(() => null),
       ]);
+      const units = full?.type === 'dshhome' ? Object.values(full.profiles ?? {}) : [full];
+      if (units.some(unit => Object.values(unit?.plugins ?? {}).some(p => p?.icon?.startsWith?.('assets/plugins/')))) {
+        icons = await fetchJson(base + 'plugin-icons.json').catch(() => null);
+      }
     } catch {
       /* 懒加载失败则降级为仅用索引条目渲染 */
     }
   }
 
-  d.innerHTML = detailHTML(mergeDetail(entry, full), readme, Boolean(full), stats);
+  if (currentName() === name) {
+    d.innerHTML = detailHTML(mergeDetail(entry, full), readme, Boolean(full), stats, matchingIconCache(entry.sha256, icons));
+  }
 }
 
-function detailHTML(m, readme, hasFull, stats) {
+const resourceTypes = {
+  'path.json': '插件数据', 'provider.json': '模型服务商', 'mcp.json': 'MCP 服务', 'skill.json': '技能',
+};
+
+function matchingIconCache(digest, cache) {
+  if (typeof digest === 'string' && /^[0-9a-f]{64}$/i.test(digest) &&
+      typeof cache?.sha256 === 'string' && cache.sha256.toLowerCase() === digest.toLowerCase()) {
+    return cache;
+  }
+  return null;
+}
+
+function pluginIcon(icon, cache) {
+  if (typeof icon !== 'string') {
+    return '';
+  }
+  if (/^assets\/plugins\//.test(icon)) {
+    const value = cache?.icons?.[icon];
+    return typeof value === 'string' && /^data:image\/(?:svg\+xml|png|jpeg|webp);base64,[a-zA-Z0-9+/]+=*$/.test(value) ? value : '';
+  }
+  try {
+    const url = new URL(icon);
+    return url.protocol === 'https:' && !url.username && !url.password ? url.href : '';
+  } catch {
+    return '';
+  }
+}
+
+function packageDetails(m, cache) {
+  const units = m.type === 'dshhome' ? Object.entries(m.profiles || {}) : [['', m]];
+  const groups = [];
+  for (const [scope, unit] of units) {
+    const list = Object.entries(unit?.plugins ?? {}).filter(([, item]) => item && typeof item === 'object');
+    if (!list.length) {
+      continue;
+    }
+    const rows = list.map(([id, item]) => {
+      const icon = pluginIcon(item.icon, cache);
+      const title = pickLang(item.name) || id;
+      const desc = pickLang(item.desc);
+      const version = unit.dependencies?.[id];
+      const image = icon ? '<img class="pack-icon" width="32" height="32" alt="" loading="lazy" referrerpolicy="no-referrer" src="' + esc(icon) + '">' : '';
+      return '<li>' + image + '<div><strong>' + esc(title) + '</strong> <code>' + esc(id) +
+        (version ? '@' + esc(version) : '') + '</code>' + (desc ? '<p>' + esc(desc) + '</p>' : '') + '</div></li>';
+    }).join('');
+    groups.push((scope ? '<h4>' + esc(scope) + '</h4>' : '') + '<ul class="pack-items">' + rows + '</ul>');
+  }
+  return groups.length ? '<section class="d-block"><h3>插件</h3>' + groups.join('') + '</section>' : '';
+}
+
+function resourceDetails(resources) {
+  const groups = [];
+  for (const [sidecar, title] of Object.entries(resourceTypes)) {
+    const items = resources?.[sidecar];
+    if (!Array.isArray(items) || !items.length) {
+      continue;
+    }
+    const rows = items.filter(item => item && typeof item.id === 'string').map(item => {
+      const title = pickLang(item.name) || item.id;
+      const desc = pickLang(item.desc);
+      const meta = [item.scope, item.plugin, item.ref, item.commit].filter(v => typeof v === 'string' && v).map(v => '<code>' + esc(v) + '</code>');
+      return '<li><div><strong>' + esc(title) + '</strong> ' + (title !== item.id ? '<code>' + esc(item.id) + '</code> ' : '') +
+        meta.join(' ') + (desc ? '<p>' + esc(desc) + '</p>' : '') + '</div></li>';
+    }).join('');
+    if (rows) {
+      groups.push('<h4>' + title + '</h4><ul class="pack-items">' + rows + '</ul>');
+    }
+  }
+  return groups.length ? '<section class="d-block"><h3>可导入资源</h3>' + groups.join('') + '</section>' : '';
+}
+
+function detailHTML(m, readme, hasFull, stats, icons) {
   const size = m.size ? `${(m.size / 1024).toFixed(1)} KB` : '';
   const cmd = `dspack install ${m.downloadUrl}`;
   const type = m.type === 'dshhome' ? 'dshhome' : 'profile';
@@ -700,6 +779,8 @@ function detailHTML(m, readme, hasFull, stats) {
 
       ${statsBlock}
       ${contentBlock}
+      ${packageDetails(m, icons)}
+      ${resourceDetails(m.resources)}
       ${compatBlock}
       ${readmeBlock}
 
@@ -868,5 +949,16 @@ document.addEventListener('click', (e) => {
 });
 
 window.addEventListener('hashchange', route);
+document.addEventListener('error', (event) => {
+  const image = event.target;
+  if (image?.classList?.contains('pack-icon')) {
+    const url = new URL(image.src);
+    if (url.origin === 'https://cdn.jsdelivr.com' && url.pathname.startsWith('/npm/')) {
+      image.src = 'https://cdn.jsdelivr.net' + url.pathname;
+    } else {
+      image.hidden = true;
+    }
+  }
+}, true);
 
 load();
