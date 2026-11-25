@@ -12,6 +12,15 @@ const browser = vm.createContext({
 });
 vm.runInContext(source,browser);
 
+test('图标缓存接受大小写混合的 SHA-256，拒绝不匹配和缺失的摘要', () => {
+  const digest = 'aBcD'.repeat(16);
+  const cache = {sha256:digest.toLowerCase(),icons:{}};
+  assert.equal(browser.matchingIconCache(digest,cache),cache);
+  assert.equal(browser.matchingIconCache('0'.repeat(64),cache),null);
+  assert.equal(browser.matchingIconCache(undefined,{}),null);
+  assert.equal(browser.matchingIconCache('',{sha256:''}),null);
+});
+
 test('多配置档插件按浏览器语言显示，图片只来自安全的 HTTPS 或已验证图标缓存', () => {
   const icon = 'assets/plugins/example.png';
   const manifest = {type:'dshhome', profiles:{

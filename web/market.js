@@ -548,13 +548,21 @@ async function showDetail(name) {
   }
 
   if (currentName() === name) {
-    d.innerHTML = detailHTML(mergeDetail(entry, full), readme, Boolean(full), stats, icons);
+    d.innerHTML = detailHTML(mergeDetail(entry, full), readme, Boolean(full), stats, matchingIconCache(entry.sha256, icons));
   }
 }
 
 const resourceTypes = {
   'path.json': '插件数据', 'provider.json': '模型服务商', 'mcp.json': 'MCP 服务', 'skill.json': '技能',
 };
+
+function matchingIconCache(digest, cache) {
+  if (typeof digest === 'string' && /^[0-9a-f]{64}$/i.test(digest) &&
+      typeof cache?.sha256 === 'string' && cache.sha256.toLowerCase() === digest.toLowerCase()) {
+    return cache;
+  }
+  return null;
+}
 
 function pluginIcon(icon, cache) {
   if (typeof icon !== 'string') {
@@ -771,7 +779,7 @@ function detailHTML(m, readme, hasFull, stats, icons) {
 
       ${statsBlock}
       ${contentBlock}
-      ${packageDetails(m, icons?.sha256 === m.sha256 ? icons : null)}
+      ${packageDetails(m, icons)}
       ${resourceDetails(m.resources)}
       ${compatBlock}
       ${readmeBlock}

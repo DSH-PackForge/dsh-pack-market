@@ -6,6 +6,7 @@ import json
 import re
 import tempfile
 import zipfile
+from http.client import HTTPException
 from pathlib import Path
 from urllib.error import URLError
 from urllib.parse import urlsplit
@@ -101,7 +102,7 @@ def main():
         try:
             print(f"[{i}/{len(entries)}] {pack_id}", flush=True)
             update_pack(entry, INDEX / "packs" / pack_id)
-        except (OSError, URLError, KeyError, ValueError, zipfile.BadZipFile, RuntimeError) as error:
+        except (OSError, URLError, HTTPException, KeyError, ValueError, zipfile.BadZipFile, RuntimeError) as error:
             print(f"跳过 {pack_id} 的图标缓存：{error}", flush=True)
 
 

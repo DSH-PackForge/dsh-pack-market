@@ -8,6 +8,7 @@ import json
 import tempfile
 import unittest
 import zipfile
+from http.client import IncompleteRead
 from pathlib import Path
 from unittest.mock import patch
 
@@ -17,6 +18,17 @@ SPEC.loader.exec_module(icons)
 
 
 class PackIconTest(unittest.TestCase):
+    def test_interrupted_download_continues_to_next_pack(self):
+        entries = [{"id": "example.one"}, {"id": "example.two"}]
+        with tempfile.TemporaryDirectory() as directory:
+            index = Path(directory)
+            (index / "index.json").write_text(json.dumps({"modpacks": entries}), encoding="utf-8")
+            with patch.object(icons, "INDEX", index), patch.object(
+                icons, "update_pack", side_effect=[IncompleteRead(b""), None]
+            ) as update:
+                icons.main()
+            self.assertEqual([call.args[0] for call in update.call_args_list], entries)
+
     def test_extract_and_reuse_verified_archive(self):
         icon = "assets/plugins/example.png"
         manifest = {"type": "dshhome", "profiles": {"one": {"plugins": {
